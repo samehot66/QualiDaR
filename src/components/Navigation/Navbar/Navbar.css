@@ -10,3 +10,47 @@
     color: #3F9BCB;
     font-size: 25px;
 }
+
+.Dashboard {
+    padding: 0px 0px 11px 0px;
+}
+
+.Dashboard:hover {
+    text-decoration: underline;
+}
+
+.Upload {
+    padding: 0px 0px 11px 0px;
+}
+
+.Upload:hover {
+    text-decoration: underline;
+}
+
+.Projects {
+    padding: 0px 0px 11px 0px;
+}
+
+.Projects:hover {
+    text-decoration: underline;
+}
+
+.Shared {
+    padding: 0px 0px 11px 0px;
+}
+
+.Shared:hover {
+    text-decoration: underline;
+}
+
+a:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: pointer;
+}
