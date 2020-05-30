@@ -1,0 +1,29 @@
+.Header {
+    height: 56px;
+    width: 100%;
+    position:fixed;
+    top: 0;
+    left: 0;
+    background-color: #3F9BCB;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.DocRR {
+    position: absolute;
+    left: 30px;
+    font-size: 35px;
+}
+
+.Name {
+    position: absolute;
+    right: 80px;
+}
+
+.Auth {
+    position: absolute;
+    right: 30px;
+   
+}
+

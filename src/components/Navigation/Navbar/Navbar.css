@@ -1,0 +1,12 @@
+.Navbar {
+    margin-top: 56px;
+    padding-top: 30px;
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    color: #3F9BCB;
+    font-size: 25px;
+}

@@ -1,0 +1,9 @@
+.Content {
+    height: 100%;
+    width: 100%;
+    position:fixed;
+    top: 56px;
+    left: 280px;
+    background-color: #EBF0F9;
+    padding-left: 30px;
+}
