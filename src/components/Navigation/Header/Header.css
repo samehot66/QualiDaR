@@ -25,7 +25,13 @@
 
 .Auth {
     position: absolute;
-    right: 30px;
-   
+    top: 10px;
+    right: 18px;
+    width: 44px;
+    height: 32px;
+}
+
+.Auth:hover {
+    transform: scale(1.2);
 }
 
