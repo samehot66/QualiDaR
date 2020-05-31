@@ -7,3 +7,11 @@
     background-color: #EBF0F9;
     padding-left: 30px;
 }
+
+.MenuIcon {
+    width: 36px;
+    height: 32px;
+    top: 14px;
+    left: 33px;
+    position: fixed;
+}

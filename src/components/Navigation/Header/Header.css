@@ -8,11 +8,13 @@
     display: flex;
     align-items: center;
     color: white;
+    text-shadow: 2px 2px 4px #000000;
+
 }
 
 .DocRR {
     position: absolute;
-    left: 30px;
+    left: 80px;
     font-size: 35px;
 }
 

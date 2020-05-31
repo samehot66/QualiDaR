@@ -4,7 +4,7 @@ import Header from '../Navigation/Header/Header';
 import Navbar from '../Navigation/Navbar/Navbar';
 import Content from '../Content/Content';
 
-const layout = (props) => (
+const layout = () => (
     <Auxi>
         <Header />
         <Navbar />
