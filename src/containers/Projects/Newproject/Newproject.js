@@ -4,10 +4,9 @@ import Auxi from '../../../hoc/Auxi';
 const newProj = (props) => {
     return (
         <Auxi>
-            <div>Create new project.</div>
-            <div>name</div>
-            <div>describe</div>
-            <div>Create</div>
+            <div>Name : </div>
+            <div>Description</div>
+            <button>Create</button>
         </Auxi>
     )
 };
