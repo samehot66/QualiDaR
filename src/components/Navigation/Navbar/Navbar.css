@@ -2,13 +2,14 @@
     margin-top: 56px;
     padding-top: 30px;
     height: 100%;
-    width: 290px;
+    width: 302px;
     position: fixed;
     top: 0;
     left: 0;
     background-color: #ffffff;
     color: #3F9BCB;
     font-size: 25px;
+    box-shadow: 0px 0px 0px 4px #3F9BCB;
 }
 
 .Dashboard, .Upload, .Projects, .Shared {

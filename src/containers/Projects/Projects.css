@@ -1,0 +1,33 @@
+.New{
+    border: 4px dashed #3F9BCB;
+    left: 0px;
+    vertical-align: middle;
+    width: 140px;
+    height: 140px;
+    position: relative;
+    top: 20px;
+    text-align: center;
+    line-height: 140px;
+    color: #3F9BCB;
+    font-size: 45px;
+    cursor: default;
+    user-select:none;
+}
+
+.New:hover
+{
+    border: 4px dashed #95d4f5;
+    color: #95d4f5;
+}
+.New:active
+{
+    transform: scale(0.8);
+}
+
+.Yourproj
+{
+    top:10px;
+    position:relative;
+    font-size: 30px;
+    color:#3F9BCB;
+}

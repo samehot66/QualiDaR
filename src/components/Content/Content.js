@@ -13,7 +13,7 @@ const content = () => {
     const closeSidebar = () => { setSidebar(true) };
     
     return (
-    <div className={classes.Content} style={{ left: Sidebar ? '300px' : '0px' }}>
+    <div className={classes.Content} style={{ left: Sidebar ? '306px' : '0px' }}>
         <div onClick={showSidebar} style={{ display: Sidebar ? 'block' : 'none'}}>
             <img className={classes.MenuIcon} src={require('./icon/Close.png')} alt="Menu" />
         </div>
