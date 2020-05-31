@@ -8,7 +8,6 @@ const newProj = (props) => {
             <div>name</div>
             <div>describe</div>
             <div>Create</div>
-            <div>Cancel</div>
         </Auxi>
     )
 };

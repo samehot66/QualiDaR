@@ -14,7 +14,7 @@ const projects = (props) => {
             <div className={classes.Yourproj}>Your Project(s)</div>
             <div>
                 <div className={classes.New} onClick={showModal}>+</div>
-                    <Modal show={Newprojmodal} modalClosed={closeModal}>
+                    <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
                         <Newproj />
                     </Modal>
             </div>

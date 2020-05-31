@@ -11,3 +11,10 @@
     box-sizing: border-box;
     transition: all 0.3s ease-out;
 }
+
+.Name
+{
+    background-color: #61c9ff;
+    text-align: center;
+    color: #ffffff;
+}
