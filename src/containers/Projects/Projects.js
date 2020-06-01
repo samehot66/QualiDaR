@@ -9,13 +9,14 @@ const projects = (props) => {
     const [Newprojmodal, setNewprojmodal] = useState(false);
     const showModal= () => { setNewprojmodal(true) };
     const closeModal= () => { setNewprojmodal(false) };
+    
     return (
         <Auxi>
             <div className={classes.Yourproj}>Your Project(s)</div>
             <div>
                 <div className={classes.New} onClick={showModal}>+</div>
                     <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
-                        <Newproj />
+                        <Newproj cancel={closeModal}/>
                     </Modal>
             </div>
         </Auxi>
