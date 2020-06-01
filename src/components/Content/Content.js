@@ -15,10 +15,10 @@ const content = () => {
     return (
     <div className={classes.Content} style={{ left: Sidebar ? '306px' : '0px' }}>
         <div onClick={showSidebar} style={{ display: Sidebar ? 'block' : 'none'}}>
-            <img className={classes.MenuIcon} src={require('./icon/Close.png')} alt="Menu" />
+            <img className={classes.MenuIcon} src={require('./icon/Menu.png')} alt="Menu" />
         </div>
         <div onClick={closeSidebar} style={{ display: Sidebar ? 'none' : 'block'}} > 
-            <img className={classes.MenuIcon}  src={require('./icon/Menu.png')} alt="Menu" /> 
+            <img className={classes.MenuIcon}  src={require('./icon/Close.png')} alt="Menu" /> 
         </div>
         <Switch>
             <Route path="/" exact component={Dashboard} />

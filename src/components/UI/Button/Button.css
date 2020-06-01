@@ -15,8 +15,10 @@
 
 .Success { 
     background-color: #3F9BCB;
+    left:-68px;
 }
 
 .Danger {
     background-color: #FF5533;
+    left: 92px;
 }
