@@ -5,7 +5,7 @@ import Input from '../../../components/UI/Input/Input';
 
 const newProj = (props) => {
 
-    const [projFrom, setprogFrom] = useState(
+    const [projForm, setprojForm] = useState(
         {
             name:
             {
@@ -45,11 +45,25 @@ const newProj = (props) => {
         })
 
     const formElementsArray = [];
-    for (let key in projFrom) {
+    for (let key in projForm) {
         formElementsArray.push({
             id: key,
-            config: projFrom[key]
+            config: projForm[key]
         })
+    }
+
+    const inputChangedHandler = (event, inputIdentifier) => {
+        const updatedprojForm = {
+            ...projForm
+        };
+
+        const updatedFormElement = {
+            ...updatedprojForm[inputIdentifier]
+        };
+        
+        updatedFormElement.value = event.target.value;
+        updatedprojForm[inputIdentifier] = updatedFormElement;
+        setprojForm({ ...updatedprojForm });
     }
 
     return (
@@ -61,7 +75,8 @@ const newProj = (props) => {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
-                        elementLabel={formElement.config.elementLabel} />
+                        elementLabel={formElement.config.elementLabel}
+                        changed={(event) => inputChangedHandler(event, formElement.id)} />
                 ))}
                 <Button btnType="Success">Create</Button>
             </form>
