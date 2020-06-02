@@ -28,7 +28,20 @@ const newProj = (props) => {
                     placeholder: 'Input your description details...'
                 },
                 value: ''
-            }
+            }/*,
+            drop:
+            {
+                elementType: 'select',
+                elementLabel: 'xxx',
+                elementConfig:
+                {
+                    options:[
+                        {value:'x', displayValue:'x'},
+                        {value:'xx', displayValue:'xx'},
+                    ]
+                },
+                value: ''
+            }*/
         })
 
     const formElementsArray = [];
