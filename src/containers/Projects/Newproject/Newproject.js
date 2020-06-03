@@ -76,12 +76,12 @@ const newProj = (props) => {
 
         if (value.length < rules.minLength) {
             checkArray[0].Isvalid = false;
-            checkArray[0].Error = 'Minimum length ' + rules.minLength;
+            checkArray[0].Error = 'Minimum length is ' + rules.minLength;
         }
 
         if (value.length > rules.maxLength) {
             checkArray[0].Isvalid = false;
-            checkArray[0].Error = 'Maximum length ' + rules.maxLength;
+            checkArray[0].Error = 'Maximum length is ' + rules.maxLength;
         }
 
         if (rules.required) {
@@ -100,10 +100,7 @@ const newProj = (props) => {
         for (let formElementIdentifier in projForm) {
             formDataArray[formElementIdentifier] = { value: projForm[formElementIdentifier].value }
         }
-        console.log(formDataArray);
         //name
-        console.log(formDataArray["name"].value);
-        console.log(formDataArray["description"].value);
     }
 
     const formElementsArray = [];
@@ -137,12 +134,12 @@ const newProj = (props) => {
         updatedFormElement.error = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Error;
         updatedprojForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
-        for (let inputIdentifier in updatedprojForm)
+        let formIsValid = true; 
+        if(updatedprojForm['name'].valid === false)
         {
-            formIsValid = updatedprojForm[inputIdentifier].valid && formIsValid;
+            formIsValid =false;
         }
-
+        
         setprojForm({ ...updatedprojForm });
         setFromIsValid(formIsValid);
     }
