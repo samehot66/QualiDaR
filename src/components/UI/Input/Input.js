@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Input.css';
+import TextField from '@material-ui/core/TextField';
 
 const input = (props) => {
 
@@ -7,36 +8,66 @@ const input = (props) => {
 
     switch (props.elementType) {
         case ('input'):
-            inputElement = <input
-                className={classes.InputElement}
-                {...props.elementConfig}
-                value={props.value} 
-                onChange={props.changed} />; break;
+            if (props.checkError === 'No') {
+                inputElement = <TextField rowsMax={1}
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    onChange={props.changed} />;
+            }
+            else {
+                inputElement = <TextField rowsMax={1} error
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    helperText={props.error}
+                    onChange={props.changed} />;
+            } break;
         case ('textarea'):
-            inputElement = <textarea
+            if (props.checkError === 'No') {
+                inputElement = <TextField multiline rowsMax={3}
                 className={classes.InputElement}
                 {...props.elementConfig}
-                value={props.value} 
-                onChange={props.changed} />; break;
+                value={props.value}
+                onChange={props.changed} />;
+            }
+            else {
+                inputElement = <TextField multiline rowsMax={3} error 
+                className={classes.InputElement}
+                {...props.elementConfig}
+                value={props.value}
+                helperText={props.error}
+                onChange={props.changed} />;
+            } break;
         case ('select'):
             inputElement =
                 <select
                     className={classes.InputElement}
-                    value={props.value} 
+                    value={props.value}
                     onChange={props.changed}>
                     {props.elementConfig.options.map(option => (
-                        <option key= {option.value} value={option.value}>
+                        <option key={option.value} value={option.value}>
                             {option.displayValue}
                         </option>
                     ))}
                     >
                 </select>; break;
         default:
-            inputElement = <input
-                className={classes.InputElement}
-                {...props.elementConfig}
-                value={props.value} 
-                onChange={props.changed} />;
+            if (props.checkError === 'No') {
+                inputElement = <TextField rowsMax={1}
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    onChange={props.changed} />;
+            }
+            else {
+                inputElement = <TextField rowsMax={1} error
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    helperText={props.error}
+                    onChange={props.changed} />;
+            } 
     }
 
     return (
