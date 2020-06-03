@@ -13,6 +13,12 @@
     float:right;
 }
 
+.Button:disabled{
+    color: white;
+    cursor:not-allowed;
+    background-color: #ccc;
+}
+
 .Success { 
     background-color: #3F9BCB;
     left:-68px;

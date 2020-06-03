@@ -9,14 +9,14 @@ const input = (props) => {
     switch (props.elementType) {
         case ('input'):
             if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1}
+                inputElement = <TextField rowsMax={1} label = {props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
                     onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField rowsMax={1} error
+                inputElement = <TextField rowsMax={1} error label = {props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
@@ -25,14 +25,14 @@ const input = (props) => {
             } break;
         case ('textarea'):
             if (props.checkError === 'No') {
-                inputElement = <TextField multiline rowsMax={3}
+                inputElement = <TextField multiline rowsMax={3} label = {props.elementLabel}
                 className={classes.InputElement}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField multiline rowsMax={3} error 
+                inputElement = <TextField multiline rowsMax={3} error label = {props.elementLabel}
                 className={classes.InputElement}
                 {...props.elementConfig}
                 value={props.value}
@@ -54,14 +54,14 @@ const input = (props) => {
                 </select>; break;
         default:
             if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1}
+                inputElement = <TextField rowsMax={1} label = {props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
                     onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField rowsMax={1} error
+                inputElement = <TextField rowsMax={1} error label = {props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
@@ -72,7 +72,6 @@ const input = (props) => {
 
     return (
         <div className={classes.Input}>
-            <label className={classes.Label}>{props.elementLabel} </label>
             {inputElement}
         </div>
     )

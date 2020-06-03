@@ -36,13 +36,13 @@ const newProj = (props) => {
                 },
                 value: '',
                 validation: {
-                    required: true,
+                    required: false,
                     minLength: 0,
                     maxLength: 200
                 },
                 valid: false,
                 error: ''
-            }/*,
+            },/*,
             drop:
             {
                 elementType: 'select',
@@ -57,6 +57,7 @@ const newProj = (props) => {
                 value: ''
             }*/
         })
+        const [FormIsValid,setFromIsValid] =  useState(false);
 
     const checkValidity = (value, rules) => {
         let isValid = true;
@@ -68,6 +69,11 @@ const newProj = (props) => {
             Error: error
         })
 
+        if(!rules)
+        {
+            return checkArray;
+        }
+
         if (value.length < rules.minLength) {
             checkArray[0].Isvalid = false;
             checkArray[0].Error = 'Minimum length ' + rules.minLength;
@@ -78,21 +84,21 @@ const newProj = (props) => {
             checkArray[0].Error = 'Maximum length ' + rules.maxLength;
         }
 
-        if (!(value.trim() !== "")) {
-            checkArray[0].Isvalid = false;
-            checkArray[0].Error = 'Must not empty!';
+        if (rules.required) {
+            if (!(value.trim() !== "")) {
+                checkArray[0].Isvalid = false;
+                checkArray[0].Error = 'Must not empty!';
+            }
         }
 
         return checkArray;
     }
 
-    const newProjHandler = (event) =>
-    {
+    const newProjHandler = (event) => {
         event.preventDefault();
-        const formDataArray =[];
-        for (let formElementIdentifier in projForm)
-        {
-            formDataArray[formElementIdentifier]={ value: projForm[formElementIdentifier].value}
+        const formDataArray = [];
+        for (let formElementIdentifier in projForm) {
+            formDataArray[formElementIdentifier] = { value: projForm[formElementIdentifier].value }
         }
         console.log(formDataArray);
         //name
@@ -108,12 +114,13 @@ const newProj = (props) => {
         })
     }
 
-    const checkErrorFunc = (x) => 
-    {
-        if(x==='')
+    const checkErrorFunc = (x) => {
+        if (x === '') {
             return 'No';
-        else
+        }
+        else {
             return 'Yes';
+        }
     }
 
     const inputChangedHandler = (event, inputIdentifier) => {
@@ -124,12 +131,20 @@ const newProj = (props) => {
         const updatedFormElement = {
             ...updatedprojForm[inputIdentifier]
         };
-        
+
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Isvalid;
         updatedFormElement.error = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Error;
         updatedprojForm[inputIdentifier] = updatedFormElement;
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedprojForm)
+        {
+            formIsValid = updatedprojForm[inputIdentifier].valid && formIsValid;
+        }
+
         setprojForm({ ...updatedprojForm });
+        setFromIsValid(formIsValid);
     }
 
     return (
@@ -137,16 +152,16 @@ const newProj = (props) => {
             <form>
                 {formElementsArray.map(formElement => (
                     <Input
-                    key={formElement.id}
-                    elementType={formElement.config.elementType}
-                    elementConfig={formElement.config.elementConfig}
-                    value={formElement.config.value}
-                    elementLabel={formElement.config.elementLabel}
-                    changed={(event) => inputChangedHandler(event, formElement.id)}
-                    error={formElement.config.error}
-                    checkError= {checkErrorFunc(formElement.config.error)}/>
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        elementLabel={formElement.config.elementLabel}
+                        changed={(event) => inputChangedHandler(event, formElement.id)}
+                        error={formElement.config.error}
+                        checkError={checkErrorFunc(formElement.config.error)} />
                 ))}
-                <Button btnType="Success">Create</Button>
+                <Button btnType="Success" disabled={!FormIsValid} >Create</Button>
             </form>
             <Button btnType="Danger" clicked={props.cancel}>Cancel</Button>
         </Auxi>
