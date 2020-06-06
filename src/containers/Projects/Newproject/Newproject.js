@@ -101,6 +101,10 @@ const newProj = (props) => {
             formDataArray[formElementIdentifier] = { value: projForm[formElementIdentifier].value }
         }
         //name
+
+
+
+
     }
 
     const formElementsArray = [];
@@ -148,7 +152,7 @@ const newProj = (props) => {
         <Auxi>
             <form>
                 {formElementsArray.map(formElement => (
-                    <Input
+                    <Input 
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
@@ -165,3 +169,5 @@ const newProj = (props) => {
     )
 };
 export default newProj;
+
+

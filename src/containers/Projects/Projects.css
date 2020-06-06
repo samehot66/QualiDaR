@@ -1,33 +1,44 @@
-.New{
-    border: 4px dashed #3F9BCB;
-    left: 0px;
-    vertical-align: middle;
-    width: 140px;
-    height: 140px;
-    position: relative;
-    top: 20px;
-    text-align: center;
-    line-height: 140px;
-    color: #3F9BCB;
-    font-size: 45px;
-    cursor: default;
-    user-select:none;
-}
-
-.New:hover
-{
-    border: 4px dashed #95d4f5;
-    color: #95d4f5;
-}
-.New:active
-{
-    transform: scale(0.8);
-}
-
 .Yourproj
 {
     top:10px;
     position:relative;
     font-size: 30px;
     color:#3F9BCB;
+    margin-bottom: 10px;
+}
+
+.Projects {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    max-width: 1200px;
+}
+
+.Project {
+    width: 200px;
+    height: 150px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    margin: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 4px dashed #3F9BCB;
+    vertical-align: middle;
+    text-align: center;
+    color: #3F9BCB;
+    font-size: 45px;
+    cursor: default;
+    user-select:none;
+    line-height: 100px;
+}
+
+.Project:hover,
+.Project:active {
+    transform: scale(0.9);
+}
+
+::-webkit-scrollbar{
+    width: 10px;
 }
