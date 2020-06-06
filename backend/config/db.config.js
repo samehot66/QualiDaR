@@ -23,7 +23,7 @@ db.user = require('../models/users.js')(sequelize, Sequelize);
 db.project = require('../models/projects.js')(sequelize, Sequelize);
 db.project_role = require('../models/project_roles.js')(sequelize, Sequelize);
  
-db.project.belongsToMany(db.user, { through: 'project_roles', foreignKey: 'pId', otherKey: 'userId'});
-db.user.belongsToMany(db.project, { through: 'project_roles', foreignKey: 'userId', otherKey: 'pId'});
+db.project.belongsToMany(db.user, { through: 'project_roles', foreignKey: 'pid', otherKey: 'uid'});
+db.user.belongsToMany(db.project, { through: 'project_roles', foreignKey: 'uid', otherKey: 'pid'});
 
 module.exports = db;

@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, Sequelize) => {
 	const Project = sequelize.define('projects', {
-	  id: {
+	  pid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
