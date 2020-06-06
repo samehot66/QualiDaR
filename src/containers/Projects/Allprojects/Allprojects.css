@@ -8,9 +8,11 @@
     box-sizing: border-box;
     cursor: pointer;
     height: 150px;
+    color: #3F9BCB;
+    background-color:#C0DDF5;
 }
 
 .Projects:hover,
 .Projects:active {
-    background-color: #C0DDF5;
+    background-color: #ffffff;
 }

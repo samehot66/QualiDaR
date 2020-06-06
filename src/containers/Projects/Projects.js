@@ -99,7 +99,6 @@ const projects = (props) => {
 
     },[])
     
-console.log(projects);
     return (
         <Auxi>
             <div className={classes.Yourproj}>Your Project(s)</div>
