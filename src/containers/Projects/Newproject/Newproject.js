@@ -20,7 +20,7 @@ const newProj = (props) => {
                 validation: {
                     required: true,
                     minLength: 5,
-                    maxLength: 30
+                    maxLength: 50
                 },
                 valid: false,
                 error: ''

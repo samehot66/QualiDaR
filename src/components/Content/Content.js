@@ -27,6 +27,7 @@ const content = () => {
             <Route path="/sharedwithme" component={Sharedwithme} />
             <Route render={() => <p>Error: Not found!</p>} />
         </Switch>
+        <div style={{marginTop:'200px'}}></div>
     </div>
     )
 }

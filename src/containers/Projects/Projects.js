@@ -35,9 +35,66 @@ const projects = (props) => {
         const loadprojects =[];
         loadprojects.push({
            id:1,
-            pname:"helloxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            pname:"y03fR3Lbs0PTIQE4kfAPnFFoKJ5tHjyry1JR93N4zrtJ0UwMBq"
         });
         loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         });loadprojects.push({
+            id:2,
+             pname:"hello2"
+         }); loadprojects.push({
             id:2,
              pname:"hello2"
          });loadprojects.push({
@@ -98,7 +155,8 @@ const projects = (props) => {
         setprojects(loadprojects);
 
     },[])
-    
+
+
     return (
         <Auxi>
             <div className={classes.Yourproj}>Your Project(s)</div>
