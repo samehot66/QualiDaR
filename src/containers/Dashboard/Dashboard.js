@@ -1,7 +1,7 @@
 import React from 'react';
 
 const dashboard = (props) => (
-    <p>This is route from Dashboard</p>
+    <div style={{  marginTop: '67px'}}>This is route from DashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboard</div>
 );
 
 export default dashboard;

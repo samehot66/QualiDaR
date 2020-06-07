@@ -160,8 +160,8 @@ const projects = (props) => {
     return (
         <Auxi>
             <div className={classes.Yourproj}>Your Project(s)</div>
-          
-            <div className={classes.Projects}>
+            <div className={classes.Projects}>    
+        
                 <div className={classes.Project} onClick={showModal}>+</div>
                     <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
                         <Newproj cancel={closeModal}/>

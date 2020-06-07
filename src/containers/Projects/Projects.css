@@ -1,17 +1,18 @@
 .Yourproj
 {
-    top:10px;
-    position:relative;
+    margin-top: 67px;
+    position: relative;
     font-size: 30px;
-    color:#3F9BCB;
-    margin-bottom: 10px;
+    color: #3F9BCB;
+    margin-bottom: 5px;
+    left: 47px;
 }
 
 .Projects {
     display: flex;
     flex-flow: row wrap;
     justify-content: left;
-    max-width: 1200px;
+    margin-left:40px;
 }
 
 .Project {
@@ -39,6 +40,3 @@
     transform: scale(0.9);
 }
 
-::-webkit-scrollbar{
-    width: 10px;
-}

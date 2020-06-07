@@ -8,8 +8,7 @@
     display: flex;
     align-items: center;
     color: white;
-    text-shadow: 2px 2px 4px #000000;
-
+    z-index:1;
 }
 
 .DocRR {
@@ -17,6 +16,7 @@
     left: 80px;
     font-size: 27px;
     cursor: default;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .Name {
@@ -36,3 +36,10 @@
     transform: scale(1.2);
 }
 
+.MenuIcon {
+    width: 36px;
+    height: 32px;
+    top: 14px;
+    left: 33px;
+    position: fixed;
+}

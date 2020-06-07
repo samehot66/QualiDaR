@@ -7,8 +7,8 @@ import Button from '../../../components/UI/Button/Button';
     return (
         <div id={props.id} className={classes.Projects} > {props.pname} 
        
-             <div> <Button>edit</Button>
-               <Button>delete</Button>
+             <div> 
+             <Button>Add</Button><Button>edit</Button> <Button>delete</Button>
             </div>
         </div>
     )
