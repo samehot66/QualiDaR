@@ -17,8 +17,8 @@
 
 .Project {
     width: 200px;
-    height: 150px;
-    padding: 16px;
+    height: 169px;
+    padding: 28px;
     text-align: center;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
@@ -40,3 +40,28 @@
     transform: scale(0.9);
 }
 
+.Menu
+{
+    position: relative;
+    width: 200px;
+    height: 28px;
+    left: 10px;
+    top: 10px;
+    background-color: #66bfed;
+}
+
+.AddpeopleIcon , .TrashIcon
+{
+    margin-top: 4px;
+    margin-right: 3px;
+    width: 24px;
+    height: 20px;
+    float: right;
+    margin-left: 2px;
+}
+
+.AddpeopleIcon
+{
+    margin-top: 1px;
+    height: 25px;
+}
