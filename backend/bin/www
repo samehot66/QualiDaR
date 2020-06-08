@@ -12,15 +12,15 @@ var http = require('http');
 const db = require('../config/db.config.js');
   
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync with { force: true }');
+db.sequelize.sync({force: false}).then(() => {
+  console.log('Drop and Resync with { force: false }');
 });
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**

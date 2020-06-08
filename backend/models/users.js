@@ -6,16 +6,13 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
-	  name: {
-		  type: Sequelize.STRING
-	  },
-	  username: {
+	  googleId: {
 		  type: Sequelize.STRING
 	  },
 	  email: {
 		  type: Sequelize.STRING
 	  },
-	  password: {
+	  accessToken: {
 		  type: Sequelize.STRING
 	  }
 	});
