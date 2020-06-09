@@ -4,9 +4,14 @@ const db = require('../../config/db.config.js');
 const Project = db.project
 const ProjectRole = db.project_role
 
+//GET
+//URL - http://localhost:4000/api/projects 
+//body - {
+//          "uid": "#userid#"
+//        }
 router.get('', async (req,res) => {
     var projects = await Project.findAll({
-        attributes : ['pid','name','num_subhead','num_text_component','description']
+        attributes : ['pid','name','num_subhead','num_text_component','description', 'createdAt', 'updatedAt']
     }).then((data) => {
         return data
       }).catch((error) => {
@@ -14,11 +19,16 @@ router.get('', async (req,res) => {
         res.status(500).send(error)
       })
       var projectOwner = await ProjectRole.findAll({
-        attributes : ['id','role','pid','uid'],
+        attributes : ['id','role','pid','uid', 'createdAt', 'updatedAt'],
         where: {
           uid: req.body.uid
         }
       }).then((data) => {
+        if (data.length == 0){
+          return {
+            message: "no own project"
+          }
+        }
         //console.log(JSON.stringify(data))
         return data
       }).catch((error) => {
@@ -34,4 +44,39 @@ router.get('', async (req,res) => {
       await res.json(responseData)     
 })
 
+//POST
+//URL - http://localhost:4000/api/projects 
+//body - {
+//          "uid": "#userid#", 
+//          "pname": "#project name#", 
+//          "description": "#project description#"
+//        }
+router.post('', async (req, res) => {
+  var createProject = await Project.create({
+    name: req.body.pname,
+    num_subhead: 0,
+    num_text_component: 0,
+    description: req.body.description
+  }).then((data) => {
+    return data
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+  //console.log(createProject)
+  var registOwner = await ProjectRole.create({
+    role: "owner",
+    uid: req.body.uid,
+    pid: createProject.dataValues.pid
+  }).then((data) => {
+    return data
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+  var responseData = await {
+    project: createProject,
+    owner: registOwner
+  }
+
+  await res.json(responseData)
+})
 module.exports = router
