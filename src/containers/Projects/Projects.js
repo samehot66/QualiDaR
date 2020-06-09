@@ -4,7 +4,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Newproj from './Newproject/Newproject';
 import Auxi from '../../hoc/Auxi';
 import Project from './Allprojects/Allprojects';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const projects = (props) => {
     const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
@@ -84,7 +84,8 @@ const projects = (props) => {
                 ))}
             </div>
         </Auxi>
-    : <div style={{  marginTop: '67px'}}>Please login</div>
+        :   
+        <Link to="/" ><div className={classes.Pleaselogin}>Please login</div></Link>
     )
 }
 

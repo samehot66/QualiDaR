@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import classes from './App.css';
+import classes from './Authentication.css';
 import { GoogleLogin } from 'react-google-login';
 import config from './config.json';
-
+import Button from '../../components/UI/Button/Button';
 class authentication extends Component {
    
  
@@ -20,7 +20,7 @@ class authentication extends Component {
     };
 
     onFailure = (error) => {
-        alert(error);
+        alert("Login Failed");
     };
 
     googleResponse = (response) => {
@@ -36,7 +36,6 @@ class authentication extends Component {
             r.json().then(user => {
                 if (token) {
                     this.setState({ isAuthenticated: true, user, token });
-                    console.log(user);
                     sessionStorage.setItem('iSAuthenticated', true);
                     sessionStorage.setItem('email', user.email);
                     sessionStorage.setItem('uid', user.uid);
@@ -53,21 +52,20 @@ class authentication extends Component {
         let content = !!sessionStorage.getItem('isAuth')  ?
             (
                 <div>
-                    <div>Your login name</div>
+                    <div className={classes.Yourlogin}>Your login name</div>
+                    <div className={classes.Name}> {sessionStorage.getItem('email')} </div>
                     <div>
-                    {sessionStorage.getItem('email')}
-                    {sessionStorage.getItem('uid')}
-                    </div>
-                    <div>
-                        <button onClick={this.logout} className="button">
+                        <Button clicked={this.logout} btnType="Logout">
                             Log out
-                        </button>
+                        </Button>
                     </div>
                 </div>
             ) :
             (  
                 <div>
-                    <div>Welcome to DocRR Please login</div>
+                    <div className={classes.Welcome}>Welcome to DocR&R!</div>
+                    <div className={classes.Qbdrrs}>The Qualitative Business Data Retrieval and Repository System</div>
+                    <div className={classes.Lets}>Let's start your analysis...</div>
                     <GoogleLogin
                         clientId={config.GOOGLE_CLIENT_ID}
                         buttonText="Login"

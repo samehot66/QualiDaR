@@ -1,0 +1,35 @@
+.App {
+    margin-top: 67px;
+    position: relative;
+    text-align: center;
+    padding: 165px;
+    color: #66bfed;
+}
+
+.Welcome {
+    font-size: 50px;
+    font-weight: bold;
+
+}
+
+.Qbdrrs {
+    font-size: 20px;
+}
+
+.Lets
+{
+    font-size: 20px;
+    color:#ccc;
+    font-weight: Italic;
+}
+
+.Yourlogin
+{
+    font-size: 25px;
+    font-weight: bold;
+    color:#ccc;
+}
+
+.Name {
+    font-size: 30px;
+}

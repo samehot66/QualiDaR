@@ -1,4 +1,6 @@
 import React,{useState} from 'react';
+import classes from './Dashboard.css';
+import { Link } from 'react-router-dom';
 
 const dashboard = (props) => {
     const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
@@ -8,7 +10,7 @@ const dashboard = (props) => {
         isauth? 
         <div style={{  marginTop: '67px'}}>This is route from DashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboard</div>
     :
-        <div style={{  marginTop: '67px'}}>Please login</div>
+    <Link to="/" ><div className={classes.Pleaselogin}>Please login</div></Link>
     ) 
 };
 

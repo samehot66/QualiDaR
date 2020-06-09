@@ -17,7 +17,7 @@ const header = (props) => {
             <div onClick={closeSidebar} style={{ display: Sidebar ? 'none' : 'block' }} >
                 <img className={classes.MenuIcon} src={require('./icon/Close.png')} alt="Menu" />
             </div>
-            <span className={classes.DocRR}>DocR&R</span>
+            <Link to="/dashboard" > <span className={classes.DocRR}>DocR&R</span> </Link>
             {
             !!sessionStorage.getItem('iSAuthenticated') ? 
             <span className={classes.Name}>{ sessionStorage.getItem('email')}</span> 
