@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 const projects = (props) => {
 
     const [projects, setprojects] = useState([]);
-
+    const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
     /* useEffect(() =>{
         #1 fetch data from database
         #2 assign data to array loadprojects
@@ -42,6 +42,7 @@ const projects = (props) => {
     }, [])
 
     return (
+        isauth ?
         <Auxi>
             <div className={classes.Sharedwithme}>Shared with me</div>
             <div className={classes.Projects}>
@@ -54,6 +55,7 @@ const projects = (props) => {
                 ))}
             </div>
         </Auxi>
+       : <div style={{  marginTop: '67px'}}>Please login</div>
     )
 }
 

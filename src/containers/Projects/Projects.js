@@ -7,7 +7,7 @@ import Project from './Allprojects/Allprojects';
 import { NavLink } from 'react-router-dom';
 
 const projects = (props) => {
-
+    const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
     const [Newprojmodal, setNewprojmodal] = useState(false);
     const showModal = () => { setNewprojmodal(true) };
     const closeModal = () => { setNewprojmodal(false) };
@@ -55,6 +55,7 @@ const projects = (props) => {
     }, [])
 
     return (
+        isauth ?
         <Auxi>
             <div className={classes.Yourproj}>Your Project(s)</div>
             <div className={classes.Projects}>
@@ -83,6 +84,7 @@ const projects = (props) => {
                 ))}
             </div>
         </Auxi>
+    : <div style={{  marginTop: '67px'}}>Please login</div>
     )
 }
 

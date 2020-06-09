@@ -1,7 +1,15 @@
-import React from 'react';
+import React,{useState} from 'react';
 
-const upload = (props) => (
-    <p style={{  marginTop: '67px'}}>This is route from UploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUploadUpload</p>
-);
+const dashboard = (props) => {
+    const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
+   
+    
+    return ( 
+        isauth? 
+        <div style={{  marginTop: '67px'}}>This is route from Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload Upload</div>
+    :
+        <div style={{  marginTop: '67px'}}>Please login</div>
+    ) 
+};
 
-export default upload;
+export default dashboard;

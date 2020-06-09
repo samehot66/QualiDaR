@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classes from './Header.css';
 import Navbar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
 
 const header = (props) => {
 
@@ -17,9 +18,13 @@ const header = (props) => {
                 <img className={classes.MenuIcon} src={require('./icon/Close.png')} alt="Menu" />
             </div>
             <span className={classes.DocRR}>DocR&R</span>
-            <span className={classes.Name}>Name</span>
+            {
+            !!sessionStorage.getItem('iSAuthenticated') ? 
+            <span className={classes.Name}>{ sessionStorage.getItem('email')}</span> 
+            : <span className={classes.Name}>Name</span>}
+
             <span>
-                <img className={classes.Auth} src={require('./icon/Human.png')} alt="Auth" />
+            <Link to="/" ><img className={classes.Auth} src={require('./icon/Human.png')} alt="Auth" /> </Link>
             </span>
             <span style={{ display: Sidebar ? 'block' : 'none' }}><Navbar /></span>
         </header>)
