@@ -24,18 +24,36 @@ module.exports = function () {
             if(user == null) {
                 try{
                     console.log('1111')
-                    return User.create({
+                    User.create({
                         googleId: profile.id ,
                         email: profile.emails[0].value,
                         access_token: accessToken
+                    })
+                    User.findOne({
+                        where: {
+                            'googleId': profile.id
+                        }
+                    }).then((data) => {
+                        return done(null, user)
                     })
                 }catch(err){
                     console.log(err)
                     return done(null, user)
                 }              
             }else{
-                console.log(JSON.stringify(user))
-                return done(null, user)
+                User.update(
+                    {access_token: accessToken},
+                    {where: {'email':profile.emails[0].value}
+                    }
+                  )
+                User.findOne({
+                    where: {
+                        'googleId': profile.id
+                    }
+                }).then((data) => {
+                    console.log(JSON.stringify(data))
+                    return done(null, data)
+                })
             }
         })
     }));
