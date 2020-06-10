@@ -39,7 +39,7 @@ class authentication extends Component {
                     sessionStorage.setItem('email', user.email);
                     sessionStorage.setItem('uid', user.uid);
                     sessionStorage.setItem('googleid', user.googleId);
-                    sessionStorage.setItem('token', token);
+                    sessionStorage.setItem('googletoken', response.accessToken);
                     sessionStorage.setItem('isAuth', true);
                     window.location.reload();
                 }
