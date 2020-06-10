@@ -6,7 +6,7 @@ const navbar = () => {
     return (
     <nav className={classes.Navbar}>  
         <div className={classes.Dashboard}>
-            <NavLink to="/" exact activeStyle={{color: '#036294', fontSize: '27px', textDecoration: 'underline'}}>
+            <NavLink to="/dashboard" exact activeStyle={{color: '#036294', fontSize: '27px', textDecoration: 'underline'}}>
                 <img className={classes.DashboardIcon} src={require('./icon/Dashboard.png')} alt="Dashboard" />
                 Dashboard
             </NavLink>

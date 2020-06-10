@@ -1,15 +1,23 @@
 .Projects {
-    width: 200px;
-    padding: 16px;
     text-align: center;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    margin: 10px;
-    box-sizing: border-box;
+    box-shadow: 10px #333;
     cursor: pointer;
     height: 150px;
-    color: #3F9BCB;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    box-sizing: border-box;
+    width:200px;
     background-color:#C0DDF5;
+    float: left;
+    margin: 10px;
+    text-align: center;
+    color: #3F9BCB;
+    word-wrap: break-word; 
+    vertical-align:middle;
+    font-weight: bold;
+    margin-top:0px;
+    font-size:20px;
 }
 
 .Projects:hover,
