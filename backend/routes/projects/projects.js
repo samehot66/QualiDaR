@@ -12,7 +12,7 @@ const User = db.user
 //        }
 router.get('', async (req,res) => {
     var projects = await Project.findAll({
-        attributes : ['pid','name','num_subhead','num_text_component','description', 'createdAt', 'updatedAt'],
+        attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
         include: [{
           model: User,
           where: {uid: req.body.uid},
@@ -59,9 +59,7 @@ router.get('', async (req,res) => {
 //        }
 router.post('', async (req, res) => {
   var createProject = await Project.create({
-    name: req.body.pname,
-    num_subhead: 0,
-    num_text_component: 0,
+    pname: req.body.pname,
     description: req.body.description
   }).then((data) => {
     return data

@@ -6,14 +6,8 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
 	  },
-	  name: {
+	  pname: {
 		  type: Sequelize.STRING
-      },
-      num_subhead: {
-          type: Sequelize.INTEGER
-      },
-      num_text_component: {
-          type: Sequelize.INTEGER
       },
       description: {
           type: Sequelize.STRING
