@@ -24,17 +24,10 @@ module.exports = function () {
             if(user == null) {
                 try{
                     console.log('1111')
-                    User.create({
+                    return User.create({
                         googleId: profile.id ,
                         email: profile.emails[0].value,
                         access_token: accessToken
-                    })
-                    User.findOne({
-                        where: {
-                            'googleId': profile.id
-                        }
-                    }).then((data) => {
-                        return done(null, user)
                     })
                 }catch(err){
                     console.log(err)
@@ -46,9 +39,12 @@ module.exports = function () {
                     {where: {'email':profile.emails[0].value}
                     }
                   )
+
+               
+                
                 User.findOne({
                     where: {
-                        'googleId': profile.id
+                        'email':profile.emails[0].value
                     }
                 }).then((data) => {
                     console.log(JSON.stringify(data))

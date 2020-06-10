@@ -19,7 +19,7 @@ router.post('', (req, res, next) => {passport.authenticate('google-token', {sess
             });
             res.setHeader('x-auth-token', token);
             console.log(token)
-            //res.end();
+           // res.end();
             return res.status(200).send(JSON.stringify(user.dataValues));
         } else {
             console.log('null')
