@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var index = require('./routes/index');
-var APIauthMiddleware = require('./utils/APIauth.utils')
 
 var app = express();
 
@@ -37,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')));
   await APIauthMiddleware.clientApiKeyValidation(req.cookies)
   next()
 }*/
-app.use(APIauthMiddleware.clientApiKeyValidation);
 
 app.use('/api/', index);
 
