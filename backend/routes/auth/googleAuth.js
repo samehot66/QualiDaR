@@ -2,17 +2,19 @@ var express = require('express');
 var router = express.Router();
 //var { generateToken, sendToken } = require('../../utils/token.utils');
 var passport = require('passport');
-var config = require('../../config/config');
+var db = require('../../config/db.config');
 var request = require('request');
 var jwt = require('jsonwebtoken');
 require('../../passport')();
 
 router.post('', (req, res, next) => {passport.authenticate('google-token', {session: false}, (err, user, info) => {
-        console.log(user)
-        if (user != null) {
-            console.log(user.dataValues)
+        console.log("asdasd", user)
+        console.log('err', err)
+        console.log('info', info)
+        if (user) {
+            console.log(user)
             var token = jwt.sign({
-                id: user.dataValues.googleId
+                id: user.googleId
             }, 'my-secret',
             {
                 expiresIn: 60 * 120
@@ -20,10 +22,10 @@ router.post('', (req, res, next) => {passport.authenticate('google-token', {sess
             res.setHeader('x-auth-token', token);
             console.log(token)
             //res.end();
-            return res.status(200).send(JSON.stringify(user.dataValues));
+            return res.status(200).send(JSON.stringify(user));
         } else {
             console.log('null')
-            return res.send(401, 'User Not Authenticated');
+            return res.status(401).send({message: 'User Not Authenticated'});
         }
         //console.log(JSON.stringify(req))
         /*if (req == null) {
