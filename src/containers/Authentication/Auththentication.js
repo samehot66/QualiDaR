@@ -3,13 +3,12 @@ import classes from './Authentication.css';
 import { GoogleLogin } from 'react-google-login';
 import config from './config.json';
 import Button from '../../components/UI/Button/Button';
+
 class authentication extends Component {
-   
- 
-   
+
     constructor() {
-        super();  
-        { sessionStorage.setItem('iSAuth',false)}
+        super();
+        { sessionStorage.setItem('iSAuth', false) }
         this.state = { isAuthenticated: false, user: null, token: '' };
     }
 
@@ -41,7 +40,7 @@ class authentication extends Component {
                     sessionStorage.setItem('uid', user.uid);
                     sessionStorage.setItem('googleid', user.googleId);
                     sessionStorage.setItem('token', token);
-                    sessionStorage.setItem('isAuth',true); 
+                    sessionStorage.setItem('isAuth', true);
                     window.location.reload();
                 }
             });
@@ -49,7 +48,7 @@ class authentication extends Component {
     };
 
     render() {
-        let content = !!sessionStorage.getItem('isAuth')  ?
+        let content = !!sessionStorage.getItem('isAuth') ?
             (
                 <div>
                     <div className={classes.Yourlogin}>Your login name</div>
@@ -61,7 +60,7 @@ class authentication extends Component {
                     </div>
                 </div>
             ) :
-            (  
+            (
                 <div>
                     <div className={classes.Welcome}>Welcome to DocR&R!</div>
                     <div className={classes.Qbdrrs}>The Qualitative Business Data Retrieval and Repository System</div>
@@ -73,7 +72,7 @@ class authentication extends Component {
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
                     />
-                </div> 
+                </div>
             );
 
         return (

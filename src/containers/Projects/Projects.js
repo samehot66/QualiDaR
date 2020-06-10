@@ -5,6 +5,7 @@ import Newproj from './Newproject/Newproject';
 import Auxi from '../../hoc/Auxi';
 import Project from './Allprojects/Allprojects';
 import { NavLink, Link } from 'react-router-dom';
+import Pleaselogin from '../../components/UI/Pleaselogin/Pleaselogin';
 
 const projects = (props) => {
     const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
@@ -85,7 +86,7 @@ const projects = (props) => {
             </div>
         </Auxi>
         :   
-        <Link to="/" ><div className={classes.Pleaselogin}>Please login</div></Link>
+        <Pleaselogin/>
     )
 }
 

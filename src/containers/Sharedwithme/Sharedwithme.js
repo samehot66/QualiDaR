@@ -3,6 +3,7 @@ import classes from './Sharedwithme.css';
 import Auxi from '../../hoc/Auxi';
 import Project from '../Projects/Allprojects/Allprojects';
 import { NavLink, Link } from 'react-router-dom';
+import Pleaselogin from '../../components/UI/Pleaselogin/Pleaselogin';
 
 const projects = (props) => {
 
@@ -56,7 +57,7 @@ const projects = (props) => {
             </div>
         </Auxi>
        : 
-       <Link to="/" ><div className={classes.Pleaselogin}>Please login</div></Link>
+       <Pleaselogin/>
     )
 }
 
