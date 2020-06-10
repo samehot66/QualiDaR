@@ -24,7 +24,7 @@ module.exports = function () {
             if(user == null) {
                 try{
                     console.log('1111')
-                    User.create({
+                    return User.create({
                         googleId: profile.id ,
                         email: profile.emails[0].value,
                         access_token: accessToken
