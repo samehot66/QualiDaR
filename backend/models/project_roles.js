@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true
 	  },
 	  role: {
-		  type: Sequelize.STRING
+		  type: Sequelize.ENUM('owner', 'guest')
       }
 	});
 	

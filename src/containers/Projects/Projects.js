@@ -6,6 +6,8 @@ import Auxi from '../../hoc/Auxi';
 import Project from './Allprojects/Allprojects';
 import { NavLink, Link } from 'react-router-dom';
 import Pleaselogin from '../../components/UI/Pleaselogin/Pleaselogin';
+import axios from 'axios';
+import config from '../../config.json';
 
 const projects = (props) => {
     const [isauth,setisauth] =  useState(sessionStorage.getItem('isAuth')); 
@@ -40,7 +42,7 @@ const projects = (props) => {
 
     //####Use in return() for show each Project element
     //{projects.map(project => (<Project  />))}
-
+  
     useEffect(() => {
         const loadprojects = [];
         loadprojects.push({
@@ -63,7 +65,7 @@ const projects = (props) => {
 
                 <div className={classes.Project} onClick={showModal}>+</div>
                 <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
-                    <Newproj cancel={closeModal} />
+                    <Newproj cancel={closeModal}  />
                 </Modal>
                 {projects.map(project => (
                     <div key={project.id}>

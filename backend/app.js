@@ -1,3 +1,5 @@
+//import {clientApiKeyValidation} from './utils/APIauth.utils';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -29,6 +31,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*async function AuthAPI (req, res, next) {
+  await APIauthMiddleware.clientApiKeyValidation(req.cookies)
+  next()
+}*/
 
 app.use('/api/', index);
 

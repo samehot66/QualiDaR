@@ -27,15 +27,29 @@ module.exports = function () {
                     return User.create({
                         googleId: profile.id ,
                         email: profile.emails[0].value,
-                        accessToken: accessToken
+                        access_token: accessToken
                     })
                 }catch(err){
                     console.log(err)
                     return done(null, user)
                 }              
             }else{
-                console.log(JSON.stringify(user))
-                return done(null, user)
+                User.update(
+                    {access_token: accessToken},
+                    {where: {'email':profile.emails[0].value}
+                    }
+                  )
+
+               
+                
+                User.findOne({
+                    where: {
+                        'email':profile.emails[0].value
+                    }
+                }).then((data) => {
+                    console.log(JSON.stringify(data))
+                    return done(null, data)
+                })
             }
         })
     }));

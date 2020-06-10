@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Authentication.css';
 import { GoogleLogin } from 'react-google-login';
-import config from './config.json';
+import config from '../../config.json';
 import Button from '../../components/UI/Button/Button';
 
 class authentication extends Component {
@@ -23,14 +23,18 @@ class authentication extends Component {
     };
 
     googleResponse = (response) => {
-        const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+     console.log("FRONTEND TOKEN: "+response.accessToken )
+      const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
         const options = {
             method: 'POST',
             body: tokenBlob,
             mode: 'cors',
             cache: 'default'
-        };
-        fetch('http://localhost:4000/api/auth/google', options).then(r => {
+        }; 
+        //req to express
+        fetch(config.URL+'/api/auth/google', options)
+        //response from express
+        .then(r => {
             const token = r.headers.get('x-auth-token');
             r.json().then(user => {
                 if (token) {
@@ -38,10 +42,9 @@ class authentication extends Component {
                     sessionStorage.setItem('iSAuthenticated', true);
                     sessionStorage.setItem('email', user.email);
                     sessionStorage.setItem('uid', user.uid);
-                    sessionStorage.setItem('googleid', user.googleId);
-                    sessionStorage.setItem('googletoken', response.accessToken);
+                    sessionStorage.setItem('access_token', response.accessToken);
                     sessionStorage.setItem('isAuth', true);
-                    window.location.reload();
+                   window.location.reload();
                 }
             });
         })
