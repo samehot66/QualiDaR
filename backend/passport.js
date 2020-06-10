@@ -27,7 +27,7 @@ module.exports = function () {
                     return User.create({
                         googleId: profile.id ,
                         email: profile.emails[0].value,
-                        accessToken: accessToken
+                        access_token: accessToken
                     })
                 }catch(err){
                     console.log(err)
