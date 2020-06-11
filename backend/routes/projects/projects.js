@@ -11,11 +11,12 @@ const User = db.user
 //          "uid": "#userid#"
 //        }
 router.get('', async (req,res) => {
+  console.log("request ",req)
     var projects = await Project.findAll({
         attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
         include: [{
           model: User,
-          where: {uid: req.body.uid},
+          where: {uid: req.params.uid},
           attributes: ["uid", "email"]
         }]
     }).then((data) => {
