@@ -13,7 +13,7 @@ module.exports = function () {
         clientSecret: config.googleAuth.clientSecret
     },
     function (accessToken, refreshToken, profile, done) {
-        console.log('profile: ' + JSON.stringify(profile))
+        console.log('profile:', JSON.stringify(profile))
         User.findOne({
             where: {
                 'googleId': profile.id
@@ -28,10 +28,13 @@ module.exports = function () {
                         googleId: profile.id ,
                         email: profile.emails[0].value,
                         access_token: accessToken
+                    }).then((data) => {
+                        console.log("passdata" ,data.dataValues)
+                        return done(null, data.dataValues)
                     })
                 }catch(err){
                     console.log(err)
-                    return done(null, user)
+                    return done(null, err)
                 }              
             }else{
                 User.update(
@@ -39,12 +42,9 @@ module.exports = function () {
                     {where: {'email':profile.emails[0].value}
                     }
                   )
-
-               
-                
                 User.findOne({
                     where: {
-                        'email':profile.emails[0].value
+                        'email': profile.emails[0].value
                     }
                 }).then((data) => {
                     console.log(JSON.stringify(data))
