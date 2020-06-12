@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classes from './Projects.css';
 import Modal from '../../components/UI/Modal/Modal';
 import Newproj from './Newproject/Newproject';
@@ -25,6 +25,30 @@ const projects = (props) => {
     const showDeleteModal = () => { setDeletemodal(true) };
     const closeDeleteModal = () => { setDeletemodal(false) };
 
+    // function useInterval(callback, delay) {
+    //     const savedCallback = useRef();
+      
+    //     // remember latest callback
+    //     useEffect(() => {
+    //       savedCallback.current = callback;
+    //     }, [callback]);
+      
+    //     // setup the interval
+    //     useEffect(() => {
+    //       function tick() {
+    //         savedCallback.current();
+    //       }
+      
+    //       if (delay !== null) {
+    //         let id = setInterval(tick, delay);
+    //         return () => clearInterval(id);
+    //       }
+    //     }, [delay]);
+    //   }
+
+    //useInterval(() => {
+       
+     
     useEffect(() =>{
         const loadprojects = [];
 
@@ -56,9 +80,11 @@ const projects = (props) => {
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
             })
+            forceUpdate();
     }, [])
-
-
+  
+        // ...
+      //}, 1000);
     return (
         isauth ?
             <Auxi>
