@@ -5,7 +5,7 @@ import classes from './Allprojects.css';
  const allprojects = (props) => { 
  
     return (
-        <div id={props.id} className={classes.Projects} > 
+        <div id={props.key} className={classes.Projects} > 
           {props.pname}   
         </div> 
 
