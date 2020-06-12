@@ -4,10 +4,9 @@ import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import axios from 'axios';
 import config from '../../../config.json';
-import { Redirect } from 'react-router-dom';
 
 const newProj = (props) => {
-
+    
     const [projForm, setprojForm] = useState(
         {
             name:
@@ -60,8 +59,8 @@ const newProj = (props) => {
                 value: ''
             }*/
         })
-        const [FormIsValid,setFromIsValid] =  useState(false);
-       
+    const [FormIsValid, setFromIsValid] = useState(false);
+
 
     const checkValidity = (value, rules) => {
         let isValid = true;
@@ -73,8 +72,7 @@ const newProj = (props) => {
             Error: error
         })
 
-        if(!rules)
-        {
+        if (!rules) {
             return checkArray;
         }
 
@@ -99,45 +97,33 @@ const newProj = (props) => {
     }
 
     const newProjHandler = (event) => {
-        
         event.preventDefault();
         const formDataArray = [];
         for (let formElementIdentifier in projForm) {
             formDataArray[formElementIdentifier] = { value: projForm[formElementIdentifier].value }
         }
-       console.log(formDataArray["name"]);
-          let data ={
-            "uid": sessionStorage.getItem("uid"), 
-            "pname": formDataArray["name"].value, 
+
+        let data = {
+            "uid": sessionStorage.getItem("uid"),
+            "pname": formDataArray["name"].value,
             "description": formDataArray["description"].value,
-            "access_token" : sessionStorage.getItem("access_token")
+            "access_token": sessionStorage.getItem("access_token")
         }
-    // let data ={
-    //         "uid": sessionStorage.getItem("uid"), 
-    //         "pname": "123", 
-    //         "description": "1",
-    //         "access_token" : sessionStorage.getItem("access_token")
-    //     }
 
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json'
-          }}
+            }
+        }
 
-        axios.post(config.URL+'/api/projects', data, axiosConfig)
-        .then((res) => {
-            console.log("RESPONSE RECEIVED: ", res);  
-
-          })
-          .catch((err) => {
-            console.log("AXIOS ERROR: ", err);
-       
-          })
-     
-     
+        axios.post(config.URL + '/api/projects', data, axiosConfig)
+            .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+            })
     }
-
-
 
     const formElementsArray = [];
     for (let key in projForm) {
@@ -170,22 +156,20 @@ const newProj = (props) => {
         updatedFormElement.error = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Error;
         updatedprojForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true; 
-        if(updatedprojForm['name'].valid === false)
-        {
-            formIsValid =false;
+        let formIsValid = true;
+        if (updatedprojForm['name'].valid === false) {
+            formIsValid = false;
         }
-        
+
         setprojForm({ ...updatedprojForm });
         setFromIsValid(formIsValid);
-
     }
 
     return (
         <Auxi>
             <form onSubmit={newProjHandler}>
                 {formElementsArray.map(formElement => (
-                    <Input 
+                    <Input
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
@@ -195,7 +179,7 @@ const newProj = (props) => {
                         error={formElement.config.error}
                         checkError={checkErrorFunc(formElement.config.error)} />
                 ))}
-                      <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
+                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
             </form>
             <Button btnType="Danger" clicked={props.cancel}>Cancel</Button>
         </Auxi>

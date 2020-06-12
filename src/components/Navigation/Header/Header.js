@@ -26,7 +26,7 @@ const header = (props) => {
             <span>
             <Link to="/" ><img className={classes.Auth} src={require('./icon/Human.png')} alt="Auth" /> </Link>
             </span>
-            <span style={{ display: Sidebar ? 'block' : 'none' }}><Navbar /></span>
+            <span style={{ display: Sidebar ? 'none'  : 'block'}}><Navbar /></span>
         </header>)
 };
 

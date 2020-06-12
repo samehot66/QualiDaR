@@ -16,7 +16,7 @@ router.get('', async (req,res) => {
         attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
         include: [{
           model: User,
-          where: {uid: req.params.uid},
+          where: {uid: req.query.uid},
           attributes: ["uid", "email"]
         }]
     }).then((data) => {

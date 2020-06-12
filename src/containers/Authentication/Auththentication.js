@@ -23,7 +23,7 @@ class authentication extends Component {
     };
 
     googleResponse = (response) => {
-     console.log("FRONTEND TOKEN: "+response.accessToken )
+     
       const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
         const options = {
             method: 'POST',
