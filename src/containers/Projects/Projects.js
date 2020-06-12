@@ -25,25 +25,6 @@ const projects = (props) => {
     const showDeleteModal = () => { setDeletemodal(true) };
     const closeDeleteModal = () => { setDeletemodal(false) };
 
-    /* useEffect(() =>{
-        #1 fetch data from database
-        #2 assign data to array loadprojects
-        #3 setstate hooks
- 
-         const loadprojects =[];
-         for(const key in x)
-         {
-             loadprojects.push({
-                 id:KeyboardEvent,
-                 pname: x[key].pname
-             });
-         }
-         setprojects(loadprojects);
-     },[])*/
-
-    //####Use in return() for show each Project element
-    //{projects.map(project => (<Project  />))}
-
     useEffect(() =>{
         const loadprojects = [];
 
@@ -75,18 +56,6 @@ const projects = (props) => {
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
             })
-
-       
-        // loadprojects.push({
-        //     id: 1,
-        //     pname: "y03fR3Lbs0PTIQE4kfAPnFFoKJ5tHjyry1JR93N4zrtJ0UwMBq"
-        // });
-        // loadprojects.push({
-        //     id: 2,
-        //     pname: "hello2"
-        // });
-       // setprojects(loadprojects);
-
     }, [])
 
 
