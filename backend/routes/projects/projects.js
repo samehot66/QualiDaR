@@ -130,6 +130,28 @@ router.get('/people', (req, res) => {
   }).then((data)=>{
     console.log('people in project: ', data)
     res.json(data)
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.post('/people/add', (req, res)=>{
+  User.findOne({
+    where: {email: req.body.email}
+  }).then((data)=>{
+    if(data == null){
+      res.status(404).send({message: "User not found."})
+    }else{
+      ProjectRole.create({
+        role: "guest",
+        uid: data.dataValues.uid,
+        pid: req.body.pid
+      }).then((data)=>{
+        res.json(data)
+      }).catch((err) => {
+        res.status(500).send(err)
+      })
+    }
   })
 })
 
