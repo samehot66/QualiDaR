@@ -152,6 +152,39 @@ router.post('/people/add', (req, res)=>{
         res.status(500).send(err)
       })
     }
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.delete('/people', async (req, res) => {
+  ProjectRole.findOne({
+    where:{uid: req.query.peopleid, pid:req.query.pid}
+  }).then((data)=>{
+    if(data==null){
+      console.log("null")
+    }else{
+      if(data.dataValues.role=="owner"){
+        res.status(400).send({message:"cannot delete owner from project"})
+      }else{
+        ProjectRole.destroy({
+          where:{uid: req.query.peopleid, pid:req.query.pid}
+        }).then((data)=>{
+          console.log(data)
+          if(data==1){
+            console.log('success')
+            res.status(200).send({message: "Delete people from project success"})
+          }else if(data==0){
+            console.log('not found')
+            res.status(404).send({message: "User or project not found."})
+          }
+        }).catch((err)=>{
+          res.status(500).send(err)
+        })
+      }
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
   })
 })
 
