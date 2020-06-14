@@ -59,6 +59,8 @@ router.get('', async (req,res) => {
 //          "description": "#project description#"
 //        }
 router.post('', async (req, res) => {
+  console.log("pname",req.body.pname)
+  if((req.body.pname != "" && req.body.pname != null)){
   var createProject = await Project.create({
     pname: req.body.pname,
     description: req.body.description
@@ -83,5 +85,38 @@ router.post('', async (req, res) => {
   }
 
   await res.json(responseData)
+}else{
+  return res.status(400).send({message: "Please enter project name!"})
+}
 })
+
+router.delete('', async (req, res) => {
+  var deleteProject = await Project.destroy({
+    where: {
+      pid: req.query.pid
+    }
+  }).then((data) => {
+    return data
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+
+  var deleteProjectRole = await ProjectRole.destroy({
+    where: {
+      pid: req.query.pid
+    }
+  }).then((data) => {
+    return data
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+
+  var responseData = await {
+    project: deleteProject,
+    role: deleteProjectRole
+  }
+
+  await res.json(responseData)
+})
+
 module.exports = router
