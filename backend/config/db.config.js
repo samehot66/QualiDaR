@@ -24,6 +24,7 @@ db.project = require('../models/projects.js')(sequelize, Sequelize);
 db.project_role = require('../models/project_roles.js')(sequelize, Sequelize);
 db.topic = require('../models/topics.js')(sequelize, Sequelize);
 db.phrase = require('../models/phrases.js')(sequelize, Sequelize);
+//db.project_role = User_Profile = sequelize.define('project_roles', { role: Sequelize.ENUM("owner", "guest") }, { timestamps: false });
  
 db.project.belongsToMany(db.user, { through: db.project_role, foreignKey: 'pid', otherKey: 'uid'});
 db.user.belongsToMany(db.project, { through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});

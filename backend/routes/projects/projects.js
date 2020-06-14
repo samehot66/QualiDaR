@@ -119,4 +119,18 @@ router.delete('', async (req, res) => {
   await res.json(responseData)
 })
 
+router.get('/people', (req, res) => {
+  Project.findOne({
+    where: {pid:req.query.pid}, 
+    include: [{
+      model: User,
+      attributes: ["uid", "email"],
+      through: {where: {pid:req.query.pid}}
+    }]
+  }).then((data)=>{
+    console.log('people in project: ', data)
+    res.json(data)
+  })
+})
+
 module.exports = router
