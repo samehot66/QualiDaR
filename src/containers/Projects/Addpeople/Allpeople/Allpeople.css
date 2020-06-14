@@ -1,0 +1,55 @@
+.Allpeople {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    margin-top: 0px;
+}
+
+.Email {
+    text-align: center;
+    box-shadow: 10px #333;
+    cursor: pointer;
+    height: 26px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 3px;
+    box-sizing: border-box;
+    margin-right: 0px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-left:10px;
+    background-color:#C0DDF5;
+    float: left;
+    cursor: context-menu;
+    text-align: center;
+    color: #3F9BCB;
+    word-wrap: break-word; 
+    vertical-align:middle;
+    font-weight: bold;
+ 
+    font-size:13px;
+}
+
+.Delete
+{
+    text-align: center;
+    box-shadow: 10px #333;
+    cursor: pointer;
+    height: 26px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 3px;
+    box-sizing: border-box;
+    margin-left: 1px;
+    background-color:#FF5533;
+    float: left;
+    margin-top:10px;
+    margin-bottom:10px;
+    text-align: center;
+    color: white;
+    word-wrap: break-word; 
+    vertical-align:middle;
+    font-weight: bold;
+
+    font-size:13px;
+}

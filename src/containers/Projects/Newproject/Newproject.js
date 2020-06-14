@@ -6,7 +6,7 @@ import axios from 'axios';
 import config from '../../../config.json';
 
 const newProj = (props) => {
-    
+
     const [projForm, setprojForm] = useState(
         {
             name:
@@ -44,20 +44,7 @@ const newProj = (props) => {
                 },
                 valid: false,
                 error: ''
-            },/*,
-            drop:
-            {
-                elementType: 'select',
-                elementLabel: 'xxx',
-                elementConfig:
-                {
-                    options:[
-                        {value:'x', displayValue:'x'},
-                        {value:'xx', displayValue:'xx'},
-                    ]
-                },
-                value: ''
-            }*/
+            }
         })
     const [FormIsValid, setFromIsValid] = useState(false);
 

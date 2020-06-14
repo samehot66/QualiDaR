@@ -50,7 +50,7 @@ const input = (props) => {
                             {option.displayValue}
                         </option>
                     ))}
-                    >
+                    
                 </select>; break;
         default:
             if (props.checkError === 'No') {

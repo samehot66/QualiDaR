@@ -11,7 +11,7 @@ const modal = (props) => {
     return (
         <Auxi>
             <Blackdrop show={props.show} clicked={props.modalClosed} />
-            <div className={classes.Modal}
+            <div className={classes.Modal} onClick={props.clicked}
                 style={{
                     transfrom: props.show ? 'translateY(0)' : 'translateY(-100vh)',
                     opacity: props.show ? '1' : '0',

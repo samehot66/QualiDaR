@@ -1,6 +1,5 @@
 var Client = require('../services/APIservice')
 
-<<<<<<< HEAD
 module.exports = {
    clientApiKeyValidation: async (req, res, next) => {
 
@@ -28,20 +27,6 @@ module.exports = {
             status: false,
             response: "Missing token!"
          });
-=======
-module.exports = {clientApiKeyValidation: async (req,res,next) => {
-   //console.log(req)
-    if(!req.query.access_token){
-        return res.status(400).send({
-           status:false,
-           response:"Missing token!"
-        });
-     }
-try {
-      let clientDetails = await Client.getUserDetails(req.query.uid, req.query.access_token);
-      if (clientDetails) {
-         next();
->>>>>>> 1b724801eb9343506f3e1ec7091cf51ae202b988
       }
    }
 };
