@@ -51,6 +51,23 @@ router.get('', async (req,res) => {
       await res.json(projects)     
 })
 
+router.get('/:pid', (req, res)=>{
+  console.log("request ",req)
+  Project.findOne({
+      attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
+      where: {pid: req.params.pid},
+      include: [{
+        model: User,
+        attributes: ["uid", "email"]
+      }]
+  }).then((data) => {
+      res.json(data);
+    }).catch((error) => {
+      console.log(error)
+      res.status(500).send(error)
+    })
+})
+
 //POST
 //URL - http://localhost:4000/api/projects 
 //body - {
