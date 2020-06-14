@@ -51,23 +51,6 @@ router.get('', async (req,res) => {
       await res.json(projects)     
 })
 
-router.get('/:pid', (req, res)=>{
-  console.log("request ",req)
-  Project.findOne({
-      attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
-      where: {pid: req.params.pid},
-      include: [{
-        model: User,
-        attributes: ["uid", "email"]
-      }]
-  }).then((data) => {
-      res.json(data);
-    }).catch((error) => {
-      console.log(error)
-      res.status(500).send(error)
-    })
-})
-
 //POST
 //URL - http://localhost:4000/api/projects 
 //body - {
@@ -137,7 +120,9 @@ router.delete('', async (req, res) => {
 })
 
 router.get('/people', (req, res) => {
+  console.log("easdasd",req.query.pid)
   Project.findOne({
+    attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
     where: {pid:req.query.pid}, 
     include: [{
       model: User,
@@ -204,5 +189,23 @@ router.delete('/people', async (req, res) => {
     res.status(500).send(err)
   })
 })
+
+router.get('/:pid', (req, res)=>{
+  console.log("request ",req)
+  Project.findOne({
+      attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
+      where: {pid: req.params.pid},
+      include: [{
+        model: User,
+        attributes: ["uid", "email"]
+      }]
+  }).then((data) => {
+      res.json(data);
+    }).catch((error) => {
+      console.log(error)
+      res.status(500).send(error)
+    })
+})
+
 
 module.exports = router
