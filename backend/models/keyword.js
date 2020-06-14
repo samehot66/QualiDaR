@@ -1,16 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
-	const Topic = sequelize.define('topics', {
-	  tid: {
+	const Keyword = sequelize.define('keywords', {
+	  kid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
 	  },
-	  tname: {
-          type: Sequelize.STRING,
+	  keywordtext: {
+		  type: Sequelize.STRING,
           allowNull: false
-      },
-
+    }
 	});
 	
-	return Topic;
+	return Keyword;
 }
