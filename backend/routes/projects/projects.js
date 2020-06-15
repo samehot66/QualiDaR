@@ -190,6 +190,21 @@ router.delete('/people', async (req, res) => {
   })
 })
 
+router.get('/shared', (req, res)=>{
+  User.findOne({
+    where: {uid: req.query.uid},
+    include: [{
+      model: Project,
+      attributes: ["pid", "pname", "description"],
+      through: {where: {uid:req.query.uid, role:"guest"}}
+    }]
+  }).then((data)=>{
+    res.json(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.get('/:pid', (req, res)=>{
   console.log("request ",req)
   Project.findOne({
