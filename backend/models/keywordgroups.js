@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
 	shared: {
 		type: Sequelize.BOOLEAN,
         allowNull: false
+    },
+    groupname:{
+        type: Sequelize.STRING,
+        allowNull: false
     }
 	});
 	
