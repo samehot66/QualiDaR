@@ -5,6 +5,8 @@ from flask import Flask, logging, request
 from model.utils import task_dao
 from model.task import Task
 
+#Ref: https://github.com/golechwierowicz/long_computation_rest
+
 app = Flask(__name__)
 log = logging.create_logger(app)
 log.setLevel("INFO")
