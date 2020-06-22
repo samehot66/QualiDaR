@@ -78,7 +78,7 @@ db.keyword.belongsTo(db.user, {foreignKey: 'uid', targetKey: 'uid'})
 db.keyword.hasMany(db.phrase, {foreignKey: 'kid', sourceKey: 'kid'});
 db.phrase.belongsTo(db.keyword, {foreignKey: 'kid', targetKey: 'kid'})
 
-//keywords |-------|| pharses
+//keywordgroups |-------|| keywords
 db.keyword_group.hasMany(db.keyword, {foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'});
 db.keyword.belongsTo(db.keyword_group, {foreignKey: 'keywordgroupsid', targetKey: 'keywordgroupsid'})
 
