@@ -50,7 +50,11 @@ router.delete('', (req, res) => {
 })
 
 router.post('/groups', (req, res) => {
-    Subscribe.create({
+  Keywordgroup.findOne({
+    where: {keywordgroupsid: req.body.keywordgroupsid, shared: "1"}
+  }).then((data)=>{
+    if(data){
+      Subscribe.create({
         keywordgroupsid: req.body.keywordgroupsid,
         uid: req.body.uid
       }).then((data) => {
@@ -58,6 +62,12 @@ router.post('/groups', (req, res) => {
       }).catch((err) => {
         res.status(500).send(err)
       })
+    }else{
+      res.status(404).send({"message": "keywordgroup not found"})
+    }
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
 })
 
 router.delete('/groups', (req, res) => {
@@ -82,7 +92,7 @@ router.delete('/groups', (req, res) => {
 
 router.put('', (req, res)=>{
     Keywordgroup.findOne({
-        where: {keywordgroupsid: req.body.keywordgroupsid}
+        where: {keywordgroupsid: req.body.keywordgroupsid, uid: req.body.uid}
     }).then((data)=>{
         if(data){
             Keywordgroup.update(
@@ -110,6 +120,39 @@ router.get('/public', (req, res)=>{
     }).catch((err)=>{
         res.status(500).send(err)
     })
+})
+
+router.get('/private', (req, res)=>{
+  Keywordgroup.findOne({
+      attribute: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
+      where: {keywordgroupsid: req.query.keywordgroupsid, shared: "0", uid: req.query.uid}
+  }).then((data)=>{
+      res.json(data)
+  }).catch((err)=>{
+      res.status(500).send(err)
+  })
+})
+
+router.post('/private', (req, res)=>{
+  Keywordgroup.findOne({
+    where: {keywordgroupsid: req.body.keywordgroupsid, uid: req.body.uid}
+  }).then((data)=>{
+    if(data){
+      Keyword.create({
+        keywordgroupsid: req.body.keywordgroupsid,
+        uid: req.body.uid,
+        keywordtext: req.body.keywordtext
+      }).then((data)=>{
+        res.json(data)
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
+    }else{
+      res.status(404).send({"message": "Keywordgroup not found"})
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
+}) 
 })
 
 module.exports = router
