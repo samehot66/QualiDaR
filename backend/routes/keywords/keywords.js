@@ -28,6 +28,15 @@ router.get('/mygroups', (req, res)=>{
   })
 })
 
+router.get('/groups', (req, res)=>{
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 ORDER BY keywordgroups.groupname ASC;" , { type: QueryTypes.SELECT })
+  .then((data)=>{
+    res.json(data)
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
 router.post('', (req, res) => {
   if((req.body.groupname != "" && req.body.groupname != null)){
   Keywordgroup.create({
