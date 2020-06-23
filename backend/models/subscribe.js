@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-	const subscribe = sequelize.define('subscribe', {
+	const subscribe = sequelize.define('subscribes', {
 	  
 	});
 	

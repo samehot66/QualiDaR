@@ -5,6 +5,16 @@ const Keywordgroup = db.keyword_group
 const Keyword = db.keyword
 const Subscribe = db.subscribe
 const User = db.user
+const { Op, QueryTypes, Sequelize } = require("sequelize");
+
+router.get('', (req, res)=>{
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid NOT IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 AND users.uid != " + req.query.uid + ";" , { type: QueryTypes.SELECT })
+  .then((data)=>{
+    res.json(data)
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
 
 router.post('', (req, res) => {
   if((req.body.groupname != "" && req.body.groupname != null)){
@@ -154,5 +164,6 @@ router.post('/private', (req, res)=>{
     res.status(500).send(err)
 }) 
 })
+
 
 module.exports = router
