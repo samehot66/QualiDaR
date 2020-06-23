@@ -8,7 +8,7 @@ const User = db.user
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
 router.get('', (req, res)=>{
-  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid NOT IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 AND users.uid != " + req.query.uid + ";" , { type: QueryTypes.SELECT })
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid NOT IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 AND users.uid != " + req.query.uid + " ORDER BY keywordgroups.groupname ASC;" , { type: QueryTypes.SELECT })
   .then((data)=>{
     res.json(data)
   }).catch((err) => {
