@@ -16,6 +16,18 @@ router.get('', (req, res)=>{
   })
 })
 
+router.get('/mygroups', (req, res)=>{
+  Keywordgroup.findAll({
+    attributes: ["keywordgroupsid", "groupname"],
+    where:{uid: req.query.uid},
+    order: [["groupname", "ASC"]]
+  }).then((data)=>{
+    res.json(data)
+  }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
 router.post('', (req, res) => {
   if((req.body.groupname != "" && req.body.groupname != null)){
   Keywordgroup.create({
@@ -123,7 +135,7 @@ router.put('', (req, res)=>{
 
 router.get('/public', (req, res)=>{
     Keywordgroup.findOne({
-        attribute: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
+        attributes: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
         where: {keywordgroupsid: req.query.keywordgroupsid, shared: "1"}
     }).then((data)=>{
         res.json(data)
@@ -134,7 +146,7 @@ router.get('/public', (req, res)=>{
 
 router.get('/private', (req, res)=>{
   Keywordgroup.findOne({
-      attribute: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
+      attributes: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
       where: {keywordgroupsid: req.query.keywordgroupsid, shared: "0", uid: req.query.uid}
   }).then((data)=>{
       res.json(data)
