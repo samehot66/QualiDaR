@@ -195,5 +195,32 @@ router.post('/private', (req, res)=>{
 }) 
 })
 
+router.delete('', (req, res)=>{
+  Keyword.findOne({
+    where:{kid: req.query.kid, uid: req.query.uid}
+  }).then((data)=>{
+    if(data){
+      Keyword.destroy({
+        where: {kid: req.query.kid, uid: req.query.uid}
+      }).then((data)=>{
+        console.log(data)
+        if(data==1){
+          console.log('success')
+          res.status(200).send({message: "Delete keyword from keywordgroup success"})
+        }else if(data==0){
+          console.log('not found')
+          res.status(404).send({message: "Keyword not found."})
+        }
+      }).catch((err)=>{
+        res.status(500).send(err)
+      })
+    }else{
+      res.status(404).send({"message": "Keyword not found"})
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
+  }) 
+})
+
 
 module.exports = router
