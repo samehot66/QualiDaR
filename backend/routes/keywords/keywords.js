@@ -143,20 +143,29 @@ router.put('', (req, res)=>{
 })
 
 router.get('/public', (req, res)=>{
-    Keywordgroup.findOne({
-        attributes: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
-        where: {keywordgroupsid: req.query.keywordgroupsid, shared: "1"}
-    }).then((data)=>{
+  Keyword.findAll({
+    attributes: ["kid", "keywordtext"],
+    where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
+    include:[{
+      model: Keywordgroup,
+      where: { shared: "1"}
+    }]
+  }).then((data)=>{
         res.json(data)
-    }).catch((err)=>{
+    })/*.catch((err)=>{
         res.status(500).send(err)
-    })
+    })*/
 })
 
 router.get('/private', (req, res)=>{
-  Keywordgroup.findOne({
-      attributes: ["keywordgroupsid", "shared", "groupname", "uid", "createdAt", "updatedAt"],
-      where: {keywordgroupsid: req.query.keywordgroupsid, shared: "0", uid: req.query.uid}
+  Keyword.findAll({
+    attributes: ["kid", "keywordtext"],
+    where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
+    where: {},
+    include:[{
+      model: Keywordgroup,
+      where: {shared: "0"}
+    }]
   }).then((data)=>{
       res.json(data)
   }).catch((err)=>{
