@@ -14,6 +14,7 @@ router.get('', async (req,res) => {
   console.log("request ",req)
     var projects = await Project.findAll({
         attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
+        order: [["pname", "ASC"]],
         include: [{
           model: User,
           attributes: ["uid", "email"],
@@ -129,7 +130,8 @@ router.get('/people', (req, res) => {
       model: User,
       attributes: ["uid", "email"],
       through: {where: {pid:req.query.pid}}
-    }]
+    }],
+    order: [[User, "email", "ASC"]]
   }).then((data)=>{
     console.log('people in project: ', data)
     res.json(data)
@@ -198,7 +200,8 @@ router.get('/shared', (req, res)=>{
       model: Project,
       attributes: ["pid", "pname", "description"],
       through: {where: {uid:req.query.uid, role:"guest"}}
-    }]
+    }],
+    order: [[Project, "pname", "ASC"]]
   }).then((data)=>{
     res.json(data)
   }).catch((err)=>{
@@ -208,19 +211,30 @@ router.get('/shared', (req, res)=>{
 
 router.get('/:pid', (req, res)=>{
   console.log("request ",req)
-  Project.findOne({
-      attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
-      where: {pid: req.params.pid},
-      include: [{
-        model: User,
-        attributes: ["uid", "email"]
-      }]
-  }).then((data) => {
-      res.json(data);
-    }).catch((error) => {
-      console.log(error)
-      res.status(500).send(error)
-    })
+  ProjectRole.findOne({
+    where: {pid: req.params.pid, uid: req.query.uid}
+  }).then((data)=>{
+    if(data){
+      Project.findOne({
+        attributes : ['pid','pname','description', 'createdAt', 'updatedAt'],
+        where: {pid: req.params.pid},
+        include: [{
+          model: User,
+          attributes: ["uid", "email"]
+        }]
+    }).then((data) => {
+        res.json(data);
+      }).catch((error) => {
+        console.log(error)
+        res.status(500).send(error)
+      })
+    }else{
+      res.status(404).send({"message": "Project not found"})
+    }
+  }).catch((error) => {
+    console.log(error)
+    res.status(500).send(error)
+  })
 })
 
 
