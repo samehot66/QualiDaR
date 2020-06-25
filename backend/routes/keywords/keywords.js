@@ -152,19 +152,17 @@ router.get('/public', (req, res)=>{
     }]
   }).then((data)=>{
         res.json(data)
-    })/*.catch((err)=>{
+    }).catch((err)=>{
         res.status(500).send(err)
-    })*/
+    })
 })
 
 router.get('/private', (req, res)=>{
   Keyword.findAll({
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
-    where: {},
     include:[{
-      model: Keywordgroup,
-      where: {shared: "0"}
+      model: Keywordgroup
     }]
   }).then((data)=>{
       res.json(data)
