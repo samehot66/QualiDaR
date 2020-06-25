@@ -53,7 +53,7 @@ router.post('', (req, res) => {
 }
 })
 
-router.delete('', (req, res) => {
+router.delete('/subscribe', (req, res) => {
     Keyword.destroy({
         where: {
             keywordgroupsid: req.query.keywordgroupsid
@@ -145,7 +145,7 @@ router.put('', (req, res)=>{
 router.get('/public', (req, res)=>{
   Keyword.findAll({
     attributes: ["kid", "keywordtext"],
-    where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
+    where: {keywordgroupsid: req.query.keywordgroupsid},
     include:[{
       model: Keywordgroup,
       where: { shared: "1"}
