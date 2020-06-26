@@ -176,18 +176,28 @@ router.post('/private', (req, res)=>{
     where: {keywordgroupsid: req.body.keywordgroupsid, uid: req.body.uid}
   }).then((data)=>{
     if(data){
-      Keyword.create({
-        keywordgroupsid: req.body.keywordgroupsid,
-        uid: req.body.uid,
-        keywordtext: req.body.keywordtext
+      Keyword.findOne({
+        where:{keywordtext: req.body.keywordtext}
       }).then((data)=>{
-        res.json(data)
-    }).catch((err)=>{
+        if(data){
+          res.status(400).send({"message": "Keyword is already exist!"})
+        }else{
+          Keyword.create({
+            keywordgroupsid: req.body.keywordgroupsid,
+            uid: req.body.uid,
+            keywordtext: req.body.keywordtext
+          }).then((data)=>{
+            res.json(data)
+        }).catch((err)=>{
+            res.status(500).send(err)
+        })
+        }
+      }).catch((err)=>{
         res.status(500).send(err)
     })
     }else{
       res.status(404).send({"message": "Keywordgroup not found"})
-    }
+    }   
   }).catch((err)=>{
     res.status(500).send(err)
 }) 
