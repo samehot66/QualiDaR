@@ -177,7 +177,7 @@ router.post('/private', (req, res)=>{
   }).then((data)=>{
     if(data){
       Keyword.findOne({
-        where:{keywordtext: req.body.keywordtext}
+        where:{keywordtext: req.body.keywordtext, keywordgroupsid: req.body.keywordgroupsid}
       }).then((data)=>{
         if(data){
           res.status(400).send({"message": "Keyword is already exist!"})
