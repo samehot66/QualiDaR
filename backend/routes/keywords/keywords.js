@@ -49,7 +49,7 @@ router.post('', (req, res) => {
     res.status(500).send(err)
   })
 }else{
-  return res.status(400).send({message: "Please enter keywordgroup name!"})
+  return res.status(400).send({"message": "Please enter keywordgroup name!"})
 }
 })
 
@@ -67,10 +67,10 @@ router.delete('/subscribe', (req, res) => {
             console.log(data)
             if(data==1){
                 console.log('success')
-                res.status(200).send({message: "Unsubscribe success"})
+                res.status(200).send({"message": "Unsubscribe success"})
               }else if(data==0){
                 console.log('not found')
-                res.status(404).send({message: "Subscription not found."})
+                res.status(404).send({"message": "Subscription not found."})
               }
           }).catch((err) => {
             res.status(500).send(err)
@@ -111,10 +111,10 @@ router.delete('/groups', (req, res) => {
         console.log(data)
           if(data==1){
             console.log('success')
-            res.status(200).send({message: "Unsubscribe success"})
+            res.status(200).send({"message": "Unsubscribe success"})
           }else if(data==0){
             console.log('not found')
-            res.status(404).send({message: "Subscription not found."})
+            res.status(404).send({"message": "Subscription not found."})
           }
       }).catch((err) => {
         res.status(500).send(err)
@@ -180,7 +180,7 @@ router.post('/private', (req, res)=>{
         where:{keywordtext: req.body.keywordtext, keywordgroupsid: req.body.keywordgroupsid}
       }).then((data)=>{
         if(data){
-          res.status(400).send({"message": "Keyword is already exist!"})
+          res.status(403).send({"message": "Keyword is already exist!"})
         }else{
           Keyword.create({
             keywordgroupsid: req.body.keywordgroupsid,
@@ -214,10 +214,10 @@ router.delete('', (req, res)=>{
         console.log(data)
         if(data==1){
           console.log('success')
-          res.status(200).send({message: "Delete keyword from keywordgroup success"})
+          res.status(200).send({"message": "Delete keyword from keywordgroup success"})
         }else if(data==0){
           console.log('not found')
-          res.status(404).send({message: "Keyword not found."})
+          res.status(404).send({"message": "Keyword not found."})
         }
       }).catch((err)=>{
         res.status(500).send(err)
