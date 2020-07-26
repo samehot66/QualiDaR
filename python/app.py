@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Flask, logging, request
+from flask import Flask, logging, request, jsonify
 
 from model.utils import task_dao
 from model.task import Task
@@ -14,7 +14,11 @@ log.setLevel("INFO")
 
 @app.route("/task", methods=["POST"])
 def create_task():
+    print(request.json)
+    data = request.json
+    print(data['file'])
     task = Task.create_task()
+    task.file_location(data['file'])
     task_dao.add_task(task)
     log.info(f"Created task: {task}")
     return str(task.id), 201

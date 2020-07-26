@@ -14,6 +14,7 @@ class Task(object):
     def __init__(
         self,
         id,
+        location = '',
         status="CREATED",
         job_definition=JobDefinition.PDF_PROCESS,
         job_result=None,
@@ -23,6 +24,7 @@ class Task(object):
         self.job_result = job_result
         self.job_definition = job_definition
         self.task_status = status
+        self.location = location
         self.id = id
 
     @staticmethod
@@ -32,6 +34,9 @@ class Task(object):
     def run_task(self):
         self.task_status = utils.TaskStatus.RUNNING
         return worker.pdf_process(self.id)
+    
+    def file_location(self, location):
+        self.location = location
 
     @property
     def status(self):
