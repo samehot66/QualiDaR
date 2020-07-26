@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 var index = require('./routes/index');
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload());
 
 /*async function AuthAPI (req, res, next) {
   await APIauthMiddleware.clientApiKeyValidation(req.cookies)
