@@ -13,7 +13,7 @@
     float:right;
 }
 
-.Button:disabled{
+.Button:disabled {
     color: white;
     cursor:not-allowed;
     background-color: #ccc;
@@ -38,4 +38,13 @@
 .DangerEmail {
     background-color: #FF5533;
     left: 69px;
+}
+
+.SuccessPubkey
+{
+    background-color: #FF5533;
+    width: 30px;
+    padding: 0;
+    height: 30px;
+    left:10px;
 }
