@@ -2,8 +2,16 @@
     position: fixed;
     z-index: 500;
     width: 35%;
-    padding: 16px;
-    left: 32%;
+    left: 35%;
     top: 20%;
+    box-sizing: border-box;
     transition: all 0.3s ease-out;
+
+}
+
+.Name {
+    margin-bottom: 12px;
+    background-color: #61c9ff;
+    text-align: center;
+    color: #ffffff;
 }

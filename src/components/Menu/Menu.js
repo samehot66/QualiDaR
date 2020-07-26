@@ -1,10 +1,13 @@
 import React, { useState }  from 'react';
+import Modal from '../UI/Modal/Modal';
 import { NavLink } from 'react-router-dom';
 import Auxi from '../../hoc/Auxi';
 
 const Menu = () => {
     const [isauth,setisauth] =  useState(localStorage.getItem('isAuth')); 
-
+    const [Newgroupmodal, setNewgroupmodal] = useState(false);
+    const shownewgroupModal = () => { setNewgroupmodal(true) };
+    const closenewgroupModal = () => { setNewgroupmodal(false) };
     return (
         <aside className="main-sidebar sidebar-light-primary elevation-4">
             {/* Brand Logo */}
@@ -79,7 +82,11 @@ const Menu = () => {
                                    Sign Up/Sign In
                                 </p>
                             </NavLink > 
-                        </li> }
+                        </li>}
+                        <button onClick={shownewgroupModal}  >xxx</button>
+                        <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
+                          <div>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div> 
+                        </Modal> 
                     </ul>
                 </nav>
                 {/* /.sidebar-menu */}
