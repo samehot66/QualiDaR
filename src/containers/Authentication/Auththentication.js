@@ -8,13 +8,13 @@ class authentication extends Component {
 
     constructor() {
         super();
-        { sessionStorage.setItem('iSAuth', false) }
+        { localStorage.setItem('iSAuth', false) }
         this.state = { isAuthenticated: false, user: null, token: '' };
     }
 
     logout = () => {
         this.setState({ isAuthenticated: false, token: '', user: null })
-        sessionStorage.clear();
+        localStorage.clear();
         window.location.reload();
     };
 
@@ -39,11 +39,11 @@ class authentication extends Component {
                 r.json().then(user => {
                     if (token) {
                         this.setState({ isAuthenticated: true, user, token });
-                        sessionStorage.setItem('iSAuthenticated', true);
-                        sessionStorage.setItem('email', user.email);
-                        sessionStorage.setItem('uid', user.uid);
-                        sessionStorage.setItem('access_token', response.accessToken);
-                        sessionStorage.setItem('isAuth', true);
+                        localStorage.setItem('iSAuthenticated', true);
+                        localStorage.setItem('email', user.email);
+                        localStorage.setItem('uid', user.uid);
+                        localStorage.setItem('access_token', response.accessToken);
+                        localStorage.setItem('isAuth', true);
                         window.location.reload();
                     }
                 });
@@ -51,11 +51,12 @@ class authentication extends Component {
     };
 
     render() {
-        let content = !!sessionStorage.getItem('isAuth') ?
+       
+        let content = !!localStorage.getItem('iSAuthenticated') ?
             (
                 <div>
                     <div className={classes.Yourlogin}>You are currently logging name as</div>
-                    <div className={classes.Name}> {sessionStorage.getItem('email')} </div>
+                    <div className={classes.Name}> {localStorage.getItem('email')} </div>
                     <div>
                         <Button clicked={this.logout} btnType="Logout">
                             Log out
@@ -77,11 +78,11 @@ class authentication extends Component {
                     />
                 </div>
             );
-
         return (
             <div className={classes.App}>
-                {content}
+                {content}   
             </div>
+         
         );
     }
 }

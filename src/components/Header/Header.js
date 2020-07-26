@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
 
@@ -10,14 +11,14 @@ const Header = () => {
                     <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
                 </li>
                 <li className="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" className="nav-link">Home</a>
+                    <a href="/dashboard" className="nav-link">QualiDaR</a>
                 </li>
             </ul>
            
             {/* Right navbar links */}
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i className="fas fa-user" /></a>
+                  <NavLink className="nav-link" to="/" role="button"><i className="fas fa-user"/></NavLink>
                 </li>
             </ul>
         </nav>

@@ -8,7 +8,10 @@ const Content = (props) => {
         <div className="content-wrapper">
            <Switch>
                 <Route path="/" exact component={Authentication} />  
-                <Route path="/projects"  component={Authentication} />  
+                <Route path="/dashboard"  component={Authentication} />
+                <Route path="/keywords"  component={Authentication} />    
+                <Route path="/projects"  component={Authentication} />
+                <Route path="/sharedwithme"  component={Authentication} />    
             </Switch>
         </div>
     )

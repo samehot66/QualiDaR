@@ -2,11 +2,8 @@ import React from 'react';
 import classes from './Modal.css';
 import Auxi from '../../../hoc/Auxi';
 import Blackdrop from '../Backdrop/Backdrop';
-import useFitText from "use-fit-text";
 
-const modal = (props) => {
-
-    const { fontSize, ref } = useFitText({maxFontSize: 130 ,minFontSize: 20});
+const Modal = (props) => {
 
     return (
         <Auxi>
@@ -17,13 +14,20 @@ const modal = (props) => {
                     opacity: props.show ? '1' : '0',
                     display: props.show ? 'block' : 'none'
                 }}>
-                <div ref={ref} style={{ fontSize }} className={classes.Name}>{props.name}</div>
-                <div>
-                    {props.children}
+
+                <div className="card card-primary">
+                    <div className="card-header">
+                        <h3 className="card-title">{props.name}</h3>
+                    </div>
+                    <div className="card-body">
+                        {props.children}
+                    </div>
+                    <div className="card-footer">
+                </div>
                 </div>
             </div>
         </Auxi>
     )
 };
 
-export default modal;
+export default Modal;
