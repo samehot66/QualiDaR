@@ -8,6 +8,7 @@ const Content = (props) => {
         <div className="content-wrapper">
            <Switch>
                 <Route path="/" exact component={Authentication} />  
+                <Route path="/projects"  component={Authentication} />  
             </Switch>
         </div>
     )
