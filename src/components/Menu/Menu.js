@@ -9,17 +9,17 @@ const Menu = () => {
     return (
         <aside className="main-sidebar sidebar-light-primary elevation-4">
             {/* Brand Logo */}
-            <a href="index3.html" className="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-                <span className="brand-text font-weight-light">QualiDar</span>
-            </a>
+            <NavLink to="index3.html" className="brand-link">
+                <img src={require('./icon/logo.png')} alt="QualiDaR" className="brand-image" style={{ opacity: '.8' }} />
+                <span className="brand-text font-weight-light">QualiDaR</span>
+            </NavLink>
             {/* Sidebar */}
             <div className="sidebar">
                 {/* Sidebar user panel (optional) */}     
                 { isauth ?
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="image">
-                        <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
+                    <img src={require('./icon/user.png')} className="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div className="info">
                         <NavLink to="/profile" className="d-block">Alexander Pierce</NavLink>
@@ -64,11 +64,13 @@ const Menu = () => {
                                     Shared With Me
                                 </p>
                             </NavLink >
-                        </li></Auxi>:<li className="nav-item">
+                        </li></Auxi>
+                        :
+                        <li className="nav-item">
                             <NavLink to="/" className="nav-link">
-                                <i className="nav-icon fas  fa-user" />
+                                <i className="nav-icon fas fa-user" />
                                 <p>
-                                   Login
+                                   Sign Up/Sign In
                                 </p>
                             </NavLink > 
                         </li> }

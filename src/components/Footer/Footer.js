@@ -4,10 +4,9 @@ const Footer = () => {
 
     return (
         <footer className="main-footer">
-            <strong>Copyright © 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-  All rights reserved.
+           Powered by <strong>ISNE#5</strong>.
             <div className="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.0.5
+                <b>Version</b> 1.0
   </div>
         </footer>
 

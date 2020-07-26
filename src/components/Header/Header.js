@@ -11,7 +11,7 @@ const Header = () => {
                     <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
                 </li>
                 <li className="nav-item d-none d-sm-inline-block">
-                    <a href="/dashboard" className="nav-link">QualiDaR</a>
+                    <NavLink to="/dashboard" className="nav-link">Home</NavLink>
                 </li>
             </ul>
            

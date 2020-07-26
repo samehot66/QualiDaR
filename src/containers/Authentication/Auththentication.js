@@ -54,7 +54,8 @@ class authentication extends Component {
        
         let content = !!localStorage.getItem('iSAuthenticated') ?
             (
-                <div>
+                <div style={{top:"-23px",position:"relative"}}>
+                      <img src={require('./img/icon.png')} style={{width:"150px"}} alt="QualiDaR" />
                     <div className={classes.Yourlogin}>You are currently logging name as</div>
                     <div className={classes.Name}> {localStorage.getItem('email')} </div>
                     <div>
@@ -65,7 +66,8 @@ class authentication extends Component {
                 </div>
             ) :
             (
-                <div>
+                <div style={{top:"-23px",position:"relative"}}>
+                    <img src={require('./img/icon.png')} style={{width:"150px"}} alt="QualiDaR" />
                     <div className={classes.Welcome}>Welcome to QualiDaR!</div>
                     <div className={classes.Qbdrrs}>The Qualitative Business Data Repository System</div>
                     <div className={classes.Lets}>Let's start your analysis...</div>
