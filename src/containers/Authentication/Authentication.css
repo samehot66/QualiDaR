@@ -1,5 +1,4 @@
 .App {
-    margin-top: 67px;
     position: relative;
     text-align: center;
     padding: 165px;
@@ -9,22 +8,19 @@
 .Welcome {
     font-size: 50px;
     font-weight: bold;
-
 }
 
 .Qbdrrs {
     font-size: 20px;
 }
 
-.Lets
-{
+.Lets {
     font-size: 20px;
     color:#ccc;
     font-weight: Italic;
 }
 
-.Yourlogin
-{
+.Yourlogin {
     font-size: 25px;
     font-weight: bold;
     color:#ccc;

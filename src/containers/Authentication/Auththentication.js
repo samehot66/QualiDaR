@@ -23,38 +23,38 @@ class authentication extends Component {
     };
 
     googleResponse = (response) => {
-     
-      const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+
+        const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
         const options = {
             method: 'POST',
             body: tokenBlob,
             mode: 'cors',
             cache: 'default'
-        }; 
+        };
         //req to express
-        fetch(config.URL+'/api/auth/google', options)
-        //response from express
-        .then(r => {
-            const token = r.headers.get('x-auth-token');
-            r.json().then(user => {
-                if (token) {
-                    this.setState({ isAuthenticated: true, user, token });
-                    sessionStorage.setItem('iSAuthenticated', true);
-                    sessionStorage.setItem('email', user.email);
-                    sessionStorage.setItem('uid', user.uid);
-                    sessionStorage.setItem('access_token', response.accessToken);
-                    sessionStorage.setItem('isAuth', true);
-                   window.location.reload();
-                }
-            });
-        })
+        fetch(config.URL + '/api/auth/google', options)
+            //response from express
+            .then(r => {
+                const token = r.headers.get('x-auth-token');
+                r.json().then(user => {
+                    if (token) {
+                        this.setState({ isAuthenticated: true, user, token });
+                        sessionStorage.setItem('iSAuthenticated', true);
+                        sessionStorage.setItem('email', user.email);
+                        sessionStorage.setItem('uid', user.uid);
+                        sessionStorage.setItem('access_token', response.accessToken);
+                        sessionStorage.setItem('isAuth', true);
+                        window.location.reload();
+                    }
+                });
+            })
     };
 
     render() {
         let content = !!sessionStorage.getItem('isAuth') ?
             (
                 <div>
-                    <div className={classes.Yourlogin}>Your login name</div>
+                    <div className={classes.Yourlogin}>You are currently logging name as</div>
                     <div className={classes.Name}> {sessionStorage.getItem('email')} </div>
                     <div>
                         <Button clicked={this.logout} btnType="Logout">
@@ -65,8 +65,8 @@ class authentication extends Component {
             ) :
             (
                 <div>
-                    <div className={classes.Welcome}>Welcome to DocR&R!</div>
-                    <div className={classes.Qbdrrs}>The Qualitative Business Data Retrieval and Repository System</div>
+                    <div className={classes.Welcome}>Welcome to QualiDaR!</div>
+                    <div className={classes.Qbdrrs}>The Qualitative Business Data Repository System</div>
                     <div className={classes.Lets}>Let's start your analysis...</div>
                     <GoogleLogin
                         clientId={config.GOOGLE_CLIENT_ID}

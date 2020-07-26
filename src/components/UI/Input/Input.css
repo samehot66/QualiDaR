@@ -24,3 +24,20 @@
     outline: none;
     background-color: #ccc;
 }
+
+.Selectlabel {
+    color:gray;
+    position:relative;
+    top:5px;
+}
+
+.Select {
+    outline: none;
+    border: 1px solod #ccc;
+    background-color: white;
+    font: inherit;
+    width:100%;
+    display:block;
+    position:relative;
+    top:3px;
+}

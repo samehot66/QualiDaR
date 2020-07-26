@@ -1,13 +1,17 @@
 import React from 'react';
 import Auxi from '../../hoc/Auxi';
-import Header from '../Navigation/Header/Header';
+import Header from '../Header/Header';
+import Menu from '../Menu/Menu';
 import Content from '../Content/Content';
+import Footer from '../Footer/Footer';
 
-const layout = () => (
+const Layout = () => (
     <Auxi>
-        <Header />
-        <Content />
+        <Header/>
+        <Menu/>
+        <Content/>
+        <Footer/>
     </Auxi>
 );
 
-export default layout;
+export default Layout;

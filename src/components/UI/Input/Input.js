@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Input.css';
 import TextField from '@material-ui/core/TextField';
-
+import Auxi from '../../../hoc/Auxi';
 const input = (props) => {
 
     let inputElement = null;
@@ -9,14 +9,14 @@ const input = (props) => {
     switch (props.elementType) {
         case ('input'):
             if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1} label = {props.elementLabel}
+                inputElement = <TextField rowsMax={1} label={props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
                     onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField rowsMax={1} error label = {props.elementLabel}
+                inputElement = <TextField rowsMax={1} error label={props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
@@ -25,24 +25,25 @@ const input = (props) => {
             } break;
         case ('textarea'):
             if (props.checkError === 'No') {
-                inputElement = <TextField multiline rowsMax={3} label = {props.elementLabel}
-                className={classes.InputElement}
-                {...props.elementConfig}
-                value={props.value}
-                onChange={props.changed} />;
+                inputElement = <TextField multiline rowsMax={3} label={props.elementLabel}
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField multiline rowsMax={3} error label = {props.elementLabel}
-                className={classes.InputElement}
-                {...props.elementConfig}
-                value={props.value}
-                helperText={props.error}
-                onChange={props.changed} />;
+                inputElement = <TextField multiline rowsMax={3} error label={props.elementLabel}
+                    className={classes.InputElement}
+                    {...props.elementConfig}
+                    value={props.value}
+                    helperText={props.error}
+                    onChange={props.changed} />;
             } break;
         case ('select'):
-            inputElement =
+            inputElement = <Auxi>
+                <span className={classes.Selectlabel}>{props.elementLabel}</span>
                 <select
-                    className={classes.InputElement}
+                    className={classes.Select}
                     value={props.value}
                     onChange={props.changed}>
                     {props.elementConfig.options.map(option => (
@@ -50,24 +51,24 @@ const input = (props) => {
                             {option.displayValue}
                         </option>
                     ))}
-                    
-                </select>; break;
+
+                </select></Auxi>; break;
         default:
             if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1} label = {props.elementLabel}
+                inputElement = <TextField rowsMax={1} label={props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
                     onChange={props.changed} />;
             }
             else {
-                inputElement = <TextField rowsMax={1} error label = {props.elementLabel}
+                inputElement = <TextField rowsMax={1} error label={props.elementLabel}
                     className={classes.InputElement}
                     {...props.elementConfig}
                     value={props.value}
                     helperText={props.error}
                     onChange={props.changed} />;
-            } 
+            }
     }
 
     return (
