@@ -9,10 +9,17 @@ const Menu = () => {
     return (
         <aside className="main-sidebar sidebar-light-primary elevation-4">
             {/* Brand Logo */}
-            <NavLink to="index3.html" className="brand-link">
+            { isauth ?
+            <NavLink to="/dashboard" className="brand-link">
                 <img src={require('./icon/logo.png')} alt="QualiDaR" className="brand-image" style={{ opacity: '.8' }} />
                 <span className="brand-text font-weight-light">QualiDaR</span>
             </NavLink>
+            :
+            <NavLink to="#" className="brand-link">
+                <img src={require('./icon/logo.png')} alt="QualiDaR" className="brand-image" style={{ opacity: '.8' }} />
+                <span className="brand-text font-weight-light">QualiDaR</span>
+            </NavLink>
+            }
             {/* Sidebar */}
             <div className="sidebar">
                 {/* Sidebar user panel (optional) */}     
