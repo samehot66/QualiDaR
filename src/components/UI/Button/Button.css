@@ -1,0 +1,50 @@
+.Button {
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 7px;
+    margin-right: 10px;
+    margin-left: 0px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    float:right;
+}
+
+.Button:disabled {
+    color: white;
+    cursor:not-allowed;
+    background-color: #ccc;
+}
+
+.Success { 
+    background-color: #3F9BCB;
+    left:-68px;
+}
+
+.Danger {
+    background-color: #FF5533;
+    left: 92px;
+}
+
+.Logout {
+    background-color: #FF5533;
+    float:none;
+    
+}
+
+.DangerEmail {
+    background-color: #FF5533;
+    left: 69px;
+}
+
+.SuccessPubkey
+{
+    background-color: #FF5533;
+    width: 30px;
+    padding: 0;
+    height: 30px;
+    left:10px;
+}
