@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import classes from './Dashboard.css';
 import { Link } from 'react-router-dom';
-import Pleaselogin from '../../components/UI/Pleaselogin/Pleaselogin';
+import Errorpage from '../../components/UI/Errorpage/Errorpage';
 
 const dashboard = (props) => {
     
@@ -9,9 +9,10 @@ const dashboard = (props) => {
    
     return ( 
         isauth? 
+       
         <div >This is route from DashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboardDashboard</div>
     :
-    <div>please login</div>
+  <Errorpage></Errorpage>
     ) 
 };
 
