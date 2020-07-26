@@ -4,7 +4,7 @@ module.exports = {getUserDetails: (userId, token) => {
     return new Promise((resolve, reject) => {
        console.log(userId+' '+token)
        db.user
-         .findOne( {where: { 'uid': userId}})
+         .findOne( {where: { 'uid': userId, 'access_token': token}})
          .then((data) => {
             console.log(data)
             if(data){
