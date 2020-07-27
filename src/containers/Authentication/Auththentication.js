@@ -58,10 +58,9 @@ class authentication extends Component {
                       <img src={require('./img/icon.png')} style={{width:"150px"}} alt="QualiDaR" />
                     <div className={classes.Yourlogin}>You are currently logging name as</div>
                     <div className={classes.Name}> {localStorage.getItem('email')} </div>
-                    <div>
-                        <Button clicked={this.logout} btnType="Logout">
-                            Log out
-                        </Button>
+                    <div className={classes.Btn}>
+                    
+                    <button type="button" className="btn btn-block btn-danger" onClick={this.logout} >Log out</button>
                     </div>
                 </div>
             ) :

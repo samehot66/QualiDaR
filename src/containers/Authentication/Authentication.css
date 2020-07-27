@@ -17,7 +17,8 @@
 .Lets {
     font-size: 20px;
     color:#ccc;
-    font-weight: Italic;
+   
+    padding-bottom: 5px;
 }
 
 .Yourlogin {
@@ -28,4 +29,11 @@
 
 .Name {
     font-size: 30px;
+}
+
+.Btn {
+    display: inline-block;
+    width: 85px;
+    top: 5px;
+    position: relative;
 }

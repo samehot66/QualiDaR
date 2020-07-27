@@ -12,9 +12,9 @@ const Menu = () => {
         <aside className="main-sidebar sidebar-light-primary elevation-4">
             {/* Brand Logo */}
             { isauth ?
-            <NavLink to="/dashboard" className="brand-link">
+            <NavLink to="/dashboard" className="brand-link" style={{backgroundColor: "#2981e9"}}>
                 <img src={require('./icon/logo.png')} alt="QualiDaR" className="brand-image" style={{ opacity: '.8' }} />
-                <span className="brand-text font-weight-light">QualiDaR</span>
+                <span className="brand-text font-weight-light" style={{color:"white"}}>QualiDaR</span>
             </NavLink>
             :
             <NavLink to="#" className="brand-link">

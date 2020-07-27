@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Modal.css';
 import Auxi from '../../../hoc/Auxi';
 import Blackdrop from '../Backdrop/Backdrop';
-import useFitText from "use-fit-text";
+
 
 const modal = (props) => {
 
@@ -15,7 +15,7 @@ const modal = (props) => {
                 display: props.show ? 'block' : 'none'
             }}>
                 <div className="card card-info" >
-                    <div className="card-header">
+                    <div className="card-header" style={{backgroundColor: "#66bfed"}}>
                         <h3 className="card-title">{props.name}</h3>
                         <div className="card-tools">
                             <button type="button" className="btn btn-tool" onClick={props.modalClosed}>
@@ -27,7 +27,7 @@ const modal = (props) => {
                     </div>
                     {/* /.card-body */}
                     <div className="card-footer">
-                        Footer
+                       
                     </div>
                     {/* /.card-footer*/}
                 </div>
