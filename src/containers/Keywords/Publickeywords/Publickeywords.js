@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import Auxi from '../../../hoc/Auxi';
-
+import classes from './Publickeywords.css';
 import Modal from '../../../components/UI/Modal/Modal';
 import axios from 'axios';
 import config from '../../../config.json';
@@ -101,8 +100,8 @@ const Publickeywords = (props) => {
     return (
         <Auxi>
             <tr>
-                <td style={{ color: "#007bff" }}>
-                    <i class="fa fa-fw fa-folder"></i>
+                <td className={classes.Gname}>
+                    <i className="fa fa-fw fa-folder" ></i>
                     {props.gname}
 
                 </td>
@@ -111,9 +110,9 @@ const Publickeywords = (props) => {
                 </td>
                 <td>
                     { props.type === "member" ? 
-                          <i class="fa fa-fw fa-minus-square" style={{ color: "#dc3545", fontSize: "20px" }} onClick={removeHandler}></i>
+                          <i className="fa fa-fw fa-minus-square" style={{ color: "#dc3545", fontSize: "20px"}} onClick={removeHandler}></i>
                         :
-                      <i class="fa fa-fw fa-plus-square" style={{ color: "#28a745", fontSize: "20px" }} onClick={subscribeHandler}></i>
+                      <i className="fa fa-fw fa-plus-square" style={{ color: "#007bff", fontSize: "20px" }} onClick={subscribeHandler}></i>
                     }
                 </td>
             </tr>

@@ -1,0 +1,10 @@
+.Gname
+{
+  color: #17a2b8;
+  cursor: default;
+
+}
+.Gname:hover
+{
+    text-decoration: underline;
+}
