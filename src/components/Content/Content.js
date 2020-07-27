@@ -7,7 +7,7 @@ import Keywords from '../../containers/Keywords/Keywords';
 const Content = (props) => {
 
     return (
-        <div className="content-wrapper">
+        <div className="content-wrapper" style={{minHeight: "700px", height:"700px"}}>
            <Switch>
                 <Route path="/" exact component={Authentication} />  
                 <Route path="/dashboard"  component={Dashboard} />

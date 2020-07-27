@@ -5,11 +5,9 @@ import Auxi from '../../hoc/Auxi';
 
 const Menu = () => {
     const [isauth,setisauth] =  useState(localStorage.getItem('isAuth')); 
-    const [Newgroupmodal, setNewgroupmodal] = useState(false);
-    const shownewgroupModal = () => { setNewgroupmodal(true) };
-    const closenewgroupModal = () => { setNewgroupmodal(false) };
+
     return (
-        <aside className="main-sidebar sidebar-light-primary elevation-4">
+        <aside className="main-sidebar sidebar-light-primary elevation-4" style={{minHeight: "113%"}}>
             {/* Brand Logo */}
             { isauth ?
             <NavLink to="/dashboard" className="brand-link" style={{backgroundColor: "#2981e9"}}>
@@ -83,10 +81,6 @@ const Menu = () => {
                                 </p>
                             </NavLink > 
                         </li>}
-                        <button onClick={shownewgroupModal}  >xxx</button>
-                        <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
-                          <div>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div> 
-                        </Modal> 
                     </ul>
                 </nav>
                 {/* /.sidebar-menu */}
