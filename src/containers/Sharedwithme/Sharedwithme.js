@@ -1,62 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Errorpage from '../../components/UI/Errorpage/Errorpage';
 import Auxi from '../../hoc/Auxi';
 import config from '../../config.json';
 import axios from 'axios';
-import classes from './Projects.css';
-import Modal from '../../components/UI/Modal/Modal';
-import Newproj from './Newproject/Newproject';
-import Project from './Allprojects/Allprojects';
+import classes from './Sharedwithme.css';
+import Sharedwithmeproject from '../Projects/Allprojects/Allsharedwithme/Allsharedwithme';
 
-const Projects = (props) => {
+const Sharedwithme = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
-    const [Newprojmodal, setNewprojmodal] = useState(false);
-    const showModal = () => { setNewprojmodal(true) };
-    const closeModal = () => { setNewprojmodal(false) };
     const [projects, setprojects] = useState([]);
     const [search, setsearch] = useState('');
     const [projectsfiltersearch, setprojectsfiltersearch] = useState([]);
 
     useEffect(() => {
         const loadprojects = [];
+
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
                 "access_token": localStorage.getItem("access_token")
             }
         }
+
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        axios.get(config.URL + '/api/projects', data, axiosConfig)
+
+        axios.get(config.URL + '/api/projects/shared', data, axiosConfig)
             .then((res) => {
-                for (const index in res.data) {
+                for (const index in res.data.projects) {
                     loadprojects.push({
-                        id: res.data[index].pid,
-                        pname: res.data[index].pname
+                        id: res.data.projects[index].pid,
+                        pname: res.data.projects[index].pname
                     });
                 }
                 setprojects(loadprojects);
             })
             .catch((err) => {
-                alert("Show all projects Failed");
+                alert("Show all shared projects Failed");
             })
-    }, [])
 
-    const handleGetprojects = async (newProjState) => {
-        let loadprojects = [];
-        for (const index in newProjState) {
-            loadprojects.push({
-                id: newProjState[index].pid,
-                pname: newProjState[index].pname
-            });
-        }
-        await setprojects(loadprojects);
-    }
+    }, [])
 
     useEffect(() => {
         setprojectsfiltersearch(
@@ -66,7 +53,6 @@ const Projects = (props) => {
         )
     }, [search, projects])
 
-
     return (
         isauth ?
             <Auxi>
@@ -74,7 +60,7 @@ const Projects = (props) => {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Project(s)</h1>
+                                <h1 className="m-0 text-dark">Shared with me project(s)</h1>
                             </div>
                         </div>
                     </div>
@@ -90,14 +76,10 @@ const Projects = (props) => {
                                 </div>
                             </div>
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                <div className={classes.NewProjects}>
-                                    <div className={classes.NewProject} onClick={showModal}>+</div>
-                                    <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
-                                        <Newproj cancel={closeModal} onGetprojects={handleGetprojects} />
-                                    </Modal>
+                                <div className={classes.Projects}>
                                     {projectsfiltersearch.map(project => (
                                         <div key={project.id} >
-                                            <Project pname={project.pname} pid={project.id} onGetprojects={handleGetprojects} />
+                                            <Sharedwithmeproject pname={project.pname} pid={project.id} />
                                         </div>
                                     ))}
                                 </div>
@@ -111,4 +93,4 @@ const Projects = (props) => {
     )
 };
 
-export default Projects;
+export default Sharedwithme;

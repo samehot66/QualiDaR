@@ -20,7 +20,8 @@ const Projects = (props) => {
     const [projectsfiltersearch, setprojectsfiltersearch] = useState([]);
 
     useEffect(() => {
-        const loadprojects = [];
+        const loadprojects = [];        
+        let source = axios.CancelToken.source();
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
@@ -32,7 +33,7 @@ const Projects = (props) => {
                 'Content-Type': 'application/json'
             }
         }
-        axios.get(config.URL + '/api/projects', data, axiosConfig)
+        axios.get(config.URL  + '/api/projects', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 for (const index in res.data) {
                     loadprojects.push({
@@ -45,6 +46,10 @@ const Projects = (props) => {
             .catch((err) => {
                 alert("Show all projects Failed");
             })
+        return ()=>
+        {
+            source.cancel();
+        }
     }, [])
 
     const handleGetprojects = async (newProjState) => {
@@ -64,9 +69,9 @@ const Projects = (props) => {
                 return project.pname.toString().toLowerCase().includes(search.toLowerCase())
             })
         )
+       
     }, [search, projects])
-
-
+      
     return (
         isauth ?
             <Auxi>

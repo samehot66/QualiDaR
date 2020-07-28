@@ -111,6 +111,8 @@ const addpeople = (props) => {
     }
 
     useEffect(() => {
+
+        let source = axios.CancelToken.source();
         const people = [];
         let data = {
             params: {
@@ -124,7 +126,7 @@ const addpeople = (props) => {
                 'Content-Type': 'application/json'
             }
         }
-        axios.get(config.URL + '/api/projects/people', data, axiosConfig)
+        axios.get(config.URL + '/api/projects/people', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 for (const index in res.data.users) {
                     people.push({
@@ -137,6 +139,10 @@ const addpeople = (props) => {
             .catch((err) => {
                 alert("Show people Failed");
             })
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     useEffect(() => {
