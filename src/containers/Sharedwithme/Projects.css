@@ -1,0 +1,51 @@
+
+
+.NewProjects {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    
+}
+
+.NewProject {
+    width: 200px;
+    height: 169px;
+    padding: 28px;
+    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    margin: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 4px dashed #3F9BCB;
+    vertical-align: middle;
+    text-align: center;
+    color: #3F9BCB;
+    font-size: 45px;
+    cursor: default;
+    user-select:none;
+    line-height: 100px;
+}
+
+.NewProject:hover,
+.NewProject:active {
+    transform: scale(0.9);
+}
+
+.Search {
+    position: relative;
+    left: 13px;
+    top: -4px;
+    width: 176px;
+    height: 26px;
+    font-size: 15px;
+}
+
+
+.Box
+{
+    height:639px;
+
+    top:10px;
+    position: relative;
+}

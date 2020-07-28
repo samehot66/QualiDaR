@@ -1,47 +1,53 @@
 import React, { useState } from 'react';
 import Auxi from '../../../hoc/Auxi';
-import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
 import axios from 'axios';
 import config from '../../../config.json';
 
-const addgroup = (props) => {
-    const [groupForm, setgroupForm] = useState(
+const newProj = (props) => {
+
+    const [projForm, setprojForm] = useState(
         {
-            gname:
+            name:
             {
                 elementType: 'input',
-                elementLabel: 'Group Name',
+                elementLabel: 'Project Name',
                 elementConfig:
                 {
                     type: 'text',
-                    placeholder: 'Input your keyword group name...'
+                    placeholder: 'Input your project name...'
                 },
                 value: '',
                 validation: {
                     required: true,
                     minLength: 5,
-                    maxLength: 23
+                    maxLength: 50
                 },
                 valid: false,
                 error: ''
             },
-            shared:
+            description:
             {
-                elementType: 'select',
-                elementLabel: 'Share to public?',
+                elementType: 'textarea',
+                elementLabel: 'Description',
                 elementConfig:
                 {
-                    options: [
-                        { value: false, displayValue: 'No' },
-                        { value: true, displayValue: 'Yes' }
-                    ]
+                    type: 'text',
+                    placeholder: 'Input your description details...'
                 },
-                value: false
+                value: '',
+                validation: {
+                    required: false,
+                    minLength: 0,
+                    maxLength: 200
+                },
+                valid: false,
+                error: ''
             }
         })
-
     const [FormIsValid, setFromIsValid] = useState(false);
+
 
     const checkValidity = (value, rules) => {
         let isValid = true;
@@ -77,75 +83,56 @@ const addgroup = (props) => {
         return checkArray;
     }
 
-    const addGroupHandler = async (event) => {
+    const newProjHandler = async (event) => {
         event.preventDefault();
         const formDataArray = [];
-        for (let formElementIdentifier in groupForm) {
-            formDataArray[formElementIdentifier] = { value: groupForm[formElementIdentifier].value }
+        for (let formElementIdentifier in projForm) {
+            formDataArray[formElementIdentifier] = { value: projForm[formElementIdentifier].value }
         }
-
         let data = {
             "uid": localStorage.getItem("uid"),
-            "access_token": localStorage.getItem("access_token"),
-            "groupname": formDataArray["gname"].value,
-            "shared": formDataArray["shared"].value
+            "pname": formDataArray["name"].value,
+            "description": formDataArray["description"].value,
+            "access_token": localStorage.getItem("access_token")
         }
-
         let axiosConfig = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-
-        await axios.post(config.URL + '/api/keywords', data, axiosConfig)
-            .then((res) => {
-            })
-            .catch((err) => {
-                alert("Create failed");
-            })
-        await onGetyourgroups();
+        await axios.post(config.URL + '/api/projects', data, axiosConfig)
+        await onGetprojects();
     }
 
-    const onGetyourgroups = async () => {
+    const onGetprojects = async () => {
+        const loadprojects = [];
         let data = {
-            params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") }
+          params: {
+            "uid": localStorage.getItem("uid"),
+            "access_token": localStorage.getItem("access_token")
+          }
         }
         let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-
-        await axios.get(config.URL + '/api/keywords/mygroups', data, axiosConfig)
-            .then((res) => {
-                props.onGetyourgroups(res.data);
-            })
-            .catch((err) => {
-                console.log("Show all your keyword groups Failed");
-            })
+    
+        await axios.get(config.URL + '/api/projects', data, axiosConfig)
+          .then((res) => {
+            props.onGetprojects(res.data);
+          })
+          .catch((err) => {
+            alert("Show all projects Failed");
+          })
     }
-
-    const inputChangedHandler = (event, inputIdentifier) => {
-        const updatedgroupForm = {
-            ...groupForm
-        };
-
-        const updatedFormElement = {
-            ...updatedgroupForm[inputIdentifier]
-        };
-
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Isvalid;
-        updatedFormElement.error = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Error;
-        updatedgroupForm[inputIdentifier] = updatedFormElement;
-
-        let formIsValid = true;
-        if (updatedgroupForm['gname'].valid === false) {
-            formIsValid = false;
-        }
-
-        setgroupForm({ ...updatedgroupForm });
-        setFromIsValid(formIsValid);
+    
+    const formElementsArray = [];
+    for (let key in projForm) {
+        formElementsArray.push({
+            id: key,
+            config: projForm[key]
+        })
     }
 
     const checkErrorFunc = (error) => {
@@ -157,17 +144,32 @@ const addgroup = (props) => {
         }
     }
 
-    const formElementsArray = [];
-    for (let key in groupForm) {
-        formElementsArray.push({
-            id: key,
-            config: groupForm[key]
-        })
+    const inputChangedHandler = (event, inputIdentifier) => {
+        const updatedprojForm = {
+            ...projForm
+        };
+
+        const updatedFormElement = {
+            ...updatedprojForm[inputIdentifier]
+        };
+
+        updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Isvalid;
+        updatedFormElement.error = checkValidity(updatedFormElement.value, updatedFormElement.validation)[0].Error;
+        updatedprojForm[inputIdentifier] = updatedFormElement;
+
+        let formIsValid = true;
+        if (updatedprojForm['name'].valid === false) {
+            formIsValid = false;
+        }
+
+        setprojForm({ ...updatedprojForm });
+        setFromIsValid(formIsValid);
     }
 
     return (
         <Auxi>
-            <form onSubmit={addGroupHandler}>
+            <form onSubmit={newProjHandler}>
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -179,12 +181,12 @@ const addgroup = (props) => {
                         error={formElement.config.error}
                         checkError={checkErrorFunc(formElement.config.error)} />
                 ))}
-                <Button btnType="Successaddgroup" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
+                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
             </form>
             <Button btnType="Danger" clicked={props.cancel}>Cancel</Button>
         </Auxi>
     )
 };
-export default addgroup;
+export default newProj;
 
 

@@ -4,6 +4,8 @@ import Authentication from '../../containers/Authentication/Auththentication';
 import Dashboard from '../../containers/Dashboard/Dashboard';
 import Keywords from '../../containers/Keywords/Keywords';
 import Errorpage from '../UI/Errorpage/Errorpage';
+import Projects from '../../containers/Projects/Projects';
+import Oneproject from '../../containers/Projects/Oneproject/Oneproject';
 
 const Content = (props) => {
 
@@ -12,14 +14,11 @@ const Content = (props) => {
            <Switch>
                 <Route path="/" exact component={Authentication} />  
                 <Route path="/dashboard"  component={Dashboard} />
-                <Route path="/keywords"  component={Keywords} />    
-                <Route path="/projects"  component={Authentication} />
+                <Route path="/keywords"  component={Keywords} />        
+                <Route path="/projects/:id" component={Oneproject} />
+                <Route path="/projects"  component={Projects} />
                 <Route path="/sharedwithme"  component={Authentication} />    
                 <Route render={() => <Errorpage></Errorpage>} />
-
-
-
-
             </Switch>
         </div>
     )

@@ -296,100 +296,100 @@ const yourkeywords = (props) => {
   }
   return (
     <Auxi>
-        <td className={classes.Gname} onClick={showkeywordsModal}>
-          <i className="fa fa-fw fa-folder"></i>
-          {props.gname}
+      <td className={classes.Gname} onClick={showkeywordsModal}>
+        <i className="fa fa-fw fa-folder"></i>
+        {props.gname}
 
-        </td>
-        <td style={{ color: "#ccc" }}>
-          me
+      </td>
+      <td style={{ color: "#ccc" }}>
+        me
                 </td>{console.log(props.share)}
-        <td>
-          <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal}></i>
-          <Modal show={editmodal} modalClosed={closeEditModal} name="Edit keyword group" >
-          <Editgroup gname={props.gname} groupid={props.groupid} cancel={closeEditModal}  shared={props.shared} onGetyourgroups={handlerEdityourgroup} />
+      <td>
+        <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal}></i>
+        <Modal show={editmodal} modalClosed={closeEditModal} name="Edit keyword group" >
+          <Editgroup gname={props.gname} groupid={props.groupid} cancel={closeEditModal} shared={props.shared} onGetyourgroups={handlerEdityourgroup} />
         </Modal>
 
 
-          <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal} ></i>
-          <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete keyword group">
-            <div className={classes.Delete}>Are you sure to delete
+        <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal} ></i>
+        <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete keyword group">
+          <div className={classes.Delete}>Are you sure to delete
                         <span style={{ color: "blue" }}> {props.gname} </span> group?
                      </div>
-            <Button btnType="Successdeletegroup" clicked={deleteHandler} >Delete</Button>
-            <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
-          </Modal>
-        
-    
-      <Modal show={keywordsmodal} modalClosed={closekeywordsModal} name={props.gname}>
-        <div className="card" >
-          <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#007bff" }}>
-            <h3 className="card-title" style={{ color: "white" }} >Add a keyword</h3>
+          <Button btnType="Successdeletegroup" clicked={deleteHandler} >Delete</Button>
+          <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
+        </Modal>
 
-          </div>
-          {/* /.card-header */}
-          <div className="card-body p-0 " style={{ overflow: "auto", margin: "4px", height: "108px" }}>
-            <div >
-              <Auxi>
-                <form onSubmit={addKeywordHandler}>
-                  {formElementsArray.map(formElement => (
-                    <Input
-                      key={formElement.id}
-                      elementType={formElement.config.elementType}
-                      elementConfig={formElement.config.elementConfig}
-                      value={formElement.config.value}
-                      elementLabel={formElement.config.elementLabel}
-                      changed={(event) => inputChangedHandler(event, formElement.id)}
-                      error={formElement.config.error}
-                      checkError={checkErrorFunc(formElement.config.error)} />
-                  ))}
-                  <Button btnType="Successaddkeyword" disabled={!FormIsValid}>Add</Button>
-                </form>
-                <Button btnType="DangerEmail" clicked={closekeywordsModal}>Cancel</Button>
 
-              </Auxi>
+        <Modal show={keywordsmodal} modalClosed={closekeywordsModal} name={props.gname}>
+          <div className="card" >
+            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#007bff" }}>
+              <h3 className="card-title" style={{ color: "white" }} >Add a keyword</h3>
+
             </div>
-            {/* /.table-responsive */}
-          </div>
-          {/* /.card-body */}
-        </div>
-        <div className={["card ", classes.Box].join(' ')} >
-          <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#17a2b8" }}>
-            <h3 className="card-title" style={{ color: "white" }} >Keyword(s) in group </h3>
-            <div className="card-tools">
-              <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearch(e.target.value)} />
+            {/* /.card-header */}
+            <div className="card-body p-0 " style={{ overflow: "auto", margin: "4px", height: "108px" }}>
+              <div >
+                <Auxi>
+                  <form onSubmit={addKeywordHandler}>
+                    {formElementsArray.map(formElement => (
+                      <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        elementLabel={formElement.config.elementLabel}
+                        changed={(event) => inputChangedHandler(event, formElement.id)}
+                        error={formElement.config.error}
+                        checkError={checkErrorFunc(formElement.config.error)} />
+                    ))}
+                    <Button btnType="Successaddkeyword" disabled={!FormIsValid}>Add</Button>
+                  </form>
+                  <Button btnType="DangerEmail" clicked={closekeywordsModal}>Cancel</Button>
+
+                </Auxi>
+              </div>
+              {/* /.table-responsive */}
             </div>
+            {/* /.card-body */}
           </div>
-          {/* /.card-header */}
-          <div className="card-body p-0 " style={{ overflow: "auto" }}>
-            <div >
-              <table className="table m-0 " style={{ overflow: "scroll" }}>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Tool</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allkeywordsfilterserch.map(keywords => (
-                    <tr key={keywords.kid}>
-                      <td>
-                        <i className="fa fa-fw fa-file-word" style={{ color: "#17a2b8" }}></i>
-                        {keywords.keywordtext}
-                      </td>
-                      <td >
-                        <i id={keywords.kid} key={keywords.kid} className="fa fa-fw  fa-minus-square" style={{ color: "#FF5533" }} onClick={(event) => deletekeywordHandler(event)}></i>
-                      </td>
-                    </tr>))}
-                </tbody>
-              </table>
+          <div className={["card ", classes.Box].join(' ')} >
+            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#17a2b8" }}>
+              <h3 className="card-title" style={{ color: "white" }} >Keyword(s) in group </h3>
+              <div className="card-tools">
+                <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearch(e.target.value)} />
+              </div>
             </div>
-            {/* /.table-responsive */}
+            {/* /.card-header */}
+            <div className="card-body p-0 " style={{ overflow: "auto" }}>
+              <div >
+                <table className="table m-0 " style={{ overflow: "scroll" }}>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Tool</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allkeywordsfilterserch.map(keywords => (
+                      <tr key={keywords.kid}>
+                        <td>
+                          <i className="fa fa-fw fa-file-word" style={{ color: "#17a2b8" }}></i>
+                          {keywords.keywordtext}
+                        </td>
+                        <td >
+                          <i id={keywords.kid} key={keywords.kid} className="fa fa-fw  fa-minus-square" style={{ color: "#FF5533" }} onClick={(event) => deletekeywordHandler(event)}></i>
+                        </td>
+                      </tr>))}
+                  </tbody>
+                </table>
+              </div>
+              {/* /.table-responsive */}
+            </div>
+            {/* /.card-body */}
           </div>
-          {/* /.card-body */}
-        </div>
-      </Modal></td>
-      </Auxi>
+        </Modal></td>
+    </Auxi>
   )
 };
 

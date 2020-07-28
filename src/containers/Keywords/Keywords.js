@@ -51,7 +51,7 @@ const Keywords = (props) => {
                     });
                 }
                 setpublickeywords(pubkeywords);
-                
+
             })
             .catch((err) => {
                 alert("Show public keyword groups Failed");
@@ -65,7 +65,7 @@ const Keywords = (props) => {
             })
         )
     }, [searchpublic, publickeywords])
-   
+
     const handleGetpubgroups = async (newPubState) => {
         const pubkeywords = [];
         for (const index in newPubState) {
@@ -118,7 +118,7 @@ const Keywords = (props) => {
 
         axios.get(config.URL + '/api/keywords/groups', data, axiosConfig)
             .then((res) => {
-    
+
                 for (const index in res.data) {
                     subscribekeywords.push({
                         keywordgroupsid: res.data[index].keywordgroupsid,
@@ -196,7 +196,7 @@ const Keywords = (props) => {
                     yourkeywords.push({
                         keywordgroupsid: res.data[index].keywordgroupsid,
                         groupname: res.data[index].groupname,
-                        shared:res.data[index].shared
+                        shared: res.data[index].shared
                     });
                 }
                 setprivatekeywords(yourkeywords);
@@ -213,7 +213,7 @@ const Keywords = (props) => {
             yourkeywords.push({
                 keywordgroupsid: newYourState[index].keywordgroupsid,
                 groupname: newYourState[index].groupname,
-                shared:newYourState[index].shared
+                shared: newYourState[index].shared
             });
         }
         await setprivatekeywords(yourkeywords);
@@ -228,68 +228,35 @@ const Keywords = (props) => {
     }, [searchprivate, privatekeywords])
     return (
         isauth ?
-         <Auxi>
-            {/* Content Header (Page header) */}
-            <div className="content-header" style={{ padding: "1px .5rem" }}>
-                <div className="container-fluid">
-                    <div className="row mb-2">
-                        <div className="col-sm-6">
-                            <h1 className="m-0 text-dark">Keyword(s)</h1>
-                        </div>{/* /.col */}
-                        <div className="col-sm-6">
-                            <div className="float-sm-right">
-                                Searh
+            <Auxi>
+                {/* Content Header (Page header) */}
+                <div className="content-header" style={{ padding: "1px .5rem" }}>
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <h1 className="m-0 text-dark">Keyword(s)</h1>
+                            </div>{/* /.col */}
+                            <div className="col-sm-6">
+                                <div className="float-sm-right">
+                                    Searh
                             </div >
-                        </div>{/* /.col */}
-                    </div>{/* /.row */}
-                </div>{/* /.container-fluid */}
-            </div>
-            {/* /.content-header */}
-            {/* Main content */}
-            <div className="content">
-                <div className="container-fluid">
-                    <div className={["card card-primary", classes.Box].join(' ')}>
-                        <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
-                            <h3 className="card-title">Public keyword groups </h3>
-                            <div className="card-tools">
-                                <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchpublic(e.target.value)} />
+                            </div>{/* /.col */}
+                        </div>{/* /.row */}
+                    </div>{/* /.container-fluid */}
+                </div>
+                {/* /.content-header */}
+                {/* Main content */}
+                <div className="content">
+                    <div className="container-fluid">
+                        <div className={["card card-primary", classes.Box].join(' ')}>
+                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
+                                <h3 className="card-title">Public keyword groups </h3>
+                                <div className="card-tools">
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchpublic(e.target.value)} />
+                                </div>
                             </div>
-                        </div>
-                        {/* /.card-header */}
-                        <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                <table className="table m-0 " style={{ overflow: "scroll" }}>
-                                    <thead>
-                                        <tr>
-                                            <th>Group Name</th>
-                                            <th>Owner</th>
-                                            <th>Tools</th>
-                                        </tr>
-                                    </thead>    
-                                    <tbody>
-                             {publicfilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
-                        <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="notmember" onGetpubgroups={handleGetpubgroups} />
-                   </tr> ))}
-                                    </tbody>
-                                </table>
-                            {/* /.table-responsive */}
-                        </div>
-                        {/* /.card-body */}
-                    </div>
-                    <div className={["card card-info", classes.Box].join(' ')}>
-                        <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
-                            <h3 className="card-title">Your keyword group(s) 
-                            <button type="button" className={["btn btn-block btn-success",classes.AddIcon].join(" ")} onClick={shownewgroupModal} > + Keyword group</button>
-                            <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
-                            <Addgroup cancel={closenewgroupModal}  onGetyourgroups={handleGetyourgroups}/>
-                            </Modal>
-                            </h3>
-                            <div className="card-tools">
-                                <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchprivate(e.target.value)} />
-                            </div>
-                        </div>
-                        {/* /.card-header */}
-                        <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                            <div >
+                            {/* /.card-header */}
+                            <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <table className="table m-0 " style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
@@ -299,24 +266,57 @@ const Keywords = (props) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {privatefilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
-                        <Yourkeywords gname={gkeyword.groupname} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} shared={gkeyword.shared} onGetyourgroups={handleGetyourgroups} />
-                </tr>    ))} 
-                                    {subscribekeywords.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
-                        <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="member" onGetsubgroups={handleGetsubgroups} />
-                  </tr>  ))}</tbody>
+                                        {publicfilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
+                                            <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="notmember" onGetpubgroups={handleGetpubgroups} />
+                                        </tr>))}
+                                    </tbody>
                                 </table>
+                                {/* /.table-responsive */}
                             </div>
-                            {/* /.table-responsive */}
+                            {/* /.card-body */}
                         </div>
-                        {/* /.card-body */}
+                        <div className={["card card-info", classes.Box].join(' ')}>
+                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
+                                <h3 className="card-title">Your keyword group(s)
+                            <button type="button" className={["btn btn-block btn-success", classes.AddIcon].join(" ")} onClick={shownewgroupModal} > + Keyword group</button>
+                                    <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
+                                        <Addgroup cancel={closenewgroupModal} onGetyourgroups={handleGetyourgroups} />
+                                    </Modal>
+                                </h3>
+                                <div className="card-tools">
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchprivate(e.target.value)} />
+                                </div>
+                            </div>
+                            {/* /.card-header */}
+                            <div className="card-body p-0 " style={{ overflow: "auto" }}>
+                                <div >
+                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                        <thead>
+                                            <tr>
+                                                <th>Group Name</th>
+                                                <th>Owner</th>
+                                                <th>Tools</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {privatefilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
+                                                <Yourkeywords gname={gkeyword.groupname} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} shared={gkeyword.shared} onGetyourgroups={handleGetyourgroups} />
+                                            </tr>))}
+                                            {subscribekeywords.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
+                                                <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="member" onGetsubgroups={handleGetsubgroups} />
+                                            </tr>))}</tbody>
+                                    </table>
+                                </div>
+                                {/* /.table-responsive */}
+                            </div>
+                            {/* /.card-body */}
+                        </div>
                     </div>
+                    {/* /.container-fluid */}
                 </div>
-                {/* /.container-fluid */}
-            </div>
-        </Auxi>
-        :
-        <Errorpage></Errorpage>
+            </Auxi>
+            :
+            <Errorpage></Errorpage>
     )
 };
 
