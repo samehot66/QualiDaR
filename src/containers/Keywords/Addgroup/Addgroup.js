@@ -107,7 +107,6 @@ const addgroup = (props) => {
     }
 
     const onGetyourgroups = async () => {
-        const yourkeywords = [];
         let data = {
             params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") }
         }
@@ -180,7 +179,7 @@ const addgroup = (props) => {
                         error={formElement.config.error}
                         checkError={checkErrorFunc(formElement.config.error)} />
                 ))}
-                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
+                <Button btnType="Successaddgroup" disabled={!FormIsValid} clicked={props.cancel} >Create</Button>
             </form>
             <Button btnType="Danger" clicked={props.cancel}>Cancel</Button>
         </Auxi>

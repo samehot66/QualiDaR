@@ -1,5 +1,4 @@
 import React, { useState }  from 'react';
-import Modal from '../UI/Modal/Modal';
 import { NavLink } from 'react-router-dom';
 import Auxi from '../../hoc/Auxi';
 

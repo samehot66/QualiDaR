@@ -4,7 +4,7 @@ import Auxi from '../../../hoc/Auxi';
 import Blackdrop from '../Backdrop/Backdrop';
 
 
-const modal = (props) => {
+const Modal = (props) => {
 
     return (
         <Auxi>
@@ -15,7 +15,7 @@ const modal = (props) => {
                 display: props.show ? 'block' : 'none'
             }}>
                 <div className="card card-info" >
-                    <div className="card-header" style={{backgroundColor: "#66bfed"}}>
+                    <div className="card-header" style={{backgroundColor: "#0061c9"}}>
                         <h3 className="card-title">{props.name}</h3>
                         <div className="card-tools">
                             <button type="button" className="btn btn-tool" onClick={props.modalClosed}>
@@ -25,15 +25,13 @@ const modal = (props) => {
                     <div className="card-body text-wrap" >
                         {props.children}
                     </div>
-                    {/* /.card-body */}
                     <div className="card-footer">
                        
                     </div>
-                    {/* /.card-footer*/}
                 </div>
             </div>
         </Auxi>
     )
 };
 
-export default modal;
+export default Modal;

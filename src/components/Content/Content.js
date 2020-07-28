@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Authentication from '../../containers/Authentication/Auththentication';
 import Dashboard from '../../containers/Dashboard/Dashboard';
 import Keywords from '../../containers/Keywords/Keywords';
+import Errorpage from '../UI/Errorpage/Errorpage';
 
 const Content = (props) => {
 
@@ -14,6 +15,11 @@ const Content = (props) => {
                 <Route path="/keywords"  component={Keywords} />    
                 <Route path="/projects"  component={Authentication} />
                 <Route path="/sharedwithme"  component={Authentication} />    
+                <Route render={() => <Errorpage></Errorpage>} />
+
+
+
+
             </Switch>
         </div>
     )

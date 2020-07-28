@@ -8,3 +8,18 @@
 {
     text-decoration: underline;
 }
+
+.Delete {
+    font-size: 22px;
+    text-align: center;
+    color: black;
+}
+
+
+.Box
+{
+    height:300px;
+
+    top:10px;
+    position: relative;
+}

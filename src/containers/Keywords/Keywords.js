@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Errorpage from '../../components/UI/Errorpage/Errorpage';
 import classes from './Keywords.css';
 import Auxi from '../../hoc/Auxi';
@@ -258,24 +257,20 @@ const Keywords = (props) => {
                         </div>
                         {/* /.card-header */}
                         <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                            <div >
                                 <table className="table m-0 " style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
                                             <th>Group Name</th>
                                             <th>Owner</th>
                                             <th>Tools</th>
-
                                         </tr>
                                     </thead>    
-                                    <tbody >
-                             {publicfilterserch.map(gkeyword => (
+                                    <tbody>
+                             {publicfilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
                         <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="notmember" onGetpubgroups={handleGetpubgroups} />
-                    ))}
-
+                   </tr> ))}
                                     </tbody>
                                 </table>
-                            </div>
                             {/* /.table-responsive */}
                         </div>
                         {/* /.card-body */}
@@ -283,19 +278,13 @@ const Keywords = (props) => {
                     <div className={["card card-info", classes.Box].join(' ')}>
                         <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
                             <h3 className="card-title">Your keyword group(s) 
-                          
                             <button type="button" className={["btn btn-block btn-success",classes.AddIcon].join(" ")} onClick={shownewgroupModal} > + Keyword group</button>
                             <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
                             <Addgroup cancel={closenewgroupModal}  onGetyourgroups={handleGetyourgroups}/>
-                            
-                </Modal>
+                            </Modal>
                             </h3>
-                           
                             <div className="card-tools">
-
                                 <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchprivate(e.target.value)} />
-
-
                             </div>
                         </div>
                         {/* /.card-header */}
@@ -307,17 +296,15 @@ const Keywords = (props) => {
                                             <th>Group Name</th>
                                             <th>Owner</th>
                                             <th>Tools</th>
-
                                         </tr>
                                     </thead>
-                                    <tbody >
-                                    {privatefilterserch.map(gkeyword => (
+                                    <tbody>
+                                    {privatefilterserch.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
                         <Yourkeywords gname={gkeyword.groupname} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} shared={gkeyword.shared} onGetyourgroups={handleGetyourgroups} />
-                    ))} 
-                                    {subscribekeywords.map(gkeyword => (
+                </tr>    ))} 
+                                    {subscribekeywords.map(gkeyword => (<tr key={gkeyword.keywordgroupsid}>
                         <Publickeywords gname={gkeyword.groupname} owner={gkeyword.owner} groupid={gkeyword.keywordgroupsid} key={gkeyword.keywordgroupsid} type="member" onGetsubgroups={handleGetsubgroups} />
-                    ))}
-                           </tbody>
+                  </tr>  ))}</tbody>
                                 </table>
                             </div>
                             {/* /.table-responsive */}
