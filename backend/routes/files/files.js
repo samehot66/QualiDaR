@@ -9,8 +9,14 @@ router.post('/upload', async (req, res, next) => {
     }
   
     const file = req.files.file;
+    var i = file.name.lastIndexOf('.');
+    var fileType = file.name.substr(i);
+    console.log(fileType)
+    if (fileType != '.pdf') {
+      return res.status(400).send({ message: 'File type must be .pdf' });
+    }
   
-    file.mv(`D:/Project/QBRRS/QBDRRs/backend/public/upload/${file.name}`, err => {
+    file.mv(`../backend/public/upload/${file.name}`, err => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
