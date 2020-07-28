@@ -72,11 +72,11 @@ const yourkeywords = (props) => {
     {
       keyword: {
         elementType: 'input',
-        elementLabel: 'New keyword',
+        elementLabel: 'Input new keyword...',
         elementConfig:
         {
           type: 'text',
-          placeholder: 'Input your keyword...'
+          placeholder: ''
         },
         value: '',
         validation: {
