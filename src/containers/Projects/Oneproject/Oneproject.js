@@ -1,6 +1,7 @@
 import React,{ useState, useEffect } from 'react';
 import Auxi from '../../../hoc/Auxi';
 import Errorpage from '../../../components/UI/Errorpage/Errorpage';
+import Fileupload from '../../Upload/FileUpload';
 
 const oneproject = (props) => { 
     
@@ -41,21 +42,20 @@ const oneproject = (props) => {
     //     }
     // }, [])
 
-    useEffect(() => {
-
-        let check = localStorage.getItem("uid");
-       if(check==1)
-       {
-        setcheckaccess(true);
-       }
-       else
-       {
-        setcheckaccess(false);
-       }
-     }, [])
+    const check= async (uid)=>
+    {
+        if(uid==1)
+        {
+            return true;
+        }
+        else
+        { 
+            return false;
+        }
+    }
 
     return (
-                isauth && checkaccess?
+                isauth && check(localStorage.getItem("uid")) ?
                     <Auxi>
                         <div className="content-header" style={{ padding: "1px .5rem" }}>
                             <div className="container-fluid">
@@ -69,6 +69,8 @@ const oneproject = (props) => {
                         <div className="content">
                             <div className="container-fluid">
         This route from {props.match.params.id}
+
+        
                             </div>
                         </div>
                     </Auxi>
