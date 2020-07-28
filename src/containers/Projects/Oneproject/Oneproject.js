@@ -70,7 +70,7 @@ const oneproject = (props) => {
                             <div className="container-fluid">
         This route from {props.match.params.id}
 
-        
+        <Fileupload pid={props.match.params.id}/>
                             </div>
                         </div>
                     </Auxi>

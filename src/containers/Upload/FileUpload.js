@@ -2,8 +2,9 @@ import React, { Fragment, useState } from 'react';
 import Message from './Message';
 import Progress from './Progress';
 import axios from 'axios';
+import config from '../../config.json';
 
-const FileUpload = () => {
+const FileUpload = (props) => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
@@ -13,8 +14,8 @@ const FileUpload = () => {
   const onChange = e => {
     setFile(e.target.files[0]);
 
-if(e.target.files[0]!==undefined)
-    setFilename(e.target.files[0].name);
+    if (e.target.files[0] !== undefined)
+      setFilename(e.target.files[0].name);
   };
 
   const onSubmit = async e => {
@@ -22,10 +23,11 @@ if(e.target.files[0]!==undefined)
     const formData = new FormData();
     formData.append('file', file);
     formData.append('uid', localStorage.getItem("uid"));
+    formData.append('pid', props.pid);
     formData.append('access_token', localStorage.getItem("access_token"));
-console.log(formData);
+    console.log(formData);
     try {
-      const res = await axios.post('/api/files/upload', formData, {
+      const res = await axios.post(config.URL + '/api/files/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -37,7 +39,7 @@ console.log(formData);
           );
 
           // Clear percentage
-          setTimeout(() => setUploadPercentage(0), 10000);
+          setTimeout(() => setUploadPercentage(0), 2000);
         }
       });
 

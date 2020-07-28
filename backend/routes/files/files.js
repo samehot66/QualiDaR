@@ -10,13 +10,13 @@ router.post('/upload', async (req, res, next) => {
   
     const file = req.files.file;
   
-    file.mv(`D:/Project/QBRRS/QBDRRs/backend/public/upload/${file.name}`, err => {
+    file.mv(`../backend/public/upload/${file.name}`, err => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
       }
   
-      res.json({ fileName: file.name, filePath: `/QBDRRs/backend/public/uploads/${file.name}` })
+      res.json({ fileName: file.name, filePath: `../backend/public/upload/${file.name}` })
       performTask(file.name)
       //.then(()=>{
         
@@ -29,7 +29,7 @@ router.post('/upload', async (req, res, next) => {
 
   performTask = (fileName) => {
     axios.post("http://localhost:5000/task", {
-        file: `D:/Project/QBRRS/QBDRRs/backend/public/upload/${fileName}`
+        file: `../backend/public/upload/${fileName}`
     }).then((res) => {
         console.log(`statusCode: ${res.statusCode}`)
         console.log(res)
