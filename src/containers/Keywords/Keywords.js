@@ -28,6 +28,7 @@ const Keywords = (props) => {
 
     useEffect(() => {
         const pubkeywords = [];
+        let source = axios.CancelToken.source();
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
@@ -41,7 +42,7 @@ const Keywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords', data, axiosConfig)
+        axios.get(config.URL + '/api/keywords', data, axiosConfig, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 for (const index in res.data) {
                     pubkeywords.push({
@@ -56,6 +57,10 @@ const Keywords = (props) => {
             .catch((err) => {
                 alert("Show public keyword groups Failed");
             })
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     useEffect(() => {
@@ -104,7 +109,7 @@ const Keywords = (props) => {
 
     useEffect(() => {
         const subscribekeywords = [];
-
+        let source = axios.CancelToken.source();
         let data = {
             params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") }
 
@@ -116,7 +121,7 @@ const Keywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords/groups', data, axiosConfig)
+        axios.get(config.URL + '/api/keywords/groups', data, axiosConfig, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
 
                 for (const index in res.data) {
@@ -132,7 +137,10 @@ const Keywords = (props) => {
             .catch((err) => {
                 console.log("Show subscribe keyword groups Failed");
             })
-
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     const handleGetsubgroups = async (newSubState) => {
@@ -180,6 +188,7 @@ const Keywords = (props) => {
 
     useEffect(() => {
         const yourkeywords = [];
+        let source = axios.CancelToken.source();
         let data = {
             params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") }
         }
@@ -189,7 +198,7 @@ const Keywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords/mygroups', data, axiosConfig)
+        axios.get(config.URL + '/api/keywords/mygroups', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
                 for (const index in res.data) {
@@ -204,7 +213,10 @@ const Keywords = (props) => {
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
             })
-
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     const handleGetyourgroups = async (newYourState) => {

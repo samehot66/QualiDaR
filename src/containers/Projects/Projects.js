@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Errorpage from '../../components/UI/Errorpage/Errorpage';
 import Auxi from '../../hoc/Auxi';
 import config from '../../config.json';

@@ -15,7 +15,7 @@ const Sharedwithme = (props) => {
 
     useEffect(() => {
         const loadprojects = [];
-
+        let source = axios.CancelToken.source();
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
@@ -29,7 +29,7 @@ const Sharedwithme = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/projects/shared', data, axiosConfig)
+        axios.get(config.URL + '/api/projects/shared', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 for (const index in res.data.projects) {
                     loadprojects.push({
@@ -42,7 +42,10 @@ const Sharedwithme = (props) => {
             .catch((err) => {
                 alert("Show all shared projects Failed");
             })
-
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     useEffect(() => {

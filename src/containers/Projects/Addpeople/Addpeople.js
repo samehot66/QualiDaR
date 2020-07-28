@@ -218,8 +218,6 @@ const addpeople = (props) => {
       }
     
     return (
-
-
         <Auxi>
         <div className="card" >
           <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#007bff" }}>

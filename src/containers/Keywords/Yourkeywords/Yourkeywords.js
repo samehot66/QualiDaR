@@ -96,6 +96,7 @@ const yourkeywords = (props) => {
 
   useEffect(() => {
     const keywords = [];
+    let source = axios.CancelToken.source();
     let data = {
       params: {
         "uid": localStorage.getItem("uid"),
@@ -108,7 +109,7 @@ const yourkeywords = (props) => {
         'Content-Type': 'application/json'
       }
     }
-    axios.get(config.URL + '/api/keywords/private', data, axiosConfig)
+    axios.get(config.URL + '/api/keywords/private', data, axiosConfig,{ cancelToken: source.token})
       .then((res) => {
         for (const index in res.data) {
           keywords.push({
@@ -121,7 +122,10 @@ const yourkeywords = (props) => {
       .catch((err) => {
         alert("Show keywords Failed");
       })
-
+      return ()=>
+      {
+          source.cancel();
+      }
   }, [])
 
   useEffect(() => {

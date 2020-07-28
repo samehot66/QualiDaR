@@ -107,7 +107,7 @@ const Publickeywords = (props) => {
 
     useEffect(() => {
         const keywords = [];
-
+        let source = axios.CancelToken.source();
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
@@ -121,22 +121,23 @@ const Publickeywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords/public', data, axiosConfig)
+        axios.get(config.URL + '/api/keywords/public', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-                console.log("RESPONSE RECEIVED: ", res);
                 for (const index in res.data) {
                     keywords.push({
                         kid: res.data[index].kid,
                         keywordtext: res.data[index].keywordtext
                     });
                 }
-
                 setallkeywords(keywords);
             })
             .catch((err) => {
-                console.log("AXIOS ERROR: ", err);
+                alert("Show keywords Failed!");
             })
-
+            return ()=>
+            {
+                source.cancel();
+            }
     }, [])
 
     useEffect(() => {
@@ -146,6 +147,7 @@ const Publickeywords = (props) => {
             })
         )
     }, [search, allkeywords])
+
     return (
         <Auxi>
             <td className={classes.Gname} onClick={showkeywordsModal}><i className="fa fa-fw fa-folder" ></i>{props.gname}</td>
