@@ -76,6 +76,8 @@ class authentication extends Component {
                         scope="profile email"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        prompt="select_account"
                     />
                 </div>
             );
