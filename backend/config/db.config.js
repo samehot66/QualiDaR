@@ -28,7 +28,7 @@ db.pdf_file = require('../models/PDFfiles')(sequelize, Sequelize);
 db.pdf_text = require('../models/PDFtexts')(sequelize, Sequelize);
 db.keyword = require('../models/keyword')(sequelize, Sequelize);
 db.keyword_group = require('../models/keywordgroups')(sequelize, Sequelize);
-db.project_pdgfile = require('../models/project_pdffiles.js')(sequelize, Sequelize);
+//db.project_pdgfile = require('../models/project_pdffiles.js')(sequelize, Sequelize);
 db.subscribe = require('../models/subscribe')(sequelize, Sequelize);
 //db.project_role = User_Profile = sequelize.define('project_roles', { role: Sequelize.ENUM("owner", "guest") }, { timestamps: false });
 
@@ -39,10 +39,10 @@ db.project.belongsToMany(db.user, { through: db.project_role, foreignKey: 'pid',
 db.user.belongsToMany(db.project, { through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});
 
 //----------------------
-//|| project_pdffiles ||
+//|| project_pdffiles || **Deleted**
 //----------------------
-db.pdf_file.belongsToMany(db.project, { through: db.project_pdgfile, foreignKey: 'pdfid', otherKey: 'pid'});
-db.project.belongsToMany(db.pdf_file, { through: db.project_pdgfile, foreignKey: 'pid', otherKey: 'pdfid'});
+//db.pdf_file.belongsToMany(db.project, { through: db.project_pdgfile, foreignKey: 'pdfid', otherKey: 'pid'});
+//db.project.belongsToMany(db.pdf_file, { through: db.project_pdgfile, foreignKey: 'pid', otherKey: 'pdfid'});
 
 //---------------
 //|| subscribe ||
@@ -58,13 +58,17 @@ db.topic.belongsTo(db.project, {foreignKey: 'pid', targetKey: 'pid'});
 db.topic.hasMany(db.phrase, {foreignKey: 'tid', sourceKey: 'tid'});
 db.phrase.belongsTo(db.topic, {foreignKey: 'tid', targetKey: 'tid'});
 
+//projects |-------||  pdffiles
+db.project.hasMany(db.pdf_file, {foreignKey: 'pid', sourceKey: 'pid'})
+db.pdf_file.belongsTo(db.project, {foreignKey: 'pid', targetKey: 'pid'})
+
 //pdffiles |-------|| pdftexts 
 db.pdf_file.hasMany(db.pdf_text, {foreignKey: 'pdfid', sourceKey: 'pdfid'})
 db.pdf_text.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'})
 
 //users |-------|| pdffiles
 db.user.hasMany(db.pdf_file, {foreignKey: 'uid', sourceKey: 'uid'})
-db.pdf_file.belongsTo(db.pdf_file, {foreignKey: 'uid', targetKey: 'uid'})
+db.pdf_file.belongsTo(db.user, {foreignKey: 'uid', targetKey: 'uid'})
 
 //users |-------|| keywordgroups
 db.user.hasMany(db.keyword_group, {foreignKey: 'uid', sourceKey: 'uid'})
