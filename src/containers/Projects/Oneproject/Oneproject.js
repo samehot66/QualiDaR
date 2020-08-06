@@ -6,20 +6,132 @@ import classes from './Oneproject.css';
 import { NavLink } from 'react-router-dom';
 import Modal from '../../../components/UI/Modal/Modal';
 import Addpeople from '../Addpeople/Addpeople';
+import axios from 'axios';
+import config from '../../../config.json';
 
 const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
     const [checkaccess, setcheckaccess] = useState(false);
+    const [owner, setowner] = useState('');
 
-    const [Newpeoplemodal, setNewpeoplemodal] = useState(false);
-    const shownewpeopleModal = () => { setNewpeoplemodal(true) };
-    const closenewpeopleModal = () => { setNewpeoplemodal(false) };
+    const [allpeople, setallpeople] = useState([]);
+    const [searchallpeople, setsearchallpeople] = useState('');
+    const [allpeoplefilterserch, setallpeoplefilterserch] = useState([]);
 
-    
     const [Newtopicemodal, setNewtopicmodal] = useState(false);
     const shownewtopicModal = () => { setNewtopicmodal(true) };
     const closenewtopicModal = () => { setNewtopicmodal(false) };
+
+    
+    useEffect(() => {
+
+        let source = axios.CancelToken.source();
+        const people = [];
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid": props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.get(config.URL + '/api/projects/people', data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+        
+                for (const index in res.data.users) {
+                   
+                    if(res.data.users[index].project_roles.role == "owner")
+                    {
+                        setowner(res.data.users[index].email);
+                    }
+
+                    people.push({
+                        peopleid: res.data.users[index].uid,
+                        email: res.data.users[index].email,
+                        role :  res.data.users[index].project_roles.role 
+                    });
+                   
+                }
+                setallpeople(people);
+            })
+            .catch((err) => {
+                alert("Show people Failed");
+            })
+            return ()=>
+            {
+                source.cancel();
+            }
+    }, [])
+
+    useEffect(() => {
+        setallpeoplefilterserch(
+            allpeople.filter(people => {
+                return people.email.toString().toLowerCase().includes(searchallpeople.toLowerCase())
+            })
+        )
+    }, [searchallpeople, allpeople])
+
+    const deletepeopleHandler = async (event) => {
+        let data = {
+          params: {
+            "uid": localStorage.getItem("uid"),
+            "access_token": localStorage.getItem("access_token"),
+            "pid": props.match.params.id,
+            "peopleid": event.target.id
+          }
+        }
+        let axiosConfig = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+    
+        await axios.delete(config.URL + '/api/projects/people', data, axiosConfig)
+          .then((res) => {
+            alert("Delete Successful");
+          })
+          .catch((err) => {
+            alert("Delete Failed");
+          })
+          await handleGetpeople();
+      }
+
+      const handleGetpeople = async () => {
+        const people = [];
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid": props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        await axios.get(config.URL + '/api/projects/people', data, axiosConfig)
+            .then((res) => {
+                for (const index in res.data.users) {
+                    people.push({
+                        peopleid: res.data.users[index].uid,
+                        email: res.data.users[index].email,
+                        role :  res.data.users[index].project_roles.role 
+                    });
+                   
+                }
+                setallpeople(people);
+            })
+            .catch((err) => {
+                alert("Show people Failed");
+            })
+    }
+
     // useEffect(() => {
     //     const checkaccess = [];        
     //     let source = axios.CancelToken.source();
@@ -71,12 +183,13 @@ const oneproject = (props) => {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">{props.match.params.id}    <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i></h1>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><NavLink to="/projects">Projects</NavLink></li>
-                                <li class="breadcrumb-item active">{props.match.params.id} </li>
+                          <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                     <li className="breadcrumb-item"><NavLink to="/projects">Projects</NavLink></li>
+                                    <li className="breadcrumb-item active">{props.match.params.id} </li>
                                 </ol>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -89,13 +202,9 @@ const oneproject = (props) => {
                                     <div className={["card card-info", classes.Box].join(' ')}>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
                                 <h3 className="card-title">People in this project
-                                <button type="button" className={["btn btn-block btn-success", classes.AddPeople].join(" ")} onClick={shownewpeopleModal} > + People</button>
-                                    <Modal show={Newpeoplemodal} modalClosed={closenewpeopleModal} name="Add new people to project">
-                                        <Addpeople pid={props.match.params.id} cancel={closenewpeopleModal} comefrom={"Oneproject"} />
-                                    </Modal>
                                 </h3>
                                 <div className="card-tools">
-                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchallpeople(e.target.value)}  />
                                 </div>
                             </div>
                             {/* /.card-header */}
@@ -110,14 +219,36 @@ const oneproject = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                                <td>kanokpol.thongsem@gmail.com</td>
-                                                <td>Owner</td>
-                                                <td>
-                                            
-                                                    <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
-                                                 </td>
-                                        </tr>
+                                   
+
+                                        {allpeoplefilterserch.map(people => (
+            
+                <tr key={people.peopleid}>
+    
+                <td style={{color: people.role == "owner" ? "#007bff" : "#66bfed" }}>
+                
+                <i className="fa fa-fw fa-user"  ></i>   {people.email}
+                </td>
+                <td style={{color:"#ccc" }}>
+                
+                {people.role}
+              </td>
+                <td style={{color: people.role == "owner" ? "#ccc" : "black" }}>
+                {
+                   owner == localStorage.getItem("email") ?
+                   people.role == "owner" ? null:
+              <i id={people.peopleid} key={people.peopleid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }}  onClick={(event) => deletepeopleHandler(event)}></i>  
+         
+         :null}
+         
+         
+         </td>
+              </tr>
+
+                 
+            ))}
+                                               
+                                     
                                          </tbody>
                                     </table>
                                 </div>
@@ -135,11 +266,11 @@ const oneproject = (props) => {
                                     </div>
                                     <div className="card-body" >
                                         <div className="d-flex">
-                                            <p className="d-flex flex-column" style={{ width: "700px", position: "relative", top: "3px"}}>
-                                                <span>
+                                             <span className="d-flex flex-column" style={{ width: "700px", position: "relative", top: "3px"}}>
+                                               
                                                     <Fileupload pid={props.match.params.id} />
                                                 </span>
-                                            </p>
+                                        
 
                                         </div>
                                         {/* /.d-flex */}

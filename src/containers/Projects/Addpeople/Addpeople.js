@@ -262,9 +262,7 @@ const addpeople = (props) => {
             <Button btnType="DangerEmail" clicked={props.cancel}>Cancel</Button>
               </Auxi>
             </div>
-            {/* /.table-responsive */}
           </div>
-          {/* /.card-body */}
         </div>}
         { props.comefrom=="Oneproject" ? null :
         <div className={["card ", classes.Box].join(' ')} >
@@ -287,8 +285,6 @@ const addpeople = (props) => {
                 <tbody>
                 {allpeoplefilterserch.map(people => (
                 people.email !== localStorage.getItem("email") ?
-
-
                 <tr key={people.peopleid}>
                 <td>
                   <i className="fa fa-fw fa-user" style={{ color: "#17a2b8" }}></i>
@@ -309,10 +305,6 @@ const addpeople = (props) => {
           {/* /.card-body */}
         </div>
   }
-
-    
-          
-
         </Auxi>
     )
 };
