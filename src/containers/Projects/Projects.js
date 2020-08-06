@@ -81,10 +81,10 @@ const Projects = (props) => {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Project(s)</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
-                                <li class="breadcrumb-item active">Project(s)</li>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                <li className="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
+                                <li className="breadcrumb-item active">Project(s)</li>
                                 </ol>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ const Projects = (props) => {
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div className={classes.NewProjects}>
                                     <div className={classes.NewProject} onClick={showModal}>+</div>
-                                    <Modal show={Newprojmodal} modalClosed={closeModal} name="Create New Project">
+                                    <Modal show={Newprojmodal} modalClosed={closeModal} name="Create new project">
                                         <Newproj cancel={closeModal} onGetprojects={handleGetprojects} />
                                     </Modal>
                                     {projectsfiltersearch.map(project => (

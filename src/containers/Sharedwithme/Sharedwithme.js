@@ -66,10 +66,10 @@ const Sharedwithme = (props) => {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Shared with me project(s)</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
-                                <li class="breadcrumb-item active">Shared with me project(s)</li>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                <li className="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
+                                <li className="breadcrumb-item active">Shared with me project(s)</li>
                                 </ol>
                             </div>
                         </div>
