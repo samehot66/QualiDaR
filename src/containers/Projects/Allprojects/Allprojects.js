@@ -64,7 +64,7 @@ const allprojects = (props) => {
     <Auxi>
       <div className={classes.Menu} >
         <img onClick={showDeleteModal} className={classes.TrashIcon} src={require('../icon/Trash.png')} alt="Trash" />
-        <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete Project">
+        <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete project">
           <div className={classes.Delete}>Are you sure to delete
            <span style={{ color: "blue" }}> {props.pname} </span>
            project?
@@ -74,7 +74,7 @@ const allprojects = (props) => {
         </Modal>
 
         <img onClick={showAddModal} className={classes.AddpeopleIcon} src={require('../icon/Addpeople.png')} alt="Add people" />
-        <Modal show={Addmodal} modalClosed={closeAddModal} name="Add people to Project">
+        <Modal show={Addmodal} modalClosed={closeAddModal} name="Add people to project">
           <Addpeople pid={props.pid} cancel={closeAddModal} />
         </Modal>
       </div>

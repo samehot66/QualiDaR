@@ -219,6 +219,23 @@ const addpeople = (props) => {
     
     return (
         <Auxi>
+             { props.comefrom=="Oneproject" ?  <Auxi>
+            <form onSubmit={addPeopleHandler}>
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        elementLabel={formElement.config.elementLabel}
+                        changed={(event) => inputChangedHandler(event, formElement.id)}
+                        error={formElement.config.error}
+                        checkError={checkErrorFunc(formElement.config.error)} />
+                ))}
+                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Add</Button>
+            </form>
+            <Button btnType="DangerEmail" clicked={props.cancel}>Cancel</Button>
+              </Auxi> :
         <div className="card" >
           <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#007bff" }}>
             <h3 className="card-title" style={{ color: "white" }} >Add a person</h3>
@@ -248,7 +265,8 @@ const addpeople = (props) => {
             {/* /.table-responsive */}
           </div>
           {/* /.card-body */}
-        </div>
+        </div>}
+        { props.comefrom=="Oneproject" ? null :
         <div className={["card ", classes.Box].join(' ')} >
           <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#17a2b8" }}>
             <h3 className="card-title" style={{ color: "white" }} >People in this project </h3>
@@ -290,7 +308,7 @@ const addpeople = (props) => {
           </div>
           {/* /.card-body */}
         </div>
-  
+  }
 
     
           

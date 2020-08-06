@@ -293,7 +293,7 @@ const Keywords = (props) => {
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
                                 <h3 className="card-title">Your keyword group(s)
                             <button type="button" className={["btn btn-block btn-success", classes.AddIcon].join(" ")} onClick={shownewgroupModal} > + Keyword group</button>
-                                    <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create New Keyword Group">
+                                    <Modal show={Newgroupmodal} modalClosed={closenewgroupModal} name="Create new keyword group">
                                         <Addgroup cancel={closenewgroupModal} onGetyourgroups={handleGetyourgroups} />
                                     </Modal>
                                 </h3>

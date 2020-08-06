@@ -5,6 +5,7 @@ import Fileupload from '../../Upload/FileUpload';
 import classes from './Oneproject.css';
 import { NavLink } from 'react-router-dom';
 import Modal from '../../../components/UI/Modal/Modal';
+import Addpeople from '../Addpeople/Addpeople';
 
 const oneproject = (props) => {
 
@@ -90,8 +91,7 @@ const oneproject = (props) => {
                                 <h3 className="card-title">People in this project
                                 <button type="button" className={["btn btn-block btn-success", classes.AddPeople].join(" ")} onClick={shownewpeopleModal} > + People</button>
                                     <Modal show={Newpeoplemodal} modalClosed={closenewpeopleModal} name="Add new people to project">
-                                
-                        
+                                        <Addpeople pid={props.match.params.id} cancel={closenewpeopleModal} comefrom={"Oneproject"} />
                                     </Modal>
                                 </h3>
                                 <div className="card-tools">
