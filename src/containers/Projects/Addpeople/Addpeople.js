@@ -262,8 +262,8 @@ const addpeople = (props) => {
               <table className="table m-0 " style={{ overflow: "scroll" }}>
                 <thead>
                   <tr>
-                    <th>Email</th>
-                    <th>Tool</th>
+                    <th>E-mail</th>
+                    <th>Tool(s)</th>
                   </tr>
                 </thead>
                 <tbody>

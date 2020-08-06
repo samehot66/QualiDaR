@@ -7,6 +7,7 @@ import classes from './Projects.css';
 import Modal from '../../components/UI/Modal/Modal';
 import Newproj from './Newproject/Newproject';
 import Project from './Allprojects/Allprojects';
+import { NavLink } from 'react-router-dom';
 
 const Projects = (props) => {
 
@@ -80,6 +81,12 @@ const Projects = (props) => {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Project(s)</h1>
                             </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
+                                <li class="breadcrumb-item active">Project(s)</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +94,7 @@ const Projects = (props) => {
                     <div className="container-fluid">
 
                         <div className={["card", classes.Box].join(' ')} >
-                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#2981e9" }}>
+                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}>
                                 <h3 className="card-title" style={{ color: "white" }}>All your project(s) </h3>
                                 <div className="card-tools">
                                     <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearch(e.target.value)} />

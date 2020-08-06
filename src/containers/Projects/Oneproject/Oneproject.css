@@ -1,0 +1,37 @@
+
+.Box
+{
+    height:300px;
+
+    position: relative;
+}
+
+.AddIcon
+{
+    position: absolute;
+    width: 100px;
+    padding: 0;
+    font-size: 12px;
+    top: 4px;
+    left: 200px;
+}
+
+.AddPeople
+{
+    position: absolute;
+    width: 80px;
+    padding: 0;
+    font-size: 12px;
+    top: 4px;
+    left: 200px;
+}
+
+.AddTopic
+{
+    position: absolute;
+    width: 58px;
+    padding: 0;
+    font-size: 12px;
+    top: 4px;
+    left: 88px;
+}

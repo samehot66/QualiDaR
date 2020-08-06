@@ -8,6 +8,7 @@ import axios from 'axios';
 import Modal from '../../components/UI/Modal/Modal';
 import Addgroup from './Addgroup/Addgroup';
 import Yourkeywords from './Yourkeywords/Yourkeywords';
+import { NavLink } from 'react-router-dom';
 
 const Keywords = (props) => {
 
@@ -248,11 +249,12 @@ const Keywords = (props) => {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Keyword(s)</h1>
                             </div>{/* /.col */}
-                            <div className="col-sm-6">
-                                <div className="float-sm-right">
-                                    Searh
-                            </div >
-                            </div>{/* /.col */}
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
+                                <li class="breadcrumb-item active">Keyword(s)</li>
+                                </ol>
+                            </div>
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}
                 </div>
@@ -262,7 +264,7 @@ const Keywords = (props) => {
                     <div className="container-fluid">
                         <div className={["card card-primary", classes.Box].join(' ')}>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
-                                <h3 className="card-title">Public keyword groups </h3>
+                                <h3 className="card-title">Public keyword group(s) </h3>
                                 <div className="card-tools">
                                     <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={e => setsearchpublic(e.target.value)} />
                                 </div>
@@ -272,9 +274,9 @@ const Keywords = (props) => {
                                 <table className="table m-0 " style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
-                                            <th>Group Name</th>
+                                            <th>Group name</th>
                                             <th>Owner</th>
-                                            <th>Tools</th>
+                                            <th>Tool(s)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -305,9 +307,9 @@ const Keywords = (props) => {
                                     <table className="table m-0 " style={{ overflow: "scroll" }}>
                                         <thead>
                                             <tr>
-                                                <th>Group Name</th>
+                                                <th>Group name</th>
                                                 <th>Owner</th>
-                                                <th>Tools</th>
+                                                <th>Tool(s)</th>
                                             </tr>
                                         </thead>
                                         <tbody>

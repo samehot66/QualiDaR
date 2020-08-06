@@ -51,7 +51,7 @@ const Menu = () => {
                              <NavLink to="/keywords"  className="nav-link">
                                 <i className="nav-icon fas fa-key" />
                                 <p>
-                                    Keywords
+                                    Keyword(s)
                                 </p>
                             </NavLink >
                         </li>
@@ -59,7 +59,7 @@ const Menu = () => {
                             <NavLink to="/projects"  className="nav-link">
                                 <i className="nav-icon fas fa-folder" />
                                 <p>
-                                    Projects
+                                    Project(s)
                                 </p>
                             </NavLink >
                         </li>

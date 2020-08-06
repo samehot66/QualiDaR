@@ -188,7 +188,7 @@ const Publickeywords = (props) => {
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Tool</th>
+                                            <th>Tool(s)</th>
                                         </tr>
                                     </thead>
                                     <tbody >

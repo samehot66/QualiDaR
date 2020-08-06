@@ -5,6 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import classes from './Sharedwithme.css';
 import Sharedwithmeproject from '../Projects/Allprojects/Allsharedwithme/Allsharedwithme';
+import { NavLink } from 'react-router-dom';
 
 const Sharedwithme = (props) => {
 
@@ -64,6 +65,12 @@ const Sharedwithme = (props) => {
                         <div className="row mb-2">
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Shared with me project(s)</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><NavLink to="/dashboard">Home</NavLink></li>
+                                <li class="breadcrumb-item active">Shared with me project(s)</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
