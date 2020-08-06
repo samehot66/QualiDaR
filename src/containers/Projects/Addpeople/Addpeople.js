@@ -221,7 +221,7 @@ const addpeople = (props) => {
         <Auxi>
         <div className="card" >
           <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor: "#007bff" }}>
-            <h3 className="card-title" style={{ color: "white" }} >Add a keyword</h3>
+            <h3 className="card-title" style={{ color: "white" }} >Add a person</h3>
 
           </div>
           {/* /.card-header */}
