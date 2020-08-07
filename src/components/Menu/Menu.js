@@ -28,7 +28,7 @@ const Menu = () => {
                     <img src={require('./icon/user.png')} className="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div className="info">
-                        <NavLink to="/profile" className="d-block">Alexander Pierce</NavLink>
+                        <NavLink to="/profile" className="d-block text-truncate " data-toggle="tooltip" data-placement="top" title={localStorage.getItem("email")}>{localStorage.getItem("email")}</NavLink>
                     </div> 
                 </div> :  
                   null
