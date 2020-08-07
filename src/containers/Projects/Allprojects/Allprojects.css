@@ -34,7 +34,7 @@
     background-color: #66bfed;
 }
 
-.AddpeopleIcon , .TrashIcon {
+.AddpeopleIcon , .TrashIcon ,.EditIcon {
     margin-top: 4px;
     margin-right: 3px;
     width: 24px;
@@ -46,6 +46,11 @@
 .AddpeopleIcon {
     margin-top: 1px;
     height: 25px;
+}
+
+.EditIcon {
+    margin-top: 2px;
+    height: 22px;
 }
 
 .Project {
@@ -77,3 +82,4 @@
     font-size: 22px;
     text-align: center;
 }
+

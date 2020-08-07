@@ -38,7 +38,8 @@ const Projects = (props) => {
                 for (const index in res.data) {
                     loadprojects.push({
                         id: res.data[index].pid,
-                        pname: res.data[index].pname
+                        pname: res.data[index].pname,
+                        description :res.data[index].description
                     });
                 }
                 setprojects(loadprojects);
@@ -57,7 +58,8 @@ const Projects = (props) => {
         for (const index in newProjState) {
             loadprojects.push({
                 id: newProjState[index].pid,
-                pname: newProjState[index].pname
+                pname: newProjState[index].pname,
+                description :newProjState[index].description
             });
         }
         await setprojects(loadprojects);
@@ -108,7 +110,7 @@ const Projects = (props) => {
                                     </Modal>
                                     {projectsfiltersearch.map(project => (
                                         <div key={project.id} >
-                                            <Project pname={project.pname} pid={project.id} onGetprojects={handleGetprojects} />
+                                            <Project pname={project.pname} pid={project.id} description={project.description} onGetprojects={handleGetprojects} />
                                         </div>
                                     ))}
                                 </div>

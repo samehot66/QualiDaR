@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import config from '../../../config.json';
 import axios from 'axios';
 import Button from '../../../components/UI/Button/Button';
+import Editproj from '../Editproject/Editproject';
 
 const allprojects = (props) => {
 
@@ -17,6 +18,11 @@ const allprojects = (props) => {
   const [Addmodal, setAddmodal] = useState(false);
   const showAddModal = () => { setAddmodal(true) };
   const closeAddModal = () => { setAddmodal(false) };
+
+  const [Editmodal, setEditmodal] = useState(false);
+  const showEditModal = () => { setEditmodal(true) };
+  const closeEditModal = () => { setEditmodal(false) };
+
 
   const deleteHandler = async () => {
     let data = {
@@ -63,6 +69,11 @@ const allprojects = (props) => {
   return (
     <Auxi>
       <div className={classes.Menu} >
+ 
+      
+
+
+
         <img onClick={showDeleteModal} className={classes.TrashIcon} src={require('../icon/Trash.png')} alt="Trash" />
         <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete project">
           <div className={classes.Delete}>Are you sure to delete
@@ -77,6 +88,13 @@ const allprojects = (props) => {
         <Modal show={Addmodal} modalClosed={closeAddModal} name="Add people to project">
           <Addpeople pid={props.pid} cancel={closeAddModal} />
         </Modal>
+
+        <img onClick={showEditModal} className={classes.EditIcon} src={require('../icon/Edit.png')} alt="Add people" />
+        <Modal show={Editmodal} modalClosed={closeEditModal} name="Edit the project">
+          <Editproj pid={props.pid} pname={props.pname} description ={props.description} cancel={closeEditModal} onGetprojects={onGetprojects} />
+        </Modal>
+
+
       </div>
       <NavLink to={'/projects/' + props.pid}>
         <div id={props.pid} className={classes.Projects} >

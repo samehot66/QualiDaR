@@ -8,13 +8,16 @@ import Modal from '../../../components/UI/Modal/Modal';
 import Addpeople from '../Addpeople/Addpeople';
 import axios from 'axios';
 import config from '../../../config.json';
+import Editproj from '../Editproject/Editproject';
 
 const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
     const [checkaccess, setcheckaccess] = useState(false);
     const [owner, setowner] = useState('');
+    const [projectdetail, setprojectdetail] = useState([]);
 
+    let x = projectdetail;
     const [allpeople, setallpeople] = useState([]);
     const [searchallpeople, setsearchallpeople] = useState('');
     const [allpeoplefilterserch, setallpeoplefilterserch] = useState([]);
@@ -22,7 +25,6 @@ const oneproject = (props) => {
     const [Newtopicemodal, setNewtopicmodal] = useState(false);
     const shownewtopicModal = () => { setNewtopicmodal(true) };
     const closenewtopicModal = () => { setNewtopicmodal(false) };
-
     
     useEffect(() => {
 
@@ -165,6 +167,40 @@ const oneproject = (props) => {
     //     }
     // }, [])
 
+
+    useEffect(() => {   
+        let projectdetail = [];
+        let source = axios.CancelToken.source();
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.get(config.URL  + '/api/projects/'+props.match.params.id, data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+         
+                projectdetail.push(res.data.pid);
+                projectdetail.push(res.data.pname);
+                projectdetail.push(res.data.description);    
+                setprojectdetail(projectdetail);
+            })
+            .catch((err) => {
+                alert("Show project name Failed");
+            })
+        return ()=>
+        {
+            source.cancel();
+        }
+    }, [])
+
+
+
     const check = async (uid) => {
         if (uid == 1) {
             return true;
@@ -181,12 +217,15 @@ const oneproject = (props) => {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">{props.match.params.id}    <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i></h1>
+                                <h1 className="m-0 text-dark">{projectdetail[1]} </h1>
+                                <span>Description : {projectdetail[2]=="" ? "-" : projectdetail[2]} </span>
                             </div>
+
+
                           <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                      <li className="breadcrumb-item"><NavLink to="/projects">Projects</NavLink></li>
-                                    <li className="breadcrumb-item active">{props.match.params.id} </li>
+                                    <li className="breadcrumb-item active">{projectdetail[1]}   </li>
                                 </ol>
                             </div>
 
@@ -329,7 +368,6 @@ const oneproject = (props) => {
                         <div className={["card ", classes.Box].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#52a5ff"}}>
                                 <h3 className="card-title" style={{color:"white"}}>File(s) in this project
-                     
                                 </h3>
                                 <div className="card-tools">
                                     <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
@@ -348,13 +386,13 @@ const oneproject = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr >
                                                 <td>Environment</td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td>Owner</td>
                                                 <td>
                                                    
-                                                    <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
+                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
                                                  </td>
                                         </tr>
                                          </tbody>
