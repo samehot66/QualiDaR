@@ -209,6 +209,21 @@ router.get('/shared', (req, res)=>{
   })
 })
 
+router.get('/checkaccess', (req, res)=>{
+  ProjectRole.findOne({
+    where: {uid: req.query.uid, pid: req.query.pid},
+  }).then((data)=>{
+    if(data){
+      res.status(200).send({status: true})
+    }else{
+      res.status(200).send({status: false})
+    }
+    console.log(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.get('/:pid', (req, res)=>{
   console.log("request ",req)
   ProjectRole.findOne({
