@@ -6,6 +6,7 @@ const db = require('../../config/db.config.js');
 const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
+const ProjectPdf = db.project_pdffile
 
 router.post('/upload', async (req, res, next) => {
     console.log(`first`)
@@ -29,7 +30,7 @@ router.post('/upload', async (req, res, next) => {
     }).then((data)=>{
       return data.dataValues.email
     }).catch((err) => {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     })
     console.log(email)
 
@@ -39,7 +40,7 @@ router.post('/upload', async (req, res, next) => {
     }).then((data) => {
       return data.dataValues.pname
     }).catch((err) => {
-      res.status(500).send(err)
+      return res.status(500).send(err)
     })
     console.log(project)
 
@@ -49,27 +50,47 @@ router.post('/upload', async (req, res, next) => {
       .map(dirent => dirent.name)
 
     console.log(getDirectories('../backend/public/upload/'))
+    /*ProjectPdf.create({
 
-    Pdffiles.create({
-      pdfname: file.name,
-      uri: `../backend/public/upload/${file.name}`,
-      size: file.size,
-      uid: req.body.uid,
-      pid: req.body.uid
-    }).then((data) => {
-      return data
-    }).catch((err) => {
-      res.status(500).send(err)
-    })
+    })*/
 
-    file.mv(`../backend/public/upload/${file.name}`, err => {
+    file.mv(`../backend/public/upload/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
       }
   
-      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${file.name}` })
+      
+
+      var pdfid
+
+      var uploadPDF = await Pdffiles.create({
+        pdfname: file.name,
+        uri: `../backend/public/upload/${file.name}`,
+        size: file.size,
+        status: 'uploaded'
+      }).then((data) => {
+        pdfid = data.dataValues.pdfid
+        console.log(data.dataValues.pdfid)
+      }).catch((err) => {
+        console.log(err)
+        //return res.status(500).send(err)
+      })
+
+      ProjectPdf.create({
+        pdfid: pdfid,
+        pid: req.body.pid,
+        uid: req.body.uid
+      }).then((data) => {
+        console.log(data)
+      }).catch((err) => {
+        console.log(err)
+        //return res.status(500).send(err)
+      })
+
       performTask(file.name)
+
+      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${file.name}` })
       //.then(()=>{
         
       /*})

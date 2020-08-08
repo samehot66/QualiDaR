@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.FLOAT
     },
     status: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.STRING
     },
     numpages: {
       type: Sequelize.INTEGER
