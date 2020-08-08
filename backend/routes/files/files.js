@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios');
 const { readdirSync } = require('fs')
+const fs = require('fs')
 const db = require('../../config/db.config.js');
 const Project = db.project
 const User = db.user
@@ -54,7 +55,13 @@ router.post('/upload', async (req, res, next) => {
 
     })*/
 
-    file.mv(`../backend/public/upload/${file.name}`,async (err) => {
+    var dir = `../backend/public/upload/${req.body.pid}/${email}`;
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
+    }
+
+    file.mv(`../backend/public/upload/${req.body.pid}/${email}/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
