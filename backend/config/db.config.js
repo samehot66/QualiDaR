@@ -35,8 +35,8 @@ db.subscribe = require('../models/subscribe')(sequelize, Sequelize);
 //-------------------
 //|| project_roles ||
 //-------------------
-db.project.belongsToMany(db.user, { through: db.project_role, foreignKey: 'pid', otherKey: 'uid'});
-db.user.belongsToMany(db.project, { through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});
+db.project.belongsToMany(db.user, {as: 'role', through: db.project_role, foreignKey: 'pid', otherKey: 'uid'});
+db.user.belongsToMany(db.project, {as: 'role', through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});
 
 //----------------------
 //|| project_pdffiles || 
@@ -61,6 +61,14 @@ db.keyword_group.belongsToMany(db.user, { through: db.subscribe, foreignKey: 'ke
 //projects |-------|| topics
 db.project.hasMany(db.topic, {foreignKey: 'pid', sourceKey: 'pid'});
 db.topic.belongsTo(db.project, {foreignKey: 'pid', targetKey: 'pid'});
+
+//users |-------|| topics
+db.user.hasMany(db.topic, {foreignKey: 'uid', sourceKey: 'uid'});
+db.topic.belongsTo(db.user, {foreignKey: 'uid', targetKey: 'uid'});
+
+//pdffiles |-------|| topics
+db.pdf_file.hasMany(db.topic, {foreignKey: 'pdfid', sourceKey: 'pdfid'});
+db.topic.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'});
 
 //topic |-------|| phrases
 db.topic.hasMany(db.phrase, {foreignKey: 'tid', sourceKey: 'tid'});

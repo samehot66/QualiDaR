@@ -73,7 +73,7 @@ router.post('/upload', async (req, res, next) => {
 
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
-        uri: `../backend/public/upload/${file.name}`,
+        uri: `../backend/public/upload/${req.body.pid}/${email}/${file.name}`,
         size: file.size,
         status: 'uploaded'
       }).then((data) => {
@@ -97,7 +97,7 @@ router.post('/upload', async (req, res, next) => {
 
       performTask(file.name)
 
-      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${file.name}` })
+      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}` })
       //.then(()=>{
         
       /*})
