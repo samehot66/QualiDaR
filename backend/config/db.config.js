@@ -35,8 +35,12 @@ db.subscribe = require('../models/subscribe')(sequelize, Sequelize);
 //-------------------
 //|| project_roles ||
 //-------------------
-db.project.belongsToMany(db.user, {as: 'role', through: db.project_role, foreignKey: 'pid', otherKey: 'uid'});
-db.user.belongsToMany(db.project, {as: 'role', through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});
+db.user.hasMany(db.project_role, {foreignKey: 'uid', sourceKey: 'uid'})
+db.project_role.belongsTo(db.user, {foreignKey: 'uid', sourceKey: 'uid'})
+db.project.hasMany(db.project_role, {foreignKey: 'pid', sourceKey: 'pid'})
+db.project_role.belongsTo(db.project, {foreignKey: 'pid', sourceKey: 'pid'})
+//db.project.belongsToMany(db.user, {as: 'role', through: db.project_role, foreignKey: 'pid', otherKey: 'uid'});
+//db.user.belongsToMany(db.project, {as: 'role', through: db.project_role, foreignKey: 'uid', otherKey: 'pid'});
 
 //----------------------
 //|| project_pdffiles || 

@@ -8,6 +8,32 @@ const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
 const ProjectPdf = db.project_pdffile
+const ProjectRole = db.project_role
+
+router.get('', (req, res) => {
+  ProjectPdf.findAll({
+    attributes: ['pdfid'],
+    where: { pid: req.query.pid },
+    include: [{
+      model: Pdffiles,
+      attributes: ['pdfname']
+    },
+    {
+      model: User,
+      attributes: ['uid', 'email'],
+      include: [{
+        model: ProjectRole,
+        attributes: ['role']
+      }]
+    }]
+  }).then((data) => {
+    console.log(data)
+    res.status(200).send(data)
+  }).catch((err) => {
+    console.log(err)
+    res.status(500).send(data)
+  })
+})
 
 router.post('/upload', async (req, res, next) => {
     console.log(`first`)
