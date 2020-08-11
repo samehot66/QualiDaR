@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import classes from './Dashboard.css';
 import { Link } from 'react-router-dom';
 import Errorpage from '../../components/UI/Errorpage/Errorpage';
-import Fileview from '../Upload/Fileview/Fileview';
+
 
 const dashboard = (props) => {
     
@@ -10,8 +10,7 @@ const dashboard = (props) => {
    
     return ( 
         isauth? 
-       
-       <Fileview/>
+    <div>grekgerkgko</div>
     :
   <Errorpage></Errorpage>
     ) 

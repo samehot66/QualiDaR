@@ -387,7 +387,7 @@ const oneproject = (props) => {
                                         </thead>
                                         <tbody>
                                         <tr >
-                                                <td>Environment</td>
+                                                <td><a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=9" target="_blank">20190222-scc-ar-2018-th-03.pdf</a></td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td>Owner</td>
                                                 <td>
