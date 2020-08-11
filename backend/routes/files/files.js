@@ -10,13 +10,13 @@ router.post('/upload', async (req, res, next) => {
   
     const file = req.files.file;
   
-    file.mv(`../backend/public/upload/${file.name}`, err => {
+    file.mv(`../public/upload/${file.name}`, err => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
       }
   
-      res.json({ fileName: file.name, filePath: `../backend/public/upload/${file.name}` })
+      res.json({ fileName: file.name, filePath: `../public/upload/${file.name}` })
       performTask(file.name)
       //.then(()=>{
         
