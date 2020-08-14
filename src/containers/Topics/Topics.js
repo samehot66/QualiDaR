@@ -29,7 +29,8 @@ import React, {useState} from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import FullEditor from 'ckeditor5-build-full'
 import Auxi from '../../hoc/Auxi';
-
+import ReactHtmlParser from 'react-html-parser';
+import './Topics.css'
 const topics = (props) => {
     const [content,setcontent] = useState('');
     const handleChange = (event,editor) =>{
@@ -39,13 +40,14 @@ console.log(data);
 setcontent(data)
     }   //<textarea cols="25" row="14" type="text" name="content" value={content} onChange={handleChange}/>
     
-  
+
     FullEditor.defaultConfig = {
-        toolbar: ['bold', 'italic','|','highlight' ,'|','undo','redo' ],
-    
-        // This value must be kept in sync with the language defined in webpack.config.js.
+        toolbar: ['bold', 'italic','|','highlight:yellowMarker' ,'|','undo','redo' ],
+
         language: 'en'
     };
+
+
     return ( <Auxi>
       <CKEditor
 editor={FullEditor}
@@ -53,8 +55,9 @@ onInit={editor =>{}}
 onChange={handleChange}
 
 />
-    <div>{content}</div>
- 
+<div>
+{ReactHtmlParser(content)}
+ </div>
    </Auxi> ) 
 };
 
