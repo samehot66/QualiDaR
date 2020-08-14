@@ -14,10 +14,9 @@ const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
     const [checkaccess, setcheckaccess] = useState(false);
-    const [owner, setowner] = useState('');
+    const [role, setrole] = useState('');
     const [projectdetail, setprojectdetail] = useState([]);
 
-    let x = projectdetail;
     const [allpeople, setallpeople] = useState([]);
     const [searchallpeople, setsearchallpeople] = useState('');
     const [allpeoplefilterserch, setallpeoplefilterserch] = useState([]);
@@ -49,7 +48,12 @@ const oneproject = (props) => {
                    
                     if(res.data.users[index].project_roles.role == "owner")
                     {
-                        setowner(res.data.users[index].email);
+                        setrole(res.data.users[index].email);
+                    }
+
+                    if(res.data.users[index].project_roles.role == "guest")
+                    {
+                        setrole(res.data.users[index].email);
                     }
 
                     people.push({
@@ -200,7 +204,7 @@ const oneproject = (props) => {
     }, [])
 
 
-
+    let tid =1;
     const check = async (uid) => {
         if (uid == 1) {
             return true;
@@ -274,7 +278,7 @@ const oneproject = (props) => {
               </td>
                 <td style={{color: people.role == "owner" ? "#ccc" : "black" }}>
                 {
-                   owner == localStorage.getItem("email") ?
+                   role == localStorage.getItem("email") ?
                    people.role == "owner" ? null:
               <i id={people.peopleid} key={people.peopleid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }}  onClick={(event) => deletepeopleHandler(event)}></i>  
          
@@ -307,7 +311,7 @@ const oneproject = (props) => {
                                         <div className="d-flex">
                                              <span className="d-flex flex-column" style={{ width: "700px", position: "relative", top: "3px"}}>
                                                
-                                                    <Fileupload pid={props.match.params.id} />
+                                                    <Fileupload pid={props.match.params.id} role={role} />
                                                 </span>
                                         
 
@@ -346,11 +350,11 @@ const oneproject = (props) => {
                                                 <th>Tools</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody> 
                                         <tr>
-                                                <td>Environment</td>
+                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i><NavLink to={"/projects/"+props.match.params.id+"/"+tid}> Environment</NavLink></td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td>Owner</td>
+                                                <td style={{color:"#ccc" }}>Owner</td>
                                                 <td>
                                                     <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
@@ -382,16 +386,21 @@ const oneproject = (props) => {
                                                 <th>File name</th>
                                                 <th>Uploaded by</th>
                                                 <th>Role</th>
+                                                <th>Progress</th>
                                                 <th>Tools</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr >
-                                                <td><a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=9" target="_blank">20190222-scc-ar-2018-th-03.pdf</a></td>
+                                        <tr>
+                                                <td>   
+                                                    <i id="1" className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
+                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=1" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
+                                                </td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td>Owner</td>
+                                                <td style={{color:"#ccc" }}>Owner</td>
+                                                <td>100%</td>
                                                 <td>
-                                                   
+                                               
                                                     <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
                                                  </td>
                                         </tr>
