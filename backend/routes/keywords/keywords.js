@@ -4,6 +4,7 @@ const db = require('../../config/db.config.js');
 const Keywordgroup = db.keyword_group
 const Keyword = db.keyword
 const Subscribe = db.subscribe
+const ProjectRole = db.project_role
 const User = db.user
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
@@ -24,6 +25,33 @@ router.get('/mygroups', (req, res)=>{
   }).then((data)=>{
     res.json(data)
   }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.get('/usergroups', (req, res)=>{
+  User.findAll({
+    attributes: ['uid', 'email'],
+    where: {uid: req.query.uid},
+    include: [{
+      model: Keywordgroup,
+      attributes: ['keywordgroupsid', 'groupname']
+    },{
+      model: Subscribe,
+      include: [{
+        model: Keywordgroup,
+        attributes: ['keywordgroupsid', 'groupname', 'uid']
+      }]
+    }, {
+      model: ProjectRole,
+      attributes: ['role'],
+      where: {pid: req.query.pid}
+    }]
+  }).then((data)=>{
+    console.log(data)
+    res.json(data)
+  }).catch((err) => {
+    console.log(err)
     res.status(500).send(err)
   })
 })

@@ -59,8 +59,12 @@ db.project.belongsToMany(db.pdf_file, { through: db.project_pdffile, foreignKey:
 //---------------
 //|| subscribe ||
 //---------------
-db.user.belongsToMany(db.keyword_group, { through: db.subscribe, foreignKey: 'uid', otherKey: 'keywordgroupsid'})
-db.keyword_group.belongsToMany(db.user, { through: db.subscribe, foreignKey: 'keywordgroupsid', otherKey: 'uid'})
+db.user.hasMany(db.subscribe, {foreignKey: 'uid', sourceKey: 'uid'})
+db.subscribe.belongsTo(db.user, {foreignKey: 'uid', sourceKey: 'uid'})
+db.keyword_group.hasMany(db.subscribe, {foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
+db.subscribe.belongsTo(db.keyword_group, {foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
+//db.user.belongsToMany(db.keyword_group, { through: db.subscribe, foreignKey: 'uid', otherKey: 'keywordgroupsid'})
+//db.keyword_group.belongsToMany(db.user, { through: db.subscribe, foreignKey: 'keywordgroupsid', otherKey: 'uid'})
 
 //projects |-------|| topics
 db.project.hasMany(db.topic, {foreignKey: 'pid', sourceKey: 'pid'});
