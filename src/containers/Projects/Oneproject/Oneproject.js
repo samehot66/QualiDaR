@@ -16,7 +16,7 @@ const oneproject = (props) => {
     const [checkaccess, setcheckaccess] = useState(false);
     const [role, setrole] = useState('');
     const [projectdetail, setprojectdetail] = useState([]);
-
+    const [owner,setowner] =useState('');
     const [allpeople, setallpeople] = useState([]);
     const [searchallpeople, setsearchallpeople] = useState('');
     const [allpeoplefilterserch, setallpeoplefilterserch] = useState([]);
@@ -41,7 +41,7 @@ const oneproject = (props) => {
                 'Content-Type': 'application/json'
             }
         }
-        axios.get(config.URL + '/api/projects/people', data, axiosConfig,{ cancelToken: source.token})
+          axios.get(config.URL + '/api/projects/people', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
         
                 for (const index in res.data.users) {
@@ -49,6 +49,7 @@ const oneproject = (props) => {
                     if(res.data.users[index].project_roles.role == "owner")
                     {
                         setrole(res.data.users[index].email);
+                     setowner(res.data.users[index].email);
                     }
 
                     if(res.data.users[index].project_roles.role == "guest")
@@ -129,7 +130,7 @@ const oneproject = (props) => {
                         email: res.data.users[index].email,
                         role :  res.data.users[index].project_roles.role 
                     });
-                   
+                  
                 }
                 setallpeople(people);
             })
@@ -228,7 +229,11 @@ const oneproject = (props) => {
 
                           <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
-                                     <li className="breadcrumb-item"><NavLink to="/projects">Projects</NavLink></li>
+                                    
+                                         
+                                         {owner == localStorage.getItem("email") ?  <li className="breadcrumb-item">
+                                         <NavLink to="/projects">Project(s)</NavLink></li> : <li className="breadcrumb-item">
+                                         <NavLink to="/sharedwithme">Shared with me project(s)</NavLink></li>}
                                     <li className="breadcrumb-item active">{projectdetail[1]}   </li>
                                 </ol>
                             </div>
@@ -352,10 +357,12 @@ const oneproject = (props) => {
                                         </thead>
                                         <tbody> 
                                         <tr>
-                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i><NavLink to={"/projects/"+props.match.params.id+"/"+tid}> Environment</NavLink></td>
+                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i><NavLink to={"/projects/"+props.match.params.pname+"/"+props.match.params.id+"/"+"Environment"+"/"+tid}> Environment</NavLink></td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td style={{color:"#ccc" }}>Owner</td>
                                                 <td>
+                                                    <i className="fa fa-fw fa-key" style={{ fontSize: "18px" }} ></i>
+                                                    <i className="fa fa-fw fa-file-pdf" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
                                                  </td>
@@ -393,8 +400,21 @@ const oneproject = (props) => {
                                         <tbody>
                                         <tr>
                                                 <td>   
-                                                    <i id="1" className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
+                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
                                                     <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=1" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
+                                                </td>
+                                                <td>kanokpol.thongsem@cmu.ac.th</td>
+                                                <td style={{color:"#ccc" }}>Owner</td>
+                                                <td>100%</td>
+                                                <td>
+                                               
+                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
+                                                 </td>
+                                        </tr>
+                                        <tr>
+                                                <td>   
+                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
+                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=9" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
                                                 </td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td style={{color:"#ccc" }}>Owner</td>

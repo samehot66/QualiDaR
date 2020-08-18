@@ -17,8 +17,8 @@ const Content = (props) => {
                 <Route path="/" exact component={Authentication} />       
                 <Route path="/dashboard"  component={Dashboard} />
                 <Route path="/keywords"  component={Keywords} />        
-                <Route path="/projects/:id/:tid" component={Topics} />
-                <Route path="/projects/:id" component={Oneproject} />
+                <Route path="/projects/:pname/:id/:tname/:tid" component={Topics} />
+                <Route path="/projects/:pname/:id" component={Oneproject} />
                 <Route path="/projects"  component={Projects} />
                 <Route path="/sharedwithme"  component={Sharedwithme} />    
     

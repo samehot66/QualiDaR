@@ -96,7 +96,7 @@ const allprojects = (props) => {
 
 
       </div>
-      <NavLink to={'/projects/' + props.pid}>
+      <NavLink to={'/projects/'+props.pname+'/' + props.pid}>
         <div id={props.pid} className={classes.Projects} >
           {props.pname}
         </div>

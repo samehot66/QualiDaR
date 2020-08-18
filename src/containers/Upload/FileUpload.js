@@ -67,6 +67,7 @@ const FileUpload = (props) => {
             className='custom-file-input'
             id='customFile'
             onChange={onChange}
+            accept=".pdf"
           />
           <label className='custom-file-label' htmlFor='customFile'>
             {filename}

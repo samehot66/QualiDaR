@@ -2,3 +2,27 @@ mark
 {
     background-color:#ffff8a;
 }
+
+
+.Box
+{
+    height:645px;
+    width:20%;
+    margin-right:3px;
+}
+
+.Box2
+{
+    height:645x;
+    width:39%;
+    margin-right:3px;
+    margin-left:3px;
+}
+
+.Box3
+{
+    height:645px;
+    width:39%;
+    margin-left:3px;
+   
+}

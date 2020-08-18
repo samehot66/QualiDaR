@@ -67,7 +67,7 @@ const Menu = () => {
                              <NavLink to="/sharedwithme" className="nav-link">
                                 <i className="nav-icon fas fa-users" />
                                 <p>
-                                    Shared With Me
+                                    Shared with me
                                 </p>
                             </NavLink >
                         </li></Auxi>
