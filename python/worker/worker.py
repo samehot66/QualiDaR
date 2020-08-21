@@ -19,11 +19,12 @@ def pdf_process(task_id):
     print(f"Long running operation on task {task.job_definition}")
     try:
         print("Processing start")
-        st = extract_text('D:/Project/20190621-bts-ar201819-th.pdf')
+        print(task.location)
+        st = extract_text(task.location)
         clean_text(st)
         print(st[11])
-    except:
-        print("an error occur")
+    except ValueError:
+        print(ValueError)
     task.job_result = "Task successfully finished."
     print(f"Long running operation finished.")
     print(f"Updating task with id {task.id}...")
