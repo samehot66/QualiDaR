@@ -32,23 +32,6 @@ def extract_text(pdf_path):
     return text
 
 def clean_text(st):
-    #for i in range(len(st)):
-    #   st[i] = st[i].replace('\uf70b','้').replace('\uf70a','่').replace('\uf70e','์').replace('\uf702','ี').replace('\uf710','ั').replace('\uf712','็').replace('\uf70c','๊').replace('\x0c','\n').replace('\uf06c','*').replace('\uf701','ิ').replace('\uf705','่').replace('\uf0a7','*').replace('\uf713','่').replace(' ้า','้ำ').replace('�','ำ').replace(' า','ำ').replace(' ่า','่ำ').replace(' ำ','ำ')
-    
-    #if '\u0e33' in st[i]:
-    #    st[i] = st[i].replace('\u0e33', 'า')
-
-    #if ' ' + '\u0e33' in st[i]:
-    #    st[i] = st[i].replace(' ' + '\u0e33', 'ำ')
-
-    #if ' '+'\u0e32' in st[i]:
-    #    st[i] = st[i].replace(' '+'\u0e32', 'ำ')
-
-    #if ' '+'\u0e49'+'\u0e32' in st[i]:
-    #    st[i] = st[i].replace(' '+'\u0e49'+'\u0e32', '้ำ')
-        
-    #if 'า' + 'า' in st[i]:
-    #    st[i] = st[i].replace('า' + 'า', 'ำ')
     for i in range(len(st)):
         if '\u0e33' + '\ufffd' in st[i]:
             st[i] = st[i].replace('\u0e33' + '\ufffd', '\u0e33')
