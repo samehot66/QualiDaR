@@ -121,7 +121,7 @@ router.post('/upload', async (req, res, next) => {
         //return res.status(500).send(err)
       })
 
-      performTask(file.name)
+      createTask(req.body.pid, email, file.name)
 
       res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}` })
       //.then(()=>{
@@ -133,9 +133,9 @@ router.post('/upload', async (req, res, next) => {
     });
   });
 
-  performTask = (fileName) => {
+  createTask = (pid, email, fileName) => {
     axios.post("http://localhost:5000/task", {
-        file: `D:/Project/QBRRS/QBDRRs/backend/public/upload/${fileName}`
+        file: `../backend/public/upload//${pid}/${email}${fileName}`
     }).then((res) => {
         console.log(`statusCode: ${res.statusCode}`)
         console.log(res)
