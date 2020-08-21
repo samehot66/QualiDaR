@@ -122,8 +122,27 @@ router.post('/upload', async (req, res, next) => {
       })
 
       createTask(req.body.pid, email, file.name)
+      .then((data) => {
+        console.log(data)
+        performTask(data)
+        .then((data) => {
+          if(data==200){
+            //return res.status(data).send({message: 'Upload file complete!'})
+          }else{
+            //return res.status(data).send({message: 'An error occur!'})
+          }
+        }).catch((err)=>
+        {
+          console.log(err)
+          //return res.status(500).send(err)
+        })
+      }).catch((err)=>
+      {
+        console.log(err)
+        //return res.status(500).send(err)
+      })
 
-      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}` })
+      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}`})
       //.then(()=>{
         
       /*})
@@ -133,14 +152,33 @@ router.post('/upload', async (req, res, next) => {
     });
   });
 
-  createTask = (pid, email, fileName) => {
-    axios.post("http://localhost:5000/task", {
-        file: `../backend/public/upload//${pid}/${email}${fileName}`
+  createTask = async (pid, email, fileName) => {
+    var promise = await axios.post("http://localhost:5000/task", {
+        file: `../backend/public/upload/${pid}/${email}/${fileName}`
     }).then((res) => {
-        console.log(`statusCode: ${res.statusCode}`)
         console.log(res)
+        console.log('createTask: ' + res.data)
+        return res.data
       }).catch((err)=>{
           console.log(err)
+          return err
+      })
+      return promise
+  }
+
+  performTask = async (taskId) => {
+    var promise = await axios.put("http://localhost:5000/task/" + taskId)
+    .then((res) => {
+      console.log(res)
+      if(res.statusCode==201){
+        return 200
+      }else{
+        return 500
+      }
+
+    }).catch((err)=>{
+          console.log(err)
+          return err
       })
   }
 
