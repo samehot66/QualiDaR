@@ -8,8 +8,7 @@ module.exports = (sequelize, Sequelize) => {
 	  tname: {
           type: Sequelize.STRING,
           allowNull: false
-      },
-
+      }
 	});
 	
 	return Topic;
