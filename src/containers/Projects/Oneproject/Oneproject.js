@@ -24,6 +24,10 @@ const oneproject = (props) => {
     const [Newtopicemodal, setNewtopicmodal] = useState(false);
     const shownewtopicModal = () => { setNewtopicmodal(true) };
     const closenewtopicModal = () => { setNewtopicmodal(false) };
+
+    const [Uploadmodal, setUploadmodal] = useState(false);
+    const showUploadModal = () => { setUploadmodal(true) };
+    const closeUploadModal = () => { setUploadmodal(false) };
     
     useEffect(() => {
 
@@ -304,33 +308,62 @@ const oneproject = (props) => {
                             </div>
                             {/* /.card-body */}
                         </div>
-                   
-                             
-                                <div className="card" style={{ height: "300px" }}>
-                                    <div className="card-header border-0" style={{ backgroundColor: "#007bff" , padding:".15rem 1.25rem"}}>
-                                        <div className="d-flex justify-content-between">
-                                            <h3 className="card-title " style={{ color: "white" }}>Upload</h3>
-                                        </div>
-                                    </div>
-                                    <div className="card-body" >
-                                        <div className="d-flex">
-                                             <span className="d-flex flex-column" style={{ width: "700px", position: "relative", top: "3px"}}>
-                                               
-                                                    <Fileupload pid={props.match.params.id} role={role} />
-                                                </span>
-                                        
-
-                                        </div>
-                                        {/* /.d-flex */}
-
-
-                                    </div>
+                        <div className={["card ", classes.Box].join(' ') }>
+                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#52a5ff"}}>
+                                <h3 className="card-title" style={{color:"white"}}>File(s) in this project 
+                                
+                                 <button type="button" className={["btn btn-block btn-success", classes.Uploadmodal].join(" ")} onClick={showUploadModal} style={{ backgroundColor: "#007bff", borderColor: "#52a5ff" }}> + File</button>
+                                </h3>
+                                <div className="card-tools">
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
                                 </div>
+                            </div>
+                            {/* /.card-header */}
+                            <div className="card-body p-0 " style={{ overflow: "auto" }}>
+                                <div >
+                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                        <thead>
+                                            <tr>
+                                                <th>File name</th>
+                                                <th>Description</th>
+                                                <th>Uploaded by</th>
+                                                <th>Role</th>
+                                                <th>Progress</th>
+                                                <th>Tools</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                                <td>   
+                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
+                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=1" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
+                                                </td>
+                                                <td>gregherherh</td>
+                                                <td>kanokpol.thongsem@cmu.ac.th</td>
+                                                <td style={{color:"#ccc" }}>Owner</td>
+                                                <td>100%</td>
+                                                <td>
+                                               
+                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
+                                                 </td>
+                                        </tr>
+                                        
+                                         </tbody>
+                                    </table>
+                                </div>
+                                {/* /.table-responsive */}
+                            </div>
+                            {/* /.card-body */}
+                        </div>
+                         
+                        <Modal show={Uploadmodal} modalClosed={closeUploadModal} name="Upload file to project">
+                                                    <Fileupload pid={props.match.params.id} role={role} />
+                                 </Modal>
                                 {/* /.card */}
                             </div>
                             {/* /.col-md-6 */}
                             <div className="col-lg-6">
-                            <div className={["card ", classes.Box].join(' ') }>
+                            <div className={["card ", classes.Box2].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#66bfed"}}>
                                 <h3 className="card-title" style={{color:"white"}}>Topic(s)
                                 <button type="button" className={["btn btn-block btn-success", classes.AddTopic].join(" ")} onClick={shownewtopicModal} style={{ backgroundColor: "#52a5ff", borderColor: "#52a5ff" }}> + Topic</button>
@@ -357,7 +390,7 @@ const oneproject = (props) => {
                                         </thead>
                                         <tbody> 
                                         <tr>
-                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i><NavLink to={"/projects/"+props.match.params.pname+"/"+props.match.params.id+"/"+"Environment"+"/"+tid}> Environment</NavLink></td>
+                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i>Environment<NavLink to={"/projects/"+props.match.params.pname+"/"+props.match.params.id+"/"+"Environment"+"/"+tid} > Environment</NavLink></td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td style={{color:"#ccc" }}>Owner</td>
                                                 <td>
@@ -376,62 +409,7 @@ const oneproject = (props) => {
                         </div>
 
                       
-                        <div className={["card ", classes.Box].join(' ') }>
-                            <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#52a5ff"}}>
-                                <h3 className="card-title" style={{color:"white"}}>File(s) in this project
-                                </h3>
-                                <div className="card-tools">
-                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
-                                </div>
-                            </div>
-                            {/* /.card-header */}
-                            <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
-                                        <thead>
-                                            <tr>
-                                                <th>File name</th>
-                                                <th>Uploaded by</th>
-                                                <th>Role</th>
-                                                <th>Progress</th>
-                                                <th>Tools</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                                <td>   
-                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
-                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=1" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
-                                                </td>
-                                                <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td style={{color:"#ccc" }}>Owner</td>
-                                                <td>100%</td>
-                                                <td>
-                                               
-                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
-                                                 </td>
-                                        </tr>
-                                        <tr>
-                                                <td>   
-                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
-                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=9" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
-                                                </td>
-                                                <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td style={{color:"#ccc" }}>Owner</td>
-                                                <td>100%</td>
-                                                <td>
-                                               
-                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
-                                                 </td>
-                                        </tr>
-                                         </tbody>
-                                    </table>
-                                </div>
-                                {/* /.table-responsive */}
-                            </div>
-                            {/* /.card-body */}
-                        </div>
-                            </div>
+                         </div>
                             {/* /.col-md-6 */}
                         </div>
                         {/* /.row */}

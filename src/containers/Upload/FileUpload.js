@@ -10,7 +10,7 @@ const FileUpload = (props) => {
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState(0);
-
+  const [desc,setdesc]=useState('');
   const onChange = e => {
     setFile(e.target.files[0]);
 
@@ -22,10 +22,11 @@ const FileUpload = (props) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('description', desc);
     formData.append('uid', localStorage.getItem("uid"));
     formData.append('pid', props.pid);
     formData.append('access_token', localStorage.getItem("access_token"));
-    console.log(formData);
+ 
     try {
       const res = await axios.post(config.URL + '/api/files/upload', formData, {
         headers: {
@@ -61,7 +62,9 @@ const FileUpload = (props) => {
     <Fragment>
             {message ? <Message msg={message} /> : null}
       <form onSubmit={onSubmit}>
+
         <div className='custom-file mb-4'>
+        
           <input
             type='file'
             className='custom-file-input'
@@ -75,7 +78,9 @@ const FileUpload = (props) => {
         </div>
 
         <Progress percentage={uploadPercentage} />
-
+        Description:   <input type="text" style={{marginTop:"3px", height:"25px"}} onChange={(e)=>setdesc(e.target.value)} />
+     
+        
         <input
           type='submit'
           value='Upload'

@@ -5,7 +5,12 @@
 
     position: relative;
 }
+.Box2
+{
+    height:617px;
 
+    position: relative;
+}
 .AddIcon
 {
     position: absolute;
@@ -25,6 +30,18 @@
     font-size: 12px;
     top: 4px;
     left: 88px;
+}
+
+
+.Uploadmodal
+{
+    position: absolute;
+    width: 58px;
+    padding: 0;
+    font-size: 12px;
+    top: 4px;
+    left: 182px;
+    background-color: #007bff;
 }
 
 

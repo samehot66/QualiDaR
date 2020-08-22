@@ -1,16 +1,77 @@
-import React,{useState} from 'react';
+ import React,{useState ,useEffect,useMemo,useCallback} from 'react';
 import Ckeditor from './Ckeditor/Ckeditor';
 import { NavLink } from 'react-router-dom';
 import Errorpage from '../../components/UI/Errorpage/Errorpage';
 import Auxi from '../../hoc/Auxi';
 import classes from './Topics.css';
+ import config from '../../config.json';
+ import axios from 'axios';
 
 const topics = (props) => {
     
     const [isauth,setisauth] =  useState(localStorage.getItem('isAuth')); 
-    console.log(props.match.params.tid);
-   console.log(props.match.params.id);
+  //  console.log(props.match.params.tid);
+ //  console.log(props.match.params.id);
 
+   const [projects, setprojects] = useState([]);
+   const [projects2, setprojects2] = useState([]);
+
+  const x=()=>{
+       const loadprojects = [];        
+       let source = axios.CancelToken.source();
+       let data = {
+           params: {
+               "uid": localStorage.getItem("uid"),
+               "access_token": localStorage.getItem("access_token")
+           }
+       }
+       let axiosConfig = {
+           headers: {
+               'Content-Type': 'application/json'
+           }
+       }
+       axios.get(config.URL  + '/api/projects', data, axiosConfig,{ cancelToken: source.token})
+           .then((res) => {
+               for (const index in res.data) {
+                   loadprojects.push({
+                       id: res.data[index].pid,
+                       pname: res.data[index].pname,
+                       description :res.data[index].description
+                   });
+               }
+               setprojects(loadprojects);
+           })
+           .catch((err) => {
+               alert("Show all projects Failed");
+           })
+     
+   };
+
+
+
+const removeHandler =  (id)=>{   
+   
+    var x = [...projects]; 
+   
+   setprojects2([...projects2,x[id]]);
+     console.log(projects2);
+     x.splice(id,1)
+  
+    setprojects(x);
+
+   
+};
+
+const removeHandler2 =  (id)=>{   
+   var x = [...projects2]
+  
+   setprojects([...projects,x[id]]);
+   x.splice(id,1)
+  
+   setprojects2(x);
+
+   
+};
 
     return ( 
         isauth?
@@ -55,11 +116,13 @@ const topics = (props) => {
   <button type="button" className="list-group-item active" disabled>
     ESG
   </button>
-  <button type="button" className="list-group-item list-group-item-action">key1</button>
+  <button type="button" className="list-group-item list-group-item-action" onClick={x}>key1</button>
   <button type="button" className="list-group-item list-group-item-action">key2</button>
   <button type="button" className="list-group-item list-group-item-action">key3</button>
 
-</div>
+</div>    
+
+  
                         </div>
                    
                              
@@ -76,6 +139,11 @@ const topics = (props) => {
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                           <Ckeditor/>
+                          {projects.map((project,i) => (
+           <div id={project.id} key={project.id} onClick={()=>removeHandler(i)}>
+           {project.pname}
+          </div>
+      ))}
                         </div>
                    
                              
@@ -90,7 +158,11 @@ const topics = (props) => {
                             </div>
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                           ;ui;u
+                            {projects2.map((project,i) => (
+           <div id={project.id} key={project.id} onClick={()=>removeHandler2(i) }>
+           {project.pname}
+          </div>
+      ))}
                         </div>
                    
                              
@@ -98,12 +170,6 @@ const topics = (props) => {
                         </div>
                  
                     </div>
-
-
-
-
-
-
 
                 </div>
             </Auxi>
@@ -113,3 +179,6 @@ const topics = (props) => {
 };
 
 export default topics;
+
+
+  
