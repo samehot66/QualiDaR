@@ -9,6 +9,8 @@ const User = db.user
 const Pdffiles = db.pdf_file
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
+const Topic = db.topic
+const TopicPdffiles = db.topic_pdffiles
 
 router.get('', (req, res) => {
   ProjectPdf.findAll({
@@ -16,7 +18,8 @@ router.get('', (req, res) => {
     where: { pid: req.query.pid },
     include: [{
       model: Pdffiles,
-      attributes: ['pdfname']
+      attributes: ['pdfname'],
+      order: ['pdfname', 'ASC']
     },
     {
       model: User,
@@ -32,6 +35,37 @@ router.get('', (req, res) => {
   }).catch((err) => {
     console.log(err)
     res.status(500).send(data)
+  })
+})
+
+router.post('/topic', (req, res)=>{
+  Pdffiles.findOne({
+    where: { pdfid: req.body.pdfid }
+  }).then((data)=>{
+    if(data){
+      Topic.findOne({
+        where: { tid: req.body.tid }
+      }).then((data)=>{
+        if(data){
+          TopicPdffiles.create({
+            tid: req.body.tid,
+            pdfid: req.body.pdfid,
+            topicTid: req.body.tid,
+            pdffilePdfid: req.body.pdfid
+          }).then((data)=>{
+            res.status(200).send(data)
+          }).catch((err)=>{
+            res.status(500).send(err)
+          })
+        }else{
+          res.status(404).send({ message: 'Topic not found!' })
+        }
+      })
+    }else{
+      res.status(404).send({ message: 'PDF not found!' })
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
   })
 })
 
