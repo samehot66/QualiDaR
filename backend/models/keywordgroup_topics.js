@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-	const keywordgroup_topics = sequelize.define('project_pdffiles', {
+	const keywordgroup_topics = sequelize.define('keywordgroup_topics', {
 		  keywordgroupsid: {
 			type: Sequelize.INTEGER,
 			allowNull: false

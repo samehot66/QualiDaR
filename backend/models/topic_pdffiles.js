@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-	const topic_pdffiles = sequelize.define('project_pdffiles', {
+	const topic_pdffiles = sequelize.define('topic_pdffiles', {
 		  pdfid: {
 			type: Sequelize.INTEGER,
 			allowNull: false
