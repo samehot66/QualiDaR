@@ -8,7 +8,10 @@ module.exports = (sequelize, Sequelize) => {
 	  tname: {
           type: Sequelize.STRING,
           allowNull: false
-      }
+      },
+    done: {
+      type: Sequelize.BOOLEAN
+    }
 	});
 	
 	return Topic;

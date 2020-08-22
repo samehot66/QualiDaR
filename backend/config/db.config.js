@@ -30,7 +30,29 @@ db.keyword = require('../models/keyword')(sequelize, Sequelize);
 db.keyword_group = require('../models/keywordgroups')(sequelize, Sequelize);
 db.project_pdffile = require('../models/project_pdffiles.js')(sequelize, Sequelize);
 db.subscribe = require('../models/subscribe')(sequelize, Sequelize);
+db.topic_pdffiles = require('../models/topic_pdffiles.js')(sequelize, Sequelize);
+db.keywordgroup_topics = require('../models/keywordgroup_topics.js')(sequelize, Sequelize);
 //db.project_role = User_Profile = sequelize.define('project_roles', { role: Sequelize.ENUM("owner", "guest") }, { timestamps: false });
+
+//-------------------
+//|| keywordgroup_topics ||
+//-------------------
+db.topic.hasMany(db.keywordgroup_topics, {as: 'topic_group',foreignKey: 'tid', sourceKey: 'tid'})
+db.keywordgroup_topics.belongsTo(db.topic, {as: 'topic_group',foreignKey: 'tid', sourceKey: 'tid'})
+db.keyword_group.hasMany(db.keywordgroup_topics, {as: 'keywordgroup',foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
+db.keywordgroup_topics.belongsTo(db.keyword_group, {as: 'keywordgroup',foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
+db.topic.belongsToMany(db.keyword_group, {through: db.keywordgroup_topics});
+db.keyword_group.belongsToMany(db.topic, {through: db.keywordgroup_topics});
+
+//-------------------
+//|| topic_pdffiles ||
+//-------------------
+db.topic.hasMany(db.topic_pdffiles, {as: 'topic_role',foreignKey: 'tid', sourceKey: 'tid'})
+db.project_role.belongsTo(db.topic, {as: 'topic_role',foreignKey: 'tid', sourceKey: 'tid'})
+db.pdf_file.hasMany(db.topic_pdffiles, {as: 'pdf',foreignKey: 'pdfid', sourceKey: 'pdfid'})
+db.topic_pdffiles.belongsTo(db.pdf_file, {as: 'pdf',foreignKey: 'pdfid', sourceKey: 'pdfid'})
+db.topic.belongsToMany(db.pdf_file, {through: db.topic_pdffiles});
+db.pdf_file.belongsToMany(db.topic, {through: db.topic_pdffiles});
 
 //-------------------
 //|| project_roles ||
