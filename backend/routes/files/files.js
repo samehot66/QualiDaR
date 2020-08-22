@@ -100,6 +100,7 @@ router.post('/upload', async (req, res, next) => {
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
         uri: `../backend/public/upload/${req.body.pid}/${file.name}`,
+        description: req.body.description,
         size: file.size,
         status: 'uploaded'
       }).then((data) => {
