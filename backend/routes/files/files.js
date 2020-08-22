@@ -38,6 +38,20 @@ router.get('', (req, res) => {
   })
 })
 
+router.get('/topic', (req, res)=>{
+  Topic.findOne({
+    where: { tid: req.query.tid },
+    include: [{
+      model: Pdffiles,
+      order: ['pdfname', 'ASC']
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.post('/topic', (req, res)=>{
   Pdffiles.findOne({
     where: { pdfid: req.body.pdfid }

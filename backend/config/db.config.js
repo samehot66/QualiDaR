@@ -97,8 +97,8 @@ db.user.hasMany(db.topic, {foreignKey: 'uid', sourceKey: 'uid'});
 db.topic.belongsTo(db.user, {foreignKey: 'uid', targetKey: 'uid'});
 
 //pdffiles |-------|| topics
-db.pdf_file.hasMany(db.topic, {foreignKey: 'pdfid', sourceKey: 'pdfid'});
-db.topic.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'});
+//db.pdf_file.hasMany(db.topic, {foreignKey: 'pdfid', sourceKey: 'pdfid'});
+//db.topic.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'});
 
 //topic |-------|| phrases
 db.topic.hasMany(db.phrase, {foreignKey: 'tid', sourceKey: 'tid'});
