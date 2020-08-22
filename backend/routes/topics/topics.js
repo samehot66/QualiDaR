@@ -11,7 +11,7 @@ const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 
 router.get('', (req, res) =>{
-    db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ';')
+    db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER BY ASC;')
     .then((data) => {
         console.log(data)
         res.status(200).send(data)
@@ -34,10 +34,13 @@ router.get('/detail', (req, res)=>{
     Topic.findOne({
         where: { tid: req.query.tid },
         include: [{
-            model: Pdffiles
+            model: Pdffiles,
+            order: ['pdfname', 'ASC']
         }, {
-            model: Keywordgroups
-        }]
+            model: Keywordgroups,
+            order: ['groupname', 'ASC']
+        }],
+        order: ['tname', 'ASC']
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{
