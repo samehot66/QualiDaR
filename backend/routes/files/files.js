@@ -81,13 +81,13 @@ router.post('/upload', async (req, res, next) => {
 
     })*/
 
-    var dir = `../backend/public/upload/${req.body.pid}/${email}`;
+    var dir = `../backend/public/upload/${req.body.pid}`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
     }
 
-    file.mv(`../backend/public/upload/${req.body.pid}/${email}/${file.name}`,async (err) => {
+    file.mv(`../backend/public/upload/${req.body.pid}/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
@@ -99,7 +99,7 @@ router.post('/upload', async (req, res, next) => {
 
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
-        uri: `../backend/public/upload/${req.body.pid}/${email}/${file.name}`,
+        uri: `../backend/public/upload/${req.body.pid}/${file.name}`,
         size: file.size,
         status: 'uploaded'
       }).then((data) => {
@@ -107,7 +107,7 @@ router.post('/upload', async (req, res, next) => {
         console.log(data.dataValues.pdfid)
       }).catch((err) => {
         console.log(err)
-        //return res.status(500).send(err)
+        return res.status(500).send(err)
       })
 
       ProjectPdf.create({
@@ -118,31 +118,33 @@ router.post('/upload', async (req, res, next) => {
         console.log(data)
       }).catch((err) => {
         console.log(err)
-        //return res.status(500).send(err)
+        return res.status(500).send(err)
       })
 
-      createTask(req.body.pid, email, file.name)
+      createTask(req.body.pid, file.name)
       .then((data) => {
         console.log(data)
         performTask(data)
         .then((data) => {
           if(data==200){
-            //return res.status(data).send({message: 'Upload file complete!'})
+            //return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${file.name}`})
+            console.log(data)
           }else{
-            //return res.status(data).send({message: 'An error occur!'})
+            console.log(data)
+            return res.status(data).send({message: 'An error occur!'})
           }
         }).catch((err)=>
         {
           console.log(err)
-          //return res.status(500).send(err)
+          return res.status(500).send(err)
         })
       }).catch((err)=>
       {
         console.log(err)
-        //return res.status(500).send(err)
+        return res.status(500).send(err)
       })
 
-      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}`})
+      return res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${file.name}`})
       //.then(()=>{
         
       /*})
@@ -152,9 +154,9 @@ router.post('/upload', async (req, res, next) => {
     });
   });
 
-  createTask = async (pid, email, fileName) => {
+  createTask = async (pid, fileName) => {
     var promise = await axios.post("http://localhost:5000/task", {
-        file: `../backend/public/upload/${pid}/${email}/${fileName}`
+        file: `../backend/public/upload/${pid}/${fileName}`
     }).then((res) => {
         console.log(res)
         console.log('createTask: ' + res.data)

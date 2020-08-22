@@ -75,7 +75,9 @@ router.post('', async (req, res) => {
   var registOwner = await ProjectRole.create({
     role: "owner",
     uid: req.body.uid,
-    pid: createProject.dataValues.pid
+    pid: createProject.dataValues.pid,
+    projectPid: req.body.pid,
+    userUid: data.dataValues.uid
   }).then((data) => {
     return data
   }).catch((err) => {
@@ -150,7 +152,9 @@ router.post('/people/add', (req, res)=>{
       ProjectRole.create({
         role: "guest",
         uid: data.dataValues.uid,
-        pid: req.body.pid
+        pid: req.body.pid,
+        projectPid: req.body.pid,
+        userUid: data.dataValues.uid
       }).then((data)=>{
         res.json(data)
       }).catch((err) => {
