@@ -67,6 +67,20 @@ router.get('/groups', (req, res)=>{
   })
 })
 
+router.get('/topic', (req, res)=>{
+  Topic.findOne({
+    where: { tid: req.query.tid },
+    include: [{
+      model: Keywordgroup,
+      order: ['groupname', 'ASC']
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.post('', (req, res) => {
   if((req.body.groupname != "" && req.body.groupname != null)){
   Keywordgroup.create({
