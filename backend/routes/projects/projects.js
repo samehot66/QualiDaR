@@ -67,6 +67,7 @@ router.post('', async (req, res) => {
     pname: req.body.pname,
     description: req.body.description
   }).then((data) => {
+    console.log(data)
     return data
   }).catch((err) => {
     return res.status(500).send(err)
@@ -76,9 +77,10 @@ router.post('', async (req, res) => {
     role: "owner",
     uid: req.body.uid,
     pid: createProject.dataValues.pid,
-    projectPid: req.body.pid,
+    projectPid: createProject.dataValues.pid,
     userUid: req.body.uid
   }).then((data) => {
+    console.log(data)
     return data
   }).catch((err) => {
     return res.status(500).send(err)
