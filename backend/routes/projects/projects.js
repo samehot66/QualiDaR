@@ -69,7 +69,7 @@ router.post('', async (req, res) => {
   }).then((data) => {
     return data
   }).catch((err) => {
-    res.status(500).send(err)
+    return res.status(500).send(err)
   })
   //console.log(createProject)
   var registOwner = await ProjectRole.create({
@@ -77,18 +77,18 @@ router.post('', async (req, res) => {
     uid: req.body.uid,
     pid: createProject.dataValues.pid,
     projectPid: req.body.pid,
-    userUid: data.dataValues.uid
+    userUid: req.body.uid
   }).then((data) => {
     return data
   }).catch((err) => {
-    res.status(500).send(err)
+    return res.status(500).send(err)
   })
   var responseData = await {
     project: createProject,
     owner: registOwner
   }
 
-  await res.json(responseData)
+  return res.json(responseData)
 }else{
   return res.status(400).send({message: "Please enter project name!"})
 }

@@ -48,7 +48,7 @@ db.keyword_group.belongsToMany(db.topic, {through: db.keywordgroup_topics});
 //|| topic_pdffiles ||
 //-------------------
 db.topic.hasMany(db.topic_pdffiles, {as: 'topic_role',foreignKey: 'tid', sourceKey: 'tid'})
-db.project_role.belongsTo(db.topic, {as: 'topic_role',foreignKey: 'tid', sourceKey: 'tid'})
+db.topic_pdffiles.belongsTo(db.topic, {as: 'topic_role',foreignKey: 'tid', sourceKey: 'tid'})
 db.pdf_file.hasMany(db.topic_pdffiles, {as: 'pdf',foreignKey: 'pdfid', sourceKey: 'pdfid'})
 db.topic_pdffiles.belongsTo(db.pdf_file, {as: 'pdf',foreignKey: 'pdfid', sourceKey: 'pdfid'})
 db.topic.belongsToMany(db.pdf_file, {through: db.topic_pdffiles});
