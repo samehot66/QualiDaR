@@ -18,8 +18,6 @@ app = Celery("tasks", broker="amqp://admin:mypass@localhost:5673")
 
 @app.task()
 def pdf_process(task_id):
-    API_ENDPOINT = 'http://localhost:4000/api/python'
-    headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
     task = task_dao.get_task(uuid.UUID(str(task_id)))
     print(f"Long running operation on task {task.job_definition}")
     try:

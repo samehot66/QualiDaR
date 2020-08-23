@@ -176,12 +176,12 @@ router.post('/upload', async (req, res, next) => {
         console.log(data)
         performTask(data)
         .then((data) => {
-          if(data==200){
-            //return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${file.name}`})
-            console.log(data)
+          if(data==202){
+            console.log('data: ' + data)
+            return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`}) 
           }else{
             console.log(data)
-            return res.status(data).send({message: 'An error occur!'})
+            return res.status(500).send({message: 'An error occur!'})
           }
         }).catch((err)=>
         {
@@ -222,17 +222,13 @@ router.post('/upload', async (req, res, next) => {
   performTask = async (taskId) => {
     var promise = await axios.put("http://localhost:5000/task/" + taskId)
     .then((res) => {
-      console.log(res)
-      if(res.statusCode==201){
-        return 200
-      }else{
-        return 500
-      }
-
+      console.log(res.status)
+      return res.status
     }).catch((err)=>{
           console.log(err)
           return err
       })
+      return promise
   }
 
 module.exports = router
