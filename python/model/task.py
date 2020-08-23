@@ -15,6 +15,7 @@ class Task(object):
         self,
         id,
         location = '',
+        pdfid = '',
         status="CREATED",
         job_definition=JobDefinition.PDF_PROCESS,
         job_result=None,
@@ -25,6 +26,7 @@ class Task(object):
         self.job_definition = job_definition
         self.task_status = status
         self.location = location
+        self.pdfid = pdfid
         self.id = id
 
     @staticmethod
@@ -37,6 +39,9 @@ class Task(object):
     
     def file_location(self, location):
         self.location = location
+
+    def pdfid_set(self, pdfid):
+        self.pdfid = pdfid
 
     @property
     def status(self):

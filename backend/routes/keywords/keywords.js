@@ -6,6 +6,8 @@ const Keyword = db.keyword
 const Subscribe = db.subscribe
 const ProjectRole = db.project_role
 const User = db.user
+const Topic = db.topic
+const keywordgroupTopics = db.keywordgroup_topics
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
 router.get('', (req, res)=>{
@@ -61,6 +63,20 @@ router.get('/groups', (req, res)=>{
   .then((data)=>{
     res.json(data)
   }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.get('/topic', (req, res)=>{
+  Topic.findOne({
+    where: { tid: req.query.tid },
+    include: [{
+      model: Keywordgroup,
+      order: ['groupname', 'ASC']
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
     res.status(500).send(err)
   })
 })
@@ -196,6 +212,39 @@ router.get('/private', (req, res)=>{
       res.json(data)
   }).catch((err)=>{
       res.status(500).send(err)
+  })
+})
+
+router.post('/topic', async (req, res)=>{
+  Keywordgroup.findOne({
+    where: { keywordgroupsid: req.body.keywordgroupsid }
+  }).then((data)=>{
+    if(data){
+      Topic.findOne({
+        where: { tid: req.body.tid }
+      }).then((data)=>{
+        if(data){
+          keywordgroupTopics.create({
+            keywordgroupsid: req.body.keywordgroupsid,
+            tid: req.body.tid,
+            topicTid: req.body.tid,
+            keywordgroupKeywordgroupsid: req.body.keywordgroupsid
+          }).then((data)=>{
+            return res.status(200).send(data)
+          }).catch((err)=>{
+            return res.status(500).send(err)
+          })
+        }else{
+          return res.status(404).send({ message: 'Topic not found!' })
+        }
+      }).catch((err)=>{
+    return res.status(500).send(err)
+  })
+    }else{
+      return res.status(404).send({ message: 'Keyword group not found!' })
+    }
+  }).catch((err)=>{
+    return res.status(500).send(err)
   })
 })
 

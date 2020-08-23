@@ -9,6 +9,8 @@ const User = db.user
 const Pdffiles = db.pdf_file
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
+const Topic = db.topic
+const TopicPdffiles = db.topic_pdffiles
 
 router.get('', (req, res) => {
   ProjectPdf.findAll({
@@ -16,13 +18,15 @@ router.get('', (req, res) => {
     where: { pid: req.query.pid },
     include: [{
       model: Pdffiles,
-      attributes: ['pdfname']
+      attributes: ['pdfname', 'description', 'done', 'size', 'uri'],
+      order: ['pdfname', 'ASC']
     },
     {
       model: User,
       attributes: ['uid', 'email'],
       include: [{
         model: ProjectRole,
+        as: 'user',
         attributes: ['role']
       }]
     }]
@@ -31,7 +35,52 @@ router.get('', (req, res) => {
     res.status(200).send(data)
   }).catch((err) => {
     console.log(err)
-    res.status(500).send(data)
+    res.status(500).send(err)
+  })
+})
+
+router.get('/topic', (req, res)=>{
+  Topic.findOne({
+    where: { tid: req.query.tid },
+    include: [{
+      model: Pdffiles,
+      order: ['pdfname', 'ASC']
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
+router.post('/topic', (req, res)=>{
+  Pdffiles.findOne({
+    where: { pdfid: req.body.pdfid }
+  }).then((data)=>{
+    if(data){
+      Topic.findOne({
+        where: { tid: req.body.tid }
+      }).then((data)=>{
+        if(data){
+          TopicPdffiles.create({
+            tid: req.body.tid,
+            pdfid: req.body.pdfid,
+            topicTid: req.body.tid,
+            pdffilePdfid: req.body.pdfid
+          }).then((data)=>{
+            res.status(200).send(data)
+          }).catch((err)=>{
+            res.status(500).send(err)
+          })
+        }else{
+          res.status(404).send({ message: 'Topic not found!' })
+        }
+      })
+    }else{
+      res.status(404).send({ message: 'PDF not found!' })
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
   })
 })
 
@@ -76,18 +125,18 @@ router.post('/upload', async (req, res, next) => {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-    console.log(getDirectories('../backend/public/upload/'))
+    console.log(getDirectories('../public/upload/'))
     /*ProjectPdf.create({
 
     })*/
 
-    var dir = `../backend/public/upload/${req.body.pid}/${email}`;
+    var dir = `../public/upload/${req.body.pid}`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
     }
 
-    file.mv(`../backend/public/upload/${req.body.pid}/${email}/${file.name}`,async (err) => {
+    file.mv(`../public/upload/${req.body.pid}/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
@@ -99,7 +148,8 @@ router.post('/upload', async (req, res, next) => {
 
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
-        uri: `../backend/public/upload/${req.body.pid}/${email}/${file.name}`,
+        uri: `../public/upload/${req.body.pid}/${file.name}`,
+        description: req.body.description,
         size: file.size,
         status: 'uploaded'
       }).then((data) => {
@@ -107,7 +157,7 @@ router.post('/upload', async (req, res, next) => {
         console.log(data.dataValues.pdfid)
       }).catch((err) => {
         console.log(err)
-        //return res.status(500).send(err)
+        return res.status(500).send(err)
       })
 
       ProjectPdf.create({
@@ -118,12 +168,33 @@ router.post('/upload', async (req, res, next) => {
         console.log(data)
       }).catch((err) => {
         console.log(err)
-        //return res.status(500).send(err)
+        return res.status(500).send(err)
       })
 
-      performTask(file.name)
+      createTask(req.body.pid, file.name, pdfid)
+      .then((data) => {
+        console.log(data)
+        performTask(data)
+        .then((data) => {
+          if(data==200){
+            //return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${file.name}`})
+            console.log(data)
+          }else{
+            console.log(data)
+            return res.status(data).send({message: 'An error occur!'})
+          }
+        }).catch((err)=>
+        {
+          console.log(err)
+          return res.status(500).send(err)
+        })
+      }).catch((err)=>
+      {
+        console.log(err)
+        return res.status(500).send(err)
+      })
 
-      res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${email}/${file.name}` })
+      //return res.json({ fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`})
       //.then(()=>{
         
       /*})
@@ -133,14 +204,34 @@ router.post('/upload', async (req, res, next) => {
     });
   });
 
-  performTask = (fileName) => {
-    axios.post("http://localhost:5000/task", {
-        file: `D:/Project/QBRRS/QBDRRs/backend/public/upload/${fileName}`
+  createTask = async (pid, fileName, pdfid) => {
+    var promise = await axios.post("http://localhost:5000/task", {
+        file: `../public/upload/${pid}/${fileName}`,
+        pdfid: pdfid
     }).then((res) => {
-        console.log(`statusCode: ${res.statusCode}`)
         console.log(res)
+        console.log('createTask: ' + res.data)
+        return res.data
       }).catch((err)=>{
           console.log(err)
+          return err
+      })
+      return promise
+  }
+
+  performTask = async (taskId) => {
+    var promise = await axios.put("http://localhost:5000/task/" + taskId)
+    .then((res) => {
+      console.log(res)
+      if(res.statusCode==201){
+        return 200
+      }else{
+        return 500
+      }
+
+    }).catch((err)=>{
+          console.log(err)
+          return err
       })
   }
 
