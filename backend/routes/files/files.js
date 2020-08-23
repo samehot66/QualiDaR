@@ -26,6 +26,7 @@ router.get('', (req, res) => {
       attributes: ['uid', 'email'],
       include: [{
         model: ProjectRole,
+        as: 'user',
         attributes: ['role']
       }]
     }]
@@ -34,7 +35,7 @@ router.get('', (req, res) => {
     res.status(200).send(data)
   }).catch((err) => {
     console.log(err)
-    res.status(500).send(data)
+    res.status(500).send(err)
   })
 })
 
