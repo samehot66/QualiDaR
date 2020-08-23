@@ -151,7 +151,7 @@ router.post('/upload', async (req, res, next) => {
         uri: `../public/upload/${req.body.pid}/${file.name}`,
         description: req.body.description,
         size: file.size,
-        status: 'uploaded'
+        done: false
       }).then((data) => {
         pdfid = data.dataValues.pdfid
         console.log(data.dataValues.pdfid)
@@ -178,6 +178,19 @@ router.post('/upload', async (req, res, next) => {
         .then((data) => {
           if(data==202){
             console.log('data: ' + data)
+            Pdffiles.findOne({
+              where: { pdfid: pdfid }
+            }).then((data)=>{
+              data.update({
+                done: true
+              }).catch((err)=>{
+                console.log(err)
+                return res.status(500).send(err)
+              })
+            }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
+            })
             return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`}) 
           }else{
             console.log(data)
