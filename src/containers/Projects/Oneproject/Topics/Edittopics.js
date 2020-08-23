@@ -88,6 +88,8 @@ const edittopic = (props) => {
 
     const onGetTopic = async () => {
         let data = {
+
+            
           params: {
             "uid": localStorage.getItem("uid"),
             "access_token": localStorage.getItem("access_token"),
