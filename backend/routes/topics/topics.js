@@ -48,4 +48,17 @@ router.get('/detail', (req, res)=>{
     })
 })
 
+router.post('', (req, res)=>{
+    Topic.create({
+        tname: req.body.tname,
+        pid: req.body.pid,
+        uid: req.body.uid,
+        done: false
+    }).then((data)=>{
+        res.status(200).send(data)
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
+})
+
 module.exports = router
