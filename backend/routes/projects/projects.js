@@ -67,26 +67,30 @@ router.post('', async (req, res) => {
     pname: req.body.pname,
     description: req.body.description
   }).then((data) => {
+    console.log(data)
     return data
   }).catch((err) => {
-    res.status(500).send(err)
+    return res.status(500).send(err)
   })
   //console.log(createProject)
   var registOwner = await ProjectRole.create({
     role: "owner",
     uid: req.body.uid,
-    pid: createProject.dataValues.pid
+    pid: createProject.dataValues.pid,
+    projectPid: createProject.dataValues.pid,
+    userUid: req.body.uid
   }).then((data) => {
+    console.log(data)
     return data
   }).catch((err) => {
-    res.status(500).send(err)
+    return res.status(500).send(err)
   })
   var responseData = await {
     project: createProject,
     owner: registOwner
   }
 
-  await res.json(responseData)
+  return res.json(responseData)
 }else{
   return res.status(400).send({message: "Please enter project name!"})
 }
@@ -150,7 +154,9 @@ router.post('/people/add', (req, res)=>{
       ProjectRole.create({
         role: "guest",
         uid: data.dataValues.uid,
-        pid: req.body.pid
+        pid: req.body.pid,
+        projectPid: req.body.pid,
+        userUid: data.dataValues.uid
       }).then((data)=>{
         res.json(data)
       }).catch((err) => {
@@ -160,6 +166,42 @@ router.post('/people/add', (req, res)=>{
   }).catch((err) => {
     res.status(500).send(err)
   })
+})
+
+router.put('', (req, res) =>{
+  ProjectRole.findOne({
+    where: {pid: req.body.pid, uid: req.body.uid, role: 'owner'}
+  }).then((data)=>{
+    if(!data){
+      return res.status(404).send({ message: 'Project not found!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    res.status(500).send(err)
+  })
+
+  Project.findOne({
+    where: {pid: req.body.pid}
+  }).then((data)=>{
+    console.log(data)
+    if(data){
+      data.update({
+        pname: req.body.pname,
+        description: req.body.description
+      }).then((data)=>{
+        console.log(data)
+        res.status(200).send({ message: 'Update project success!' })
+      }).catch((err)=>{
+        console.log(err)
+        res.status(500).send(err)
+      })
+    }else{
+      res.status(404).send({ message: 'Project not found!' })
+    }
+  }).catch((err)=>{
+        console.log(err)
+        res.status(500).send(err)
+      })
 })
 
 router.delete('/people', async (req, res) => {
@@ -204,6 +246,21 @@ router.get('/shared', (req, res)=>{
     order: [[Project, "pname", "ASC"]]
   }).then((data)=>{
     res.json(data)
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
+router.get('/checkaccess', (req, res)=>{
+  ProjectRole.findOne({
+    where: {uid: req.query.uid, pid: req.query.pid},
+  }).then((data)=>{
+    if(data){
+      res.status(200).send({status: true})
+    }else{
+      res.status(200).send({status: false})
+    }
+    console.log(data)
   }).catch((err)=>{
     res.status(500).send(err)
   })

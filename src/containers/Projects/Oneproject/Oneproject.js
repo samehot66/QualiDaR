@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import Auxi from '../../../hoc/Auxi';
 import Errorpage from '../../../components/UI/Errorpage/Errorpage';
 import Fileupload from '../../Upload/FileUpload';
 import classes from './Oneproject.css';
 import { NavLink } from 'react-router-dom';
 import Modal from '../../../components/UI/Modal/Modal';
-import Addpeople from '../Addpeople/Addpeople';
 import axios from 'axios';
 import config from '../../../config.json';
-import Editproj from '../Editproject/Editproject';
+import Files from './Files/Files';
 
 const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
-    const [checkaccess, setcheckaccess] = useState(false);
+    const [checkaccess,setcheckaccess] =useState(false);
     const [role, setrole] = useState('');
     const [projectdetail, setprojectdetail] = useState([]);
     const [owner,setowner] =useState('');
     const [allpeople, setallpeople] = useState([]);
     const [searchallpeople, setsearchallpeople] = useState('');
-    const [allpeoplefilterserch, setallpeoplefilterserch] = useState([]);
+    const [allpeoplefilterserch, setallpeoplefiltersearch] = useState([]);
 
     const [Newtopicemodal, setNewtopicmodal] = useState(false);
     const shownewtopicModal = () => { setNewtopicmodal(true) };
@@ -28,7 +26,11 @@ const oneproject = (props) => {
     const [Uploadmodal, setUploadmodal] = useState(false);
     const showUploadModal = () => { setUploadmodal(true) };
     const closeUploadModal = () => { setUploadmodal(false) };
-    
+
+    const [files,setfiles] = useState([]);
+    const [searchfiles, setsearchfiles] = useState('');
+    const [filesfilterserch, setfilesfiltersearch] = useState([]);
+
     useEffect(() => {
 
         let source = axios.CancelToken.source();
@@ -80,7 +82,7 @@ const oneproject = (props) => {
     }, [])
 
     useEffect(() => {
-        setallpeoplefilterserch(
+        setallpeoplefiltersearch(
             allpeople.filter(people => {
                 return people.email.toString().toLowerCase().includes(searchallpeople.toLowerCase())
             })
@@ -143,39 +145,34 @@ const oneproject = (props) => {
             })
     }
 
-    // useEffect(() => {
-    //     const checkaccess = [];        
-    //     let source = axios.CancelToken.source();
-    //     let data = {
-    //         params: {
-    //             "uid": localStorage.getItem("uid"),
-    //             "access_token": localStorage.getItem("access_token"),
-    //             "pid": props.match.params.id
-    //         }
-    //     }
-    //     let axiosConfig = {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }
-    //     axios.get(config.URL  + '/api/projects', data, axiosConfig,{ cancelToken: source.token})
-    //         .then((res) => {
-    //             for (const index in res.data) {
-    //                 checkaccess.push({
-    //                     status: res.data[index].status,
-    //                 });
-    //             }
-    //             setprojects(loadprojects);
-    //         })
-    //         .catch((err) => {
-    //             alert("Show all projects Failed");
-    //         })
-    //     return ()=>
-    //     {
-    //         source.cancel();
-    //     }
-    // }, [])
-
+    useEffect(() => {   
+     
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid": props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    axios.get(config.URL  + '/api/projects/checkaccess', data, axiosConfig)
+            .then((res) => {
+                if(res.data.status==true)
+                {
+                    setcheckaccess(true);
+                }
+                else  
+                {   
+                    setcheckaccess(false);
+                }
+            })
+            .catch((err) => {
+            })
+    }, [])
 
     useEffect(() => {   
         let projectdetail = [];
@@ -193,14 +190,103 @@ const oneproject = (props) => {
         }
         axios.get(config.URL  + '/api/projects/'+props.match.params.id, data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-         
                 projectdetail.push(res.data.pid);
                 projectdetail.push(res.data.pname);
                 projectdetail.push(res.data.description);    
                 setprojectdetail(projectdetail);
             })
             .catch((err) => {
-                alert("Show project name Failed");
+            })
+        return ()=>
+        {
+            source.cancel();
+        }
+    }, [])
+
+    useEffect(() => {   
+        let loadfiles = [];
+        let source = axios.CancelToken.source();
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid":props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.get(config.URL  + '/api/files', data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+                for (const index in res.data) {
+                    loadfiles.push({
+                      pdfid: res.data[index].pdfid,
+                      filename: res.data[index].pdffile.pdfname,
+                      description: res.data[index].pdffile.description,
+                      uploadedby: res.data[index].user.email,
+                      role: res.data[index].user.user[0].role,
+                      progress: res.data[index].pdffile.done,
+                      size: res.data[index].pdffile.size,
+                    });
+                   setfiles(loadfiles);
+            }})
+            .catch((err) => {
+                console.log(err)
+            })
+        return ()=>
+        {
+            source.cancel();
+        }
+    }, [])
+
+    useEffect(() => {
+        setfilesfiltersearch(
+            files.filter(file => {
+                return file.filename.toString().toLowerCase().includes(searchfiles.toLowerCase())
+            })
+        )
+    }, [searchfiles, files])
+
+    const handleGetfiles = (newProjState) => {
+        let loadfiles = [];
+        for (const index in newProjState) {
+            loadfiles.push({
+              pdfid: newProjState[index].pdfid,
+              filename: newProjState[index].pdffile.pdfname,
+              description: newProjState[index].pdffile.description,
+              uploadedby: newProjState[index].user.email,
+              role: newProjState[index].user.user[0].role,
+              progress: newProjState[index].pdffile.done,
+              size: newProjState[index].pdffile.size,
+            });
+        }
+        setfiles(loadfiles);
+    }
+
+
+    useEffect(() => {   
+        
+        let source = axios.CancelToken.source();
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid":props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.get(config.URL  + '/api/topics', data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+             console.log("xxxxxx")
+            })
+            .catch((err) => {
+                console.log(err)
             })
         return ()=>
         {
@@ -209,19 +295,15 @@ const oneproject = (props) => {
     }, [])
 
 
+
+
+    
     let tid =1;
-    const check = async (uid) => {
-        if (uid == 1) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+  
 
     return (
-        isauth && check(localStorage.getItem("uid")) ?
-            <Auxi>
+        isauth ?
+            <div style={{display: checkaccess ? "block":"none"}}>
                 <div className="content-header" style={{ padding: "1px .5rem" }}>
                     <div className="container-fluid">
                         <div className="row mb-2">
@@ -315,7 +397,7 @@ const oneproject = (props) => {
                                  <button type="button" className={["btn btn-block btn-success", classes.Uploadmodal].join(" ")} onClick={showUploadModal} style={{ backgroundColor: "#007bff", borderColor: "#52a5ff" }}> + File</button>
                                 </h3>
                                 <div className="card-tools">
-                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={(e)=>setsearchfiles(e.target.value)}/>
                                 </div>
                             </div>
                             {/* /.card-header */}
@@ -328,26 +410,17 @@ const oneproject = (props) => {
                                                 <th>Description</th>
                                                 <th>Uploaded by</th>
                                                 <th>Role</th>
-                                                <th>Progress</th>
+                                                <th>Status</th>
+                                                <th>Size</th>
                                                 <th>Tools</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                                <td>   
-                                                    <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
-                                                    <a href="./upload/20190222-scc-ar-2018-th-03.pdf#page=1" target="_blank"> 20190222-scc-ar-2018-th-03.pdf</a>
-                                                </td>
-                                                <td>gregherherh</td>
-                                                <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td style={{color:"#ccc" }}>Owner</td>
-                                                <td>100%</td>
-                                                <td>
-                                               
-                                                    <i id="1" className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={(event)=>{console.log(event.target.id)}}></i>
-                                                 </td>
-                                        </tr>
+                                        {filesfilterserch.map(file => (
+                                            <Files key={file.pdfid} onGetfiles={handleGetfiles} filename={file.filename} webid={props.match.params.id} description={file.description} uploadedby={file.uploadedby} progress={file.progress} size={file.size} pdfid={file.pdfid}/>
+                                       
                                         
+                                         ))}
                                          </tbody>
                                     </table>
                                 </div>
@@ -394,8 +467,7 @@ const oneproject = (props) => {
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td style={{color:"#ccc" }}>Owner</td>
                                                 <td>
-                                                    <i className="fa fa-fw fa-key" style={{ fontSize: "18px" }} ></i>
-                                                    <i className="fa fa-fw fa-file-pdf" style={{ fontSize: "18px" }} ></i>
+                                                    <i className="fa fa-fw fa-cog" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
                                                  </td>
@@ -414,15 +486,8 @@ const oneproject = (props) => {
                         </div>
                         {/* /.row */}
                     </div>
-
-
-
-
-
-
-
                 </div>
-            </Auxi>
+            </div>
             :
             <Errorpage></Errorpage>
     )

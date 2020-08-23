@@ -15,6 +15,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     size: {
       type: Sequelize.FLOAT
+    },
+    done: {
+      type: Sequelize.BOOLEAN
+    },
+    numpages: {
+      type: Sequelize.INTEGER
+    },
+    description: {
+      type: Sequelize.STRING
     }
 	});
 	

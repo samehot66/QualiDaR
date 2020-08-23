@@ -53,7 +53,7 @@ const Projects = (props) => {
         }
     }, [])
 
-    const handleGetprojects = async (newProjState) => {
+    const handleGetprojects =  (newProjState) => {
         let loadprojects = [];
         for (const index in newProjState) {
             loadprojects.push({
@@ -62,7 +62,7 @@ const Projects = (props) => {
                 description :newProjState[index].description
             });
         }
-        await setprojects(loadprojects);
+       setprojects(loadprojects);
     }
 
     useEffect(() => {

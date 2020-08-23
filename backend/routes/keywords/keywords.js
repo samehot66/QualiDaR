@@ -4,7 +4,10 @@ const db = require('../../config/db.config.js');
 const Keywordgroup = db.keyword_group
 const Keyword = db.keyword
 const Subscribe = db.subscribe
+const ProjectRole = db.project_role
 const User = db.user
+const Topic = db.topic
+const keywordgroupTopics = db.keywordgroup_topics
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
 router.get('', (req, res)=>{
@@ -28,11 +31,52 @@ router.get('/mygroups', (req, res)=>{
   })
 })
 
+router.get('/usergroups', (req, res)=>{
+  User.findAll({
+    attributes: ['uid', 'email'],
+    where: {uid: req.query.uid},
+    include: [{
+      model: Keywordgroup,
+      attributes: ['keywordgroupsid', 'groupname']
+    },{
+      model: Subscribe,
+      include: [{
+        model: Keywordgroup,
+        attributes: ['keywordgroupsid', 'groupname', 'uid']
+      }]
+    }, {
+      model: ProjectRole,
+      attributes: ['role'],
+      where: {pid: req.query.pid}
+    }]
+  }).then((data)=>{
+    console.log(data)
+    res.json(data)
+  }).catch((err) => {
+    console.log(err)
+    res.status(500).send(err)
+  })
+})
+
 router.get('/groups', (req, res)=>{
   db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 ORDER BY keywordgroups.groupname ASC;" , { type: QueryTypes.SELECT })
   .then((data)=>{
     res.json(data)
   }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.get('/topic', (req, res)=>{
+  Topic.findOne({
+    where: { tid: req.query.tid },
+    include: [{
+      model: Keywordgroup,
+      order: ['groupname', 'ASC']
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
     res.status(500).send(err)
   })
 })
@@ -168,6 +212,39 @@ router.get('/private', (req, res)=>{
       res.json(data)
   }).catch((err)=>{
       res.status(500).send(err)
+  })
+})
+
+router.post('/topic', async (req, res)=>{
+  Keywordgroup.findOne({
+    where: { keywordgroupsid: req.body.keywordgroupsid }
+  }).then((data)=>{
+    if(data){
+      Topic.findOne({
+        where: { tid: req.body.tid }
+      }).then((data)=>{
+        if(data){
+          keywordgroupTopics.create({
+            keywordgroupsid: req.body.keywordgroupsid,
+            tid: req.body.tid,
+            topicTid: req.body.tid,
+            keywordgroupKeywordgroupsid: req.body.keywordgroupsid
+          }).then((data)=>{
+            return res.status(200).send(data)
+          }).catch((err)=>{
+            return res.status(500).send(err)
+          })
+        }else{
+          return res.status(404).send({ message: 'Topic not found!' })
+        }
+      }).catch((err)=>{
+    return res.status(500).send(err)
+  })
+    }else{
+      return res.status(404).send({ message: 'Keyword group not found!' })
+    }
+  }).catch((err)=>{
+    return res.status(500).send(err)
   })
 })
 

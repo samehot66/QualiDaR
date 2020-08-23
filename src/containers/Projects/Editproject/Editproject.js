@@ -95,7 +95,8 @@ const editProj = (props) => {
             "uid": localStorage.getItem("uid"),
             "pname": formDataArray["name"].value,
             "description": formDataArray["description"].value,
-            "access_token": localStorage.getItem("access_token")
+            "access_token": localStorage.getItem("access_token"),
+            "pid":props.pid
         }
         let axiosConfig = {
             headers: {
