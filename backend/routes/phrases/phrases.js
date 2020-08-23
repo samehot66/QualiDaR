@@ -30,7 +30,7 @@ router.delete('/delete', (req, res)=>{
             res.status(200).send({ message: 'Delete phrase success!' })
         }else if(data==0){
             console.log(data)
-            res.status(404).send({ 'Phrase not found!' })
+            res.status(404).send({ message: 'Phrase not found!' })
         }
     }).catch((err)=>{
         console.log(err)

@@ -171,7 +171,7 @@ router.post('/upload', async (req, res, next) => {
         return res.status(500).send(err)
       })
 
-      createTask(req.body.pid, file.name)
+      createTask(req.body.pid, file.name, pdfid)
       .then((data) => {
         console.log(data)
         performTask(data)
@@ -194,7 +194,7 @@ router.post('/upload', async (req, res, next) => {
         return res.status(500).send(err)
       })
 
-      return res.json({ fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`})
+      //return res.json({ fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`})
       //.then(()=>{
         
       /*})
@@ -204,9 +204,10 @@ router.post('/upload', async (req, res, next) => {
     });
   });
 
-  createTask = async (pid, fileName) => {
+  createTask = async (pid, fileName, pdfid) => {
     var promise = await axios.post("http://localhost:5000/task", {
-        file: `../public/upload/${pid}/${fileName}`
+        file: `../public/upload/${pid}/${fileName}`,
+        pdfid: pdfid
     }).then((res) => {
         console.log(res)
         console.log('createTask: ' + res.data)

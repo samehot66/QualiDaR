@@ -11,7 +11,11 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
     min: env.pool.min,
     acquire: env.pool.acquire,
     idle: env.pool.idle
-  }
+  },
+  define: {
+    charset: 'utf8',
+    collate: 'utf8_general_ci'
+  },
 });
  
 const db = {};

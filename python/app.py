@@ -19,6 +19,7 @@ def create_task():
     print(data['file'])
     task = Task.create_task()
     task.file_location(data['file'])
+    task.pdfid_set(data['pdfid'])
     task_dao.add_task(task)
     log.info(f"Created task: {task}")
     return str(task.id), 201

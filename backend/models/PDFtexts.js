@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false
     },
     text: {
-      type: Sequelize.STRING(5000)
+      type: Sequelize.TEXT
     }
 	});
 	

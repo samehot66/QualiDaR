@@ -5,6 +5,7 @@ const keywordRouter = require('./keywords/keywords')
 const googleAuth = require('./auth/googleAuth')
 const files = require('./files/files')
 const topics = require('./topics/topics')
+const phrases = require('./phrases/phrases')
 const APIauthMiddleware = require('../utils/APIauth.utils')
 
 // router to another files
@@ -14,6 +15,7 @@ router.use('/projects', projectRouter)
 router.use('/keywords', keywordRouter)
 router.use('/files', files)
 router.use('/topics', topics)
+router.use('/phrases', phrases)
 
 // export the router
 module.exports = router
