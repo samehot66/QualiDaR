@@ -17,9 +17,10 @@ router.get('', (req, res) =>{
         attributes: ['tname', 'tid'],  
         include: [{
             model: User,
+            attributes: ['uid', 'email'],
             include: [{
-                model: ProjectRole,
-                as: 'user'
+                model: Project,
+                attributes: ['pid', 'pname']
             }]
         }]
     })
