@@ -9,6 +9,8 @@ import config from '../../../config.json';
 import Files from './Files/Files';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Addtopic from './Topics/Addtopics';
+import Topic from './Topics/Topics';
+
 const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
@@ -31,6 +33,10 @@ const oneproject = (props) => {
     const [files,setfiles] = useState([]);
     const [searchfiles, setsearchfiles] = useState('');
     const [filesfilterserch, setfilesfiltersearch] = useState([]);
+
+    const [topic,settopic] = useState([]);
+    const [searchtopic, setsearchtopic] = useState('');
+    const [topicfilterserch, settopicfiltersearch] = useState([]);
 
     useEffect(() => {
 
@@ -251,7 +257,7 @@ const oneproject = (props) => {
     }, [searchfiles, files])
 
     const handleGetfiles = (newProjState) => {
-        console.log(newProjState)
+        
         let loadfiles = [];
         for (const index in newProjState) {
             loadfiles.push({
@@ -269,7 +275,7 @@ const oneproject = (props) => {
 
 
     useEffect(() => {   
-        
+        let loadtopics = [];
         let source = axios.CancelToken.source();
         let data = {
             params: {
@@ -285,10 +291,17 @@ const oneproject = (props) => {
         }
         axios.get(config.URL  + '/api/topics', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-             console.log("xxxxxx")
-            })
+                for (const index in res.data) {
+                    loadtopics.push({
+                      tid: res.data[index].tid,
+                      tname: res.data[index].tname,
+                      createdby: res.data[index].user.email,
+                      role: res.data[index].user.projects[0].project_roles.role,
+                      status: res.data[index].done
+                    })
+                   settopic(loadtopics);
+            }})
             .catch((err) => {
-                console.log(err)
             })
         return ()=>
         {
@@ -296,12 +309,30 @@ const oneproject = (props) => {
         }
     }, [])
 
+    useEffect(() => {
+        settopicfiltersearch(
+            topic.filter(topic => {
+                return topic.tname.toString().toLowerCase().includes(searchtopic.toLowerCase())
+            })
+        )
+    }, [searchtopic, topic])
     
-
+    const handlerGettopic = (newState) => {
+        let loadtopic = [];
+        for (const index in newState) {
+            loadtopic.push({
+                tid: newState[index].tid,
+                tname: newState[index].tname,
+                createdby: newState[index].user.email,
+                role: newState[index].user.projects[0].project_roles.role,
+                status: newState[index].done
+            });
+        }
+        settopic(loadtopic);
+    }
 
     
-    let tid =1;
-  
+ 
 
     return (
         isauth ?
@@ -419,7 +450,7 @@ const oneproject = (props) => {
                                         </thead>
                                         <tbody>
                                         {filesfilterserch.map(file => (
-                                            <Files key={file.pdfid} onGetfiles={handleGetfiles} filename={file.filename} webid={props.match.params.id} description={file.description} uploadedby={file.uploadedby} progress={file.progress} size={file.size} pdfid={file.pdfid}/>
+                                            <Files key={file.pdfid} onGetfiles={handleGetfiles} filename={file.filename} webid={props.match.params.id} description={file.description} uploadedby={file.uploadedby} progress={file.progress} size={file.size} pdfid={file.pdfid} role={file.role}/>
                                        
                                         
                                          ))}
@@ -443,11 +474,11 @@ const oneproject = (props) => {
                                 <h3 className="card-title" style={{color:"white"}}>Topic(s)
                                 <button type="button" className={["btn btn-block btn-success", classes.AddTopic].join(" ")} onClick={shownewtopicModal} style={{ backgroundColor: "#52a5ff", borderColor: "#52a5ff" }}> + Topic</button>
                                     <Modal show={Newtopicemodal} modalClosed={closenewtopicModal} name="Add new topic to project">
-                                            <Addtopic webid={props.match.params.id} cancel={closenewtopicModal} />
+                                            <Addtopic webid={props.match.params.id} cancel={closenewtopicModal}  />
                                     </Modal>
                                 </h3>
                                 <div className="card-tools">
-                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." />
+                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={(e)=>setsearchtopic(e.target.value)}/>
                                 </div>
                             </div>
                             {/* /.card-header */}
@@ -464,17 +495,10 @@ const oneproject = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody> 
-                                        <tr>
-                                                <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i>Environment<NavLink to={"/projects/"+props.match.params.pname+"/"+props.match.params.id+"/"+"Environment"+"/"+tid} > Environment</NavLink></td>
-                                                <td>kanokpol.thongsem@cmu.ac.th</td>
-                                                <td style={{color:"#ccc" }}>Owner</td>
-                                                <td>Extracting...</td>
-                                                <td>
-                                                    <i className="fa fa-fw fa-cog" style={{ fontSize: "18px" }} ></i>
-                                                    <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i>
-                                                    <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} ></i>
-                                                 </td>
-                                        </tr>
+                                        {topicfilterserch.map(top => (
+  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+                                     //  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+                                        ))}
                                          </tbody>
                                     </table>
                                 </div>

@@ -10,7 +10,8 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false
       },
     done: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
 	});
 	

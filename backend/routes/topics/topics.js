@@ -14,12 +14,13 @@ router.get('', (req, res) =>{
     //db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER topics.tname BY ASC;')
     Topic.findAll({
         where: { pid: req.query.pid },
-        attributes: ['tname', 'tid'],  
+        attributes: ['tname', 'tid','done'],  
         include: [{
             model: User,
+            attributes: ['uid', 'email'],
             include: [{
-                model: ProjectRole,
-                as: 'user'
+                model: Project,
+                attributes: ['pid', 'pname']
             }]
         }]
     })
@@ -73,8 +74,25 @@ router.post('', (req, res)=>{
     })
 })
 
-router.post('/finish', (res, req)=>{
-    Topic.update
+router.put('/finish', (req, res)=>{ //**not update longterm op yet!
+    Topic.findOne({
+        where: { tid: req.body.tid }
+    }).then((data)=>{
+        if(data){
+            data.update({
+                done: true
+            }).then((data)=>{
+                console.log(data)
+                res.status(200).send({ message: 'Update topic status success!' })
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }else{
+            res.status(404).send({ message: 'Topic not found!' })
+        }
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
 })
 
 module.exports = router

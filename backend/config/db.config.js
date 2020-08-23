@@ -11,7 +11,11 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
     min: env.pool.min,
     acquire: env.pool.acquire,
     idle: env.pool.idle
-  }
+  },
+  define: {
+    charset: 'utf8',
+    collate: 'utf8_general_ci'
+  },
 });
  
 const db = {};
@@ -111,6 +115,10 @@ db.phrase.belongsTo(db.topic, {foreignKey: 'tid', targetKey: 'tid'});
 //pdffiles |-------|| pdftexts 
 db.pdf_file.hasMany(db.pdf_text, {foreignKey: 'pdfid', sourceKey: 'pdfid'})
 db.pdf_text.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'})
+
+//phrases |-------|| pdftexts 
+db.pdf_text.hasMany(db.phrase, {foreignKey: 'pdftextid', sourceKey: 'pdftextid'})
+db.phrase.belongsTo(db.pdf_text, {foreignKey: 'pdftextid', targetKey: 'pdftextid'})
 
 //users |-------|| pdffiles
 //db.user.hasMany(db.pdf_file, {foreignKey: 'uid', sourceKey: 'uid'})

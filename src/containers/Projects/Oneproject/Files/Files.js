@@ -62,7 +62,7 @@ return(
 <td style={{color:"#ccc" }}>{props.role}</td>
 
 { props.progress ?
-<td>Done</td> :     <td>Extracting...</td>
+<td style={{color:"green" }}>Done</td> :     <td style={{color:"red" }}>Extracting...</td>
     }       
 <td>{props.size} KB</td>
 <td>
