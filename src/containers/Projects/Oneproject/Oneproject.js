@@ -7,7 +7,8 @@ import Modal from '../../../components/UI/Modal/Modal';
 import axios from 'axios';
 import config from '../../../config.json';
 import Files from './Files/Files';
-
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Addtopic from './Topics/Addtopics';
 const oneproject = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
@@ -309,7 +310,7 @@ const oneproject = (props) => {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">{projectdetail[1]} </h1>
+                                <h1 className="m-0 text-dark">{projectdetail[1]}</h1>
                                 <span>Description : {projectdetail[2]=="" ? "-" : projectdetail[2]} </span>
                             </div>
 
@@ -404,7 +405,7 @@ const oneproject = (props) => {
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                    <table className="table m-0 " style={{ overflow: "scroll" }} >
                                         <thead>
                                             <tr>
                                                 <th>File name</th>
@@ -442,8 +443,7 @@ const oneproject = (props) => {
                                 <h3 className="card-title" style={{color:"white"}}>Topic(s)
                                 <button type="button" className={["btn btn-block btn-success", classes.AddTopic].join(" ")} onClick={shownewtopicModal} style={{ backgroundColor: "#52a5ff", borderColor: "#52a5ff" }}> + Topic</button>
                                     <Modal show={Newtopicemodal} modalClosed={closenewtopicModal} name="Add new topic to project">
-                                
-                        
+                                            <Addtopic webid={props.match.params.id} cancel={closenewtopicModal} />
                                     </Modal>
                                 </h3>
                                 <div className="card-tools">
@@ -459,6 +459,7 @@ const oneproject = (props) => {
                                                 <th>Topic name</th>
                                                 <th>Created by</th>
                                                 <th>Role</th>
+                                                <th>Status</th>
                                                 <th>Tools</th>
                                             </tr>
                                         </thead>
@@ -467,6 +468,7 @@ const oneproject = (props) => {
                                                 <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i>Environment<NavLink to={"/projects/"+props.match.params.pname+"/"+props.match.params.id+"/"+"Environment"+"/"+tid} > Environment</NavLink></td>
                                                 <td>kanokpol.thongsem@cmu.ac.th</td>
                                                 <td style={{color:"#ccc" }}>Owner</td>
+                                                <td>Extracting...</td>
                                                 <td>
                                                     <i className="fa fa-fw fa-cog" style={{ fontSize: "18px" }} ></i>
                                                     <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} ></i>
