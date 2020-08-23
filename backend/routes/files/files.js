@@ -124,18 +124,18 @@ router.post('/upload', async (req, res, next) => {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-    console.log(getDirectories('../backend/public/upload/'))
+    console.log(getDirectories('../public/upload/'))
     /*ProjectPdf.create({
 
     })*/
 
-    var dir = `../backend/public/upload/${req.body.pid}`;
+    var dir = `../public/upload/${req.body.pid}`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
     }
 
-    file.mv(`../backend/public/upload/${req.body.pid}/${file.name}`,async (err) => {
+    file.mv(`../public/upload/${req.body.pid}/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
@@ -147,7 +147,7 @@ router.post('/upload', async (req, res, next) => {
 
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
-        uri: `../backend/public/upload/${req.body.pid}/${file.name}`,
+        uri: `../public/upload/${req.body.pid}/${file.name}`,
         description: req.body.description,
         size: file.size,
         status: 'uploaded'
@@ -193,7 +193,7 @@ router.post('/upload', async (req, res, next) => {
         return res.status(500).send(err)
       })
 
-      return res.json({ fileName: file.name, filePath: `../backend/public/uploads/${req.body.pid}/${file.name}`})
+      return res.json({ fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`})
       //.then(()=>{
         
       /*})
@@ -205,7 +205,7 @@ router.post('/upload', async (req, res, next) => {
 
   createTask = async (pid, fileName) => {
     var promise = await axios.post("http://localhost:5000/task", {
-        file: `../backend/public/upload/${pid}/${fileName}`
+        file: `../public/upload/${pid}/${fileName}`
     }).then((res) => {
         console.log(res)
         console.log('createTask: ' + res.data)
