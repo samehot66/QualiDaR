@@ -250,6 +250,7 @@ const oneproject = (props) => {
     }, [searchfiles, files])
 
     const handleGetfiles = (newProjState) => {
+        console.log(newProjState)
         let loadfiles = [];
         for (const index in newProjState) {
             loadfiles.push({
@@ -294,7 +295,7 @@ const oneproject = (props) => {
         }
     }, [])
 
-
+    
 
 
     
@@ -430,7 +431,7 @@ const oneproject = (props) => {
                         </div>
                          
                         <Modal show={Uploadmodal} modalClosed={closeUploadModal} name="Upload file to project">
-                                                    <Fileupload pid={props.match.params.id} role={role} />
+                                                    <Fileupload pid={props.match.params.id} role={role} onGetfiles={handleGetfiles} webid={props.match.params.id}/>
                                  </Modal>
                                 {/* /.card */}
                             </div>

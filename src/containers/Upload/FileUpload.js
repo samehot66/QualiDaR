@@ -38,11 +38,12 @@ const FileUpload = (props) => {
               Math.round((progressEvent.loaded * 100) / progressEvent.total)
             )
           );
-
+         onGetfiles();
           // Clear percentage
           setTimeout(() => setUploadPercentage(0), 2000);
-        }
-      });
+        
+      } })
+     
 
       const { fileName, filePath } = res.data;
 
@@ -57,6 +58,28 @@ const FileUpload = (props) => {
       }
     }
   };
+
+  const onGetfiles = async () => {
+    let data = {
+        params: {
+            "uid": localStorage.getItem("uid"),
+            "access_token": localStorage.getItem("access_token"),
+            "pid":props.webid
+        }
+    }
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    await axios.get(config.URL + '/api/files', data, axiosConfig)
+      .then((res) => {
+        props.onGetfiles(res.data);
+      })
+      .catch((err) => {
+        alert("Show all files Failed");
+      })
+  }
 
   return (
     <Fragment>
