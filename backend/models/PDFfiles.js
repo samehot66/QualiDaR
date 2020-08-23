@@ -17,7 +17,8 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.FLOAT
     },
     done: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
     numpages: {
       type: Sequelize.INTEGER

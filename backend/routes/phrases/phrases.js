@@ -38,4 +38,24 @@ router.delete('/delete', (req, res)=>{
     })
 })
 
+router.put('/status', (req, res)=>{
+    Phrases.findOne({
+        where: { phraseid: req.body.phraseid }
+    }).then((data)=>{
+        if(data){
+            data.update({
+                status: req.body.status
+            }).then((data)=>{
+                res.status(200).send({ message: 'Update status success!' })
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }else{
+            res.status(404).send({"message": "Phrase not found"})
+        }
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
+})
+
 module.exports = router
