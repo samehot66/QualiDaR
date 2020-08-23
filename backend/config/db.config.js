@@ -112,6 +112,10 @@ db.phrase.belongsTo(db.topic, {foreignKey: 'tid', targetKey: 'tid'});
 db.pdf_file.hasMany(db.pdf_text, {foreignKey: 'pdfid', sourceKey: 'pdfid'})
 db.pdf_text.belongsTo(db.pdf_file, {foreignKey: 'pdfid', targetKey: 'pdfid'})
 
+//phrases |-------|| pdftexts 
+db.pdf_text.hasMany(db.phrase, {foreignKey: 'pdftextid', sourceKey: 'pdftextid'})
+db.phrase.belongsTo(db.pdf_text, {foreignKey: 'pdftextid', targetKey: 'pdftextid'})
+
 //users |-------|| pdffiles
 //db.user.hasMany(db.pdf_file, {foreignKey: 'uid', sourceKey: 'uid'})
 //db.pdf_file.belongsTo(db.user, {foreignKey: 'uid', targetKey: 'uid'})

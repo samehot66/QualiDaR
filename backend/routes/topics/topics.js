@@ -73,8 +73,25 @@ router.post('', (req, res)=>{
     })
 })
 
-router.post('/finish', (res, req)=>{
-    Topic.update
+router.put('/finish', (req, res)=>{ //**not update longterm op yet!
+    Topic.findOne({
+        where: { tid: req.body.tid }
+    }).then((data)=>{
+        if(data){
+            data.update({
+                done: true
+            }).then((data)=>{
+                console.log(data)
+                res.status(200).send({ message: 'Update topic status success!' })
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }else{
+            res.status(404).send({ message: 'Topic not found!' })
+        }
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
 })
 
 module.exports = router
