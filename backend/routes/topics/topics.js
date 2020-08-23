@@ -11,11 +11,23 @@ const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 
 router.get('', (req, res) =>{
-    db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER BY ASC;')
+    //db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER topics.tname BY ASC;')
+    Topic.findAll({
+        where: { pid: req.query.pid },
+        attributes: ['tname', 'tid'],  
+        include: [{
+            model: User,
+            include: [{
+                model: ProjectRole,
+                as: 'user'
+            }]
+        }]
+    })
     .then((data) => {
         console.log(data)
         res.status(200).send(data)
     }).catch((err) => {
+        console.log(err)
         res.status(500).send(err)
     })
     /*Project.findOne({
@@ -59,6 +71,10 @@ router.post('', (req, res)=>{
     }).catch((err)=>{
         res.status(500).send(err)
     })
+})
+
+router.post('/finish', (res, req)=>{
+    Topic.update
 })
 
 module.exports = router
