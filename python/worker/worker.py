@@ -8,7 +8,7 @@ from mysql.connector import Error
 from celery import Celery
 from time import sleep
 from model.utils import TaskStatus, task_dao
-from worker.pdf_process import extract_text, clean_text
+from worker.pdf_process import extract_text, clean_text, clean_text2
 
 
 CELERY_ACCEPT_CONTENT = ["pickle"]
@@ -18,8 +18,6 @@ app = Celery("tasks", broker="amqp://admin:mypass@localhost:5673")
 
 @app.task()
 def pdf_process(task_id):
-    API_ENDPOINT = 'http://localhost:4000/api/python'
-    headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
     task = task_dao.get_task(uuid.UUID(str(task_id)))
     print(f"Long running operation on task {task.job_definition}")
     try:
@@ -27,6 +25,7 @@ def pdf_process(task_id):
         print(task.location)
         st = extract_text(task.location)
         clean_text(st)
+        clean_text2(st)
         try:
             connection = mysql.connector.connect(host='localhost',
                                          database='testdb',
@@ -42,7 +41,7 @@ def pdf_process(task_id):
             
             cursor.close()
         except mysql.connector.Error as error:
-            print("Failed to insert record into Laptop table {}".format(error))
+            print("Failed to insert record into pdf_texts table {}".format(error))
         finally:
             if (connection.is_connected()):
                 cursor.close()
@@ -54,6 +53,8 @@ def pdf_process(task_id):
         #print(r.text)
     except ValueError as e:
         print(e)
+    
+    print(st[7])
     task.job_result = "Task successfully finished."
     print(f"Long running operation finished.")
     print(f"Updating task with id {task.id}...")
