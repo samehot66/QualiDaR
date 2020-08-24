@@ -15,7 +15,8 @@ router.get('', (req, res) =>{
     //db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER topics.tname BY ASC;')
     Topic.findAll({
         where: { pid: req.query.pid },
-        attributes: ['tname', 'tid'],  
+        attributes: ['tname', 'tid', 'done'],
+        order: ['tname', 'ASC'],  
         include: [{
             model: User,
             attributes: ['uid', 'email'],
@@ -71,13 +72,23 @@ router.get('/test', (req, res)=>{
 })
 
 router.post('', (req, res)=>{
-    Topic.create({
-        tname: req.body.tname,
-        pid: req.body.pid,
-        uid: req.body.uid,
-        done: false
+    Topic.findOne({
+        where: { tname: req.body.tname, pid: req.body.pid }
     }).then((data)=>{
-        res.status(200).send(data)
+        if(data){
+            res.status(400).send({ message: 'Topic is already exist in this project!' })
+        }else{
+            Topic.create({
+                tname: req.body.tname,
+                pid: req.body.pid,
+                uid: req.body.uid,
+                done: false
+            }).then((data)=>{
+                res.status(200).send(data)
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }
     }).catch((err)=>{
         res.status(500).send(err)
     })
