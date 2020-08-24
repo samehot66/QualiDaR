@@ -9,6 +9,7 @@ const Topic_pdffiles = db.topic_pdffiles
 const Keywordgroup_topics = db. keywordgroup_topics
 const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
+const PdfTexts = db.pdf_text
 
 router.get('', (req, res) =>{
     //db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER topics.tname BY ASC;')
@@ -58,6 +59,14 @@ router.get('/detail', (req, res)=>{
         res.status(200).send(data)
     }).catch((err)=>{
         res.status(500).send(err)
+    })
+})
+
+router.get('/test', (req, res)=>{
+    PdfTexts.findOne({
+        where: { pdftextid: req.query.pdftextid }
+    }).then((data)=>{
+        res.status(200).send(data)
     })
 })
 
