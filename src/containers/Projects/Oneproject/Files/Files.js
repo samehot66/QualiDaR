@@ -53,18 +53,18 @@ const file= (props) => {
   }
 return(
 <tr>
-<td>   
+<td >   
     <i  className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i> 
     <a href={"./upload/"+ props.webid+"/"+props.filename} target="_blank">{props.filename}</a>
 </td>
 <td>{props.description}</td>
-<td>{props.uploadedby}</td>
-<td style={{color:"#ccc" }}>{props.role}</td>
+
 
 { props.progress ?
 <td style={{color:"green" }}>Done</td> :     <td style={{color:"red" }}>Extracting...</td>
     }       
 <td>{props.size} KB</td>
+
 <td>
     <i id={props.pdfid} key={props.pdfid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal}></i>
  
@@ -76,6 +76,8 @@ return(
           <Button btnType="Success" clicked={deleteHandler} >Delete</Button>
           <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
         </Modal> </td>
+        <td>{props.uploadedby}</td>
+<td style={{color:"#ccc" }}>{props.role}</td>
 </tr>);
 };
 

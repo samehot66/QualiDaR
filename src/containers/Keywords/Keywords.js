@@ -271,12 +271,12 @@ const Keywords = (props) => {
                             </div>
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
                                             <th>Group name</th>
                                             <th>Owner</th>
-                                            <th>Tool(s)</th>
+                                            <th>Tool</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -304,12 +304,12 @@ const Keywords = (props) => {
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                    <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                         <thead>
                                             <tr>
                                                 <th>Group name</th>
                                                 <th>Owner</th>
-                                                <th>Tool(s)</th>
+                                                <th>Tool</th>
                                             </tr>
                                         </thead>
                                         <tbody>

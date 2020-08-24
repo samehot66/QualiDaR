@@ -367,7 +367,7 @@ const yourkeywords = (props) => {
             {/* /.card-header */}
             <div className="card-body p-0 " style={{ overflow: "auto" }}>
               <div >
-                <table className="table m-0 " style={{ overflow: "scroll" }}>
+                <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                   <thead>
                     <tr>
                       <th>Name</th>

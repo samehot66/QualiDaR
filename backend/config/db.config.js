@@ -13,8 +13,8 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
     idle: env.pool.idle
   },
   define: {
-    charset: 'utf8',
-    collate: 'utf8_general_ci'
+    charset: 'utf16',
+    collate: 'utf16_general_ci'
   },
 });
  

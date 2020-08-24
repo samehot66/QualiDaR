@@ -377,7 +377,7 @@ const oneproject = (props) => {
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                    <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -430,22 +430,25 @@ const oneproject = (props) => {
                                  <button type="button" className={["btn btn-block btn-success", classes.Uploadmodal].join(" ")} onClick={showUploadModal} style={{ backgroundColor: "#007bff", borderColor: "#52a5ff" }}> + File</button>
                                 </h3>
                                 <div className="card-tools">
-                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={(e)=>setsearchfiles(e.target.value)}/>
-                                </div>
+                       
+                                   <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={(e)=>setsearchfiles(e.target.value)}/>
+                                  </div>
                             </div>
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }} >
+                                    <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }} >
                                         <thead>
-                                            <tr>
+                                            <tr> 
+                                                
                                                 <th>File name</th>
                                                 <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Size</th> 
+                                                <th>Tools</th>
                                                 <th>Uploaded by</th>
                                                 <th>Role</th>
-                                                <th>Status</th>
-                                                <th>Size</th>
-                                                <th>Tools</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -484,19 +487,19 @@ const oneproject = (props) => {
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                 <div >
-                                    <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                    <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                         <thead>
                                             <tr>
-                                                <th>Topic name</th>
+                                                <th>Topic name</th>  
+                                                <th>Status</th>
+                                                <th>Tools</th>  
                                                 <th>Created by</th>
                                                 <th>Role</th>
-                                                <th>Status</th>
-                                                <th>Tools</th>
                                             </tr>
                                         </thead>
                                         <tbody> 
                                         {topicfilterserch.map(top => (
-  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+  <Topic pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                      //  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                         ))}
                                          </tbody>

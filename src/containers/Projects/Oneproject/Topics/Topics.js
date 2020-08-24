@@ -60,12 +60,11 @@ return(
     <tr> 
         { props.done ?
     <td><i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i>
-     <NavLink to={"/projects/"+props.webid+"/"+props.webid+"/"+"Environment"+"/"+props.tid} > Environment</NavLink>  </td>
+     <NavLink to={"/projects/"+props.pname+"/"+props.webid+"/"+props.tname+"/"+props.tid} > {props.tname}</NavLink></td>
    :
-   <td style={{ color: "#007bff" }}><i className="fa fa-fw  fa-archive" ></i>Environment </td>
+   <td style={{ color: "#007bff" }}><i className="fa fa-fw  fa-archive" ></i> {props.tname}</td>
     }
-    <td>{props.email}</td>
-    <td style={{color:"#ccc" }}>{props.role}</td>
+ 
    
     { props.done ?
      <td style={{color:"green"}}>Done</td>
@@ -87,7 +86,9 @@ return(
            </div>
           <Button btnType="Success" clicked={deleteHandler} >Delete</Button>
           <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
-        </Modal> </td>
+        </Modal> </td> 
+          <td>{props.email}</td>
+    <td style={{color:"#ccc" }}>{props.role}</td>
 </tr>);
 };
 

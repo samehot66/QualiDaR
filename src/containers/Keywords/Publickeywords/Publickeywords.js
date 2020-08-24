@@ -164,7 +164,7 @@ const Publickeywords = (props) => {
                         </div>
                         {/* /.card-header */}
                         <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                            <table className="table m-0 " style={{ overflow: "scroll" }}>
+                            <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                 <thead><tr><th>Group name</th><th>Owner</th></tr></thead>
                                 <tbody>
                                     <tr><td style={{ color: "#007bff" }}><i className="fa fa-fw fa-file-word" ></i>{props.gname}</td>
@@ -184,7 +184,7 @@ const Publickeywords = (props) => {
                         {/* /.card-header */}
                         <div className="card-body p-0 " style={{ overflow: "auto" }}>
                             <div>
-                                <table className="table m-0 " style={{ overflow: "scroll" }}>
+                                <table className="table m-0 text-nowrap" style={{ overflow: "scroll" }}>
                                     <thead>
                                         <tr>
                                             <th>Name</th>
