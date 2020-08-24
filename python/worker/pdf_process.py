@@ -43,6 +43,24 @@ def clean_text2(st):
     for i in range(len(st)):
         if 'า' + 'า' in st[i]:
             st[i] = st[i].replace('า' + 'า', 'ำ')
+        if ' ' + 'า' in st[i]:
+            st[i] = st[i].replace(' ' + 'า', 'ำ')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '์')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', 'ั')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '็')
+        if '' in st[i]:
+            st[i] = st[i].replace('', 'ี')
 
 def clean_text(st):
     print("Start clean texts!")
@@ -84,8 +102,10 @@ def clean_text(st):
         #    st[i] = st[i].replace('\xef\x9c\x8b', '\xe0\xb9\x89')
         if 'ำ' in st[i]:
             st[i] = st[i].replace('ำ', 'า')
-        if '�' + 'า' in st[i]:
-            st[i] = st[i].replace('�' + 'า', 'ำ')
+        #if '�' + 'า' in st[i]:
+        #    st[i] = st[i].replace('�' + 'า', 'ำ')
+        if '�' in st[i]:
+            st[i] = st[i].replace('�', 'า')
         if '' in st[i]:
             st[i] = st[i].replace('', '่')
         if '' in st[i]:
