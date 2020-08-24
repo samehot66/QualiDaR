@@ -105,6 +105,7 @@ const addtopic = (props) => {
             props.onGettopic(res.data);
           })
           .catch((err) => {
+          
             alert("Show all topics Failed");
           })
     }

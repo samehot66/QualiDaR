@@ -66,7 +66,7 @@ return(
 <td>{props.size} KB</td>
 
 <td>
-    <i id={props.pdfid} key={props.pdfid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal}></i>
+    <i id={props.pdfid} key={props.pdfid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal} data-toggle="tooltip" data-placement="top" title={"Delete"}></i>
  
  <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete a file from project">
           <div  style={{fontSize: "22px",textAlign: "center"}}>Are you sure to delete

@@ -36,7 +36,7 @@ const oneproject = (props) => {
 
     const [topic,settopic] = useState([]);
     const [searchtopic, setsearchtopic] = useState('');
-    const [topicfilterserch, settopicfiltersearch] = useState([]);
+    const [topicfiltersearch, settopicfiltersearch] = useState([]);
 
     useEffect(() => {
 
@@ -237,8 +237,10 @@ const oneproject = (props) => {
                       progress: res.data[index].pdffile.done,
                       size: res.data[index].pdffile.size,
                     });
-                   setfiles(loadfiles);
-            }})
+                 
+            }
+          setfiles(loadfiles);
+        })
             .catch((err) => {
                 console.log(err)
             })
@@ -247,20 +249,55 @@ const oneproject = (props) => {
             source.cancel();
         }
     }, [])
-
+    const Getfiles=()=>{
+        let loadfiles = [];
+        let source = axios.CancelToken.source();
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid":props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.get(config.URL  + '/api/files', data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+                for (const index in res.data) {
+                    loadfiles.push({
+                      pdfid: res.data[index].pdfid,
+                      filename: res.data[index].pdffile.pdfname,
+                      description: res.data[index].pdffile.description,
+                      uploadedby: res.data[index].user.email,
+                      role: res.data[index].user.user[0].role,
+                      progress: res.data[index].pdffile.done,
+                      size: res.data[index].pdffile.size,
+                    });
+                  
+            }
+         setfiles(loadfiles);
+        })
+            .catch((err) => {
+               
+            })
+     
+    }
     useEffect(() => {
         setfilesfiltersearch(
-            files.filter(file => {
+           files.filter(file => {
                 return file.filename.toString().toLowerCase().includes(searchfiles.toLowerCase())
             })
         )
     }, [searchfiles, files])
 
-    const handleGetfiles = (newProjState) => {
+    const handleGetfiles = async (newProjState) => {
         
         let loadfiles = [];
         for (const index in newProjState) {
-            loadfiles.push({
+        loadfiles.push({
               pdfid: newProjState[index].pdfid,
               filename: newProjState[index].pdffile.pdfname,
               description: newProjState[index].pdffile.description,
@@ -291,6 +328,7 @@ const oneproject = (props) => {
         }
         axios.get(config.URL  + '/api/topics', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
+               
                 for (const index in res.data) {
                     loadtopics.push({
                       tid: res.data[index].tid,
@@ -299,8 +337,9 @@ const oneproject = (props) => {
                       role: res.data[index].user.projects[0].project_roles.role,
                       status: res.data[index].done
                     })
-                   settopic(loadtopics);
-            }})
+                    
+                 
+            }  settopic(loadtopics);})
             .catch((err) => {
             })
         return ()=>
@@ -308,15 +347,51 @@ const oneproject = (props) => {
             source.cancel();
         }
     }, [])
-
+    const Gettopic= async ()=>
+    {
+        let loadtopics = [];
+     
+        let data = {
+            params: {
+                "uid": localStorage.getItem("uid"),
+                "access_token": localStorage.getItem("access_token"),
+                "pid":props.match.params.id
+            }
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+       axios.get(config.URL  + '/api/topics', data, axiosConfig)
+            .then((res) => { 
+                for (const index in res.data) {
+                    loadtopics.push({
+                      tid: res.data[index].tid,
+                      tname: res.data[index].tname,
+                      createdby: res.data[index].user.email,
+                      role: res.data[index].user.projects[0].project_roles.role,
+                      status: res.data[index].done
+                    })
+                  
+            }
+         settopic(loadtopics);
+        })
+            .catch((err) => {
+            })
+      
+    }
     useEffect(() => {
         settopicfiltersearch(
-            topic.filter(topic => {
-                return topic.tname.toString().toLowerCase().includes(searchtopic.toLowerCase())
+          topic.filter(topics => {
+                return topics.tname.toString().toLowerCase().includes(searchtopic.toLowerCase())
             })
         )
-    }, [searchtopic, topic])
-    
+    }, [searchtopic,topic])
+
+
+  
+
     const handlerGettopic = (newState) => {
         let loadtopic = [];
         for (const index in newState) {
@@ -331,9 +406,7 @@ const oneproject = (props) => {
         settopic(loadtopic);
     }
 
-    
- 
-
+  
     return (
         isauth ?
             <div style={{display: checkaccess ? "block":"none"}}>
@@ -404,7 +477,7 @@ const oneproject = (props) => {
                 {
                    role == localStorage.getItem("email") ?
                    people.role == "owner" ? null:
-              <i id={people.peopleid} key={people.peopleid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }}  onClick={(event) => deletepeopleHandler(event)}></i>  
+              <i id={people.peopleid} key={people.peopleid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }}  onClick={(event) => deletepeopleHandler(event)} data-toggle="tooltip" data-placement="top" title={"Delete"}></i>  
          
          :null}
          
@@ -426,11 +499,11 @@ const oneproject = (props) => {
                         <div className={["card ", classes.Box].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#52a5ff"}}>
                                 <h3 className="card-title" style={{color:"white"}}>File(s) in this project 
-                                
+                                <i className="fa fa-fw fa-history" style={{ fontSize: "18px", left:"69px", position:"relative" }} data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={Getfiles}></i>
                                  <button type="button" className={["btn btn-block btn-success", classes.Uploadmodal].join(" ")} onClick={showUploadModal} style={{ backgroundColor: "#007bff", borderColor: "#52a5ff" }}> + File</button>
                                 </h3>
                                 <div className="card-tools">
-                       
+                               
                                    <input type="text" className="form-control" style={{ height: "1.25rem" }} placeholder="Search..." onChange={(e)=>setsearchfiles(e.target.value)}/>
                                   </div>
                             </div>
@@ -475,9 +548,10 @@ const oneproject = (props) => {
                             <div className={["card ", classes.Box2].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#66bfed"}}>
                                 <h3 className="card-title" style={{color:"white"}}>Topic(s)
+                                <i className="fa fa-fw fa-history" style={{ fontSize: "18px", left:"69px", position:"relative" }} data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={Gettopic}></i>
                                 <button type="button" className={["btn btn-block btn-success", classes.AddTopic].join(" ")} onClick={shownewtopicModal} style={{ backgroundColor: "#52a5ff", borderColor: "#52a5ff" }}> + Topic</button>
                                     <Modal show={Newtopicemodal} modalClosed={closenewtopicModal} name="Add new topic to project">
-                                            <Addtopic webid={props.match.params.id} cancel={closenewtopicModal}  />
+                                            <Addtopic webid={props.match.params.id} cancel={closenewtopicModal}  onGettopic={handlerGettopic}/>
                                     </Modal>
                                 </h3>
                                 <div className="card-tools">
@@ -498,7 +572,8 @@ const oneproject = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody> 
-                                        {topicfilterserch.map(top => (
+                                        {  topicfiltersearch.map(top => (
+                                          
   <Topic pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                      //  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                         ))}

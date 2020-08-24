@@ -15,6 +15,10 @@ const topic= (props) => {
   const showEditModal = () => { setEditmodal(true) };
   const closeEditModal = () => { setEditmodal(false) };
 
+  const [Settingmodal, setSettingmodal] = useState(false);
+  const showSettingModal = () => { setSettingmodal(true) };
+  const closeSettingModal = () => { setSettingmodal(false) };
+
   const deleteHandler = async () => {
     let data = {
       params: {
@@ -69,14 +73,19 @@ return(
     { props.done ?
      <td style={{color:"green"}}>Done</td>
     :
-    <td style={{color:"red" }}>Extracting...</td>
+    <td style={{color:"red" }}>Wait start/Extracting...</td>
     }
     <td>
-        <i className="fa fa-fw fa-cog" style={{ fontSize: "18px" }} ></i>
-        <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal}></i>
-        <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal} ></i>
+        <i className="fa fa-fw fa-play" style={{ fontSize: "18px" }} onClick={showSettingModal} data-toggle="tooltip" data-placement="top" title={"Start"}></i>
+        <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal} data-toggle="tooltip" data-placement="top" title={"Edit"}></i>
+        <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal}data-toggle="tooltip" data-placement="top" title={"Delete"} ></i>
      
-        <Modal show={Editmodal} modalClosed={closeEditModal} name="Delete a topic from project">
+        <Modal show={Settingmodal} modalClosed={closeSettingModal} name="Setting a topic">
+       
+        </Modal> 
+
+
+        <Modal show={Editmodal} modalClosed={closeEditModal} name="Edit a topic name">
         <Edittopic tid={props.tid} tname={props.tname} cancel={closeEditModal} onGetprojects={onGettopics} />
         </Modal> 
  <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete a topic from project">
