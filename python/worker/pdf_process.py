@@ -185,16 +185,20 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
                                          password='Decade65*')
             cursor = connection.cursor()
             for item in keywordgroups:
+                print(item)
                 keyword = item['keywordtext']
                 kid = item['kid']
                 print(f'keyword {keyword}')
                 mySql_select_query = 'SELECT pdf_texts.pdftextid, pdf_texts.page_number, pdf_texts.text FROM pdf_texts JOIN pdffiles ON pdffiles.pdfid = ' + str(pdfid) + ' JOIN projects ON projects.pid = ' + str(pid) + ' WHERE pdf_texts.text LIKE "%' + keyword + '%";'
                 cursor.execute(mySql_select_query)
                 for (pdftextid, page_number, text) in cursor:
-                    print(keyword)
+                    j = '{"kid": "' + str(kid) + '", "keyword": "' + str(keyword) + '", "pdftextid": "' + str(pdftextid) + '", "page_number": "' + str(page_number) + '", "text": "' + str(text) + '"}'
+                    j = j.replace("'", '"')
+                    j = j.replace('\r\n', '')
+                    print(j)
                     temp_json = {}
-                    temp_json = json.dumps({"kid": str(kid), "keyword":str(keyword), "pdftextid":str(pdftextid), "page_number":str(page_number) , "text": str(text) },  ensure_ascii=False)
-                    print(temp_json)
+                    temp_json = json.loads(str(j), strict=False)
+                    #print(temp_json)
                     query_result.append(temp_json)
                     #print(f"{str(v)}, {pdftextid}, {page_number}, {text}")
             
@@ -210,29 +214,47 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
                 print("MySQL connection is closed")
         #print(query_result[50]['page_number'])
         print('result')
-        print(query_result)
         #for item in query_result:
         #    print(item)
         #for item in query_result:
         #    temp_text
-        for jdata in query_result:
-            
-        keyword = 'สื่อโฆษณา'  #keyword from users
-        size_word = len(keyword)
+        for item in query_result:
+            keyword = item['keyword']
+            text = item['text']
+            size_word = len(keyword)
+            print(f'Keyword: {keyword}\nLength of word: {size_word}')
+            matched_setences = []  #store index of matched keyword
+            p = re.compile(keyword)  #compile pattern of string
 
-        print(f'Keyword: {keyword}\nLength of word: {size_word}')
-
-        matched_setences = []  #store index of matched keyword
-        p = re.compile(keyword)  #compile pattern of string
+            for m in p.finditer(text):  #find all position of matched keyword
+             matched_setences.append(m.start())
+             #print(m.start(), m.group())
     
-        for m in p.finditer(st[11]):  #find all position of matched keyword
-            matched_setences.append(m.start())
-            #print(m.start(), m.group())
-    
-        print(f'All matched index: {matched_setences}')
+            print(f'All matched index: {matched_setences}')
 
-        for index in matched_setences:  #display sentences that matched keyword
-            print(sent_tokenize(st[11][index-50:index+size_word+50]))
-            print(f'Index {index}: {st[11][index-50:index+size_word+50]}')
+            for index in matched_setences:  #display sentences that matched keyword
+                print(sent_tokenize(text[index-200:index+size_word+200]))
+                print(f'Index {index}: {text[index-200:index+size_word+200]}')
+
+        # for index in matched_setences:  #display sentences that matched keyword
+        #     print(sent_tokenize(st[11][index-50:index+size_word+50]))
+        #     print(f'Index {index}: {st[11][index-50:index+size_word+50]}')
+        #keyword = 'สื่อโฆษณา'  #keyword from users
+        # size_word = len(keyword)
+
+        # print(f'Keyword: {keyword}\nLength of word: {size_word}')
+
+        # matched_setences = []  #store index of matched keyword
+        # p = re.compile(keyword)  #compile pattern of string
+    
+        # for m in p.finditer(st[11]):  #find all position of matched keyword
+        #     matched_setences.append(m.start())
+        #     #print(m.start(), m.group())
+    
+        # print(f'All matched index: {matched_setences}')
+
+        # for index in matched_setences:  #display sentences that matched keyword
+        #     print(sent_tokenize(st[11][index-50:index+size_word+50]))
+        #     print(f'Index {index}: {st[11][index-50:index+size_word+50]}')
     except ValueError as e:
         print(e)
