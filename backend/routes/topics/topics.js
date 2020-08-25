@@ -155,7 +155,11 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
         return res.status(500).send(err)
     })
     
-    performFindphrases(pdfid, pid, keywordgroups, req.body.tid)
+    performFindphrases(pdfid, pid, keywordgroups, req.body.tid).then((data) => {
+        return res.status(200).send({ message: 'Finding phrases complete!' })
+    }).catch((err)=>{
+        return res.status(500).send(err)
+    })
 
 })
 
