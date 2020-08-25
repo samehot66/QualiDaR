@@ -54,7 +54,7 @@ def pdf_process(task_id):
     except ValueError as e:
         print(e)
     
-    print(st[7])
+    #find_phrases(st, ['สื่อโฆษณา', 'ด้านสิ่งแวดล้อม', 'ด้านสังคม'])
     task.job_result = "Task successfully finished."
     print(f"Long running operation finished.")
     print(f"Updating task with id {task.id}...")

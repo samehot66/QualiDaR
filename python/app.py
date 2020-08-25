@@ -1,9 +1,11 @@
 import uuid
+import json
 
 from flask import Flask, logging, request, jsonify
 
 from model.utils import task_dao
 from model.task import Task
+from worker.pdf_process import find_phrases
 
 #Ref: https://github.com/golechwierowicz/long_computation_rest
 
@@ -45,3 +47,18 @@ def task(task_id):
         latest_status = task.status
         task_dao.delete_task(task.id)
         return latest_status, 200
+
+@app.route("/findphrases", methods=["POST"])
+def findphrases():
+    data = request.json
+    try:
+        pdfid = data['pdfid']
+        pid = data['pid']
+        keywordgroups = data['keywordgroups']
+        tid = data['tid']
+        print(keywordgroups)
+        find_phrases(pdfid, pid, keywordgroups, tid)
+    except ValueError as e:
+        log.error(e)
+        return "An error occur!", 500
+    return 'Ok', 200

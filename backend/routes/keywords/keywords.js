@@ -46,6 +46,7 @@ router.get('/usergroups', (req, res)=>{
       }]
     }, {
       model: ProjectRole,
+      as: 'user',
       attributes: ['role'],
       where: {pid: req.query.pid}
     }]
@@ -72,7 +73,7 @@ router.get('/topic', (req, res)=>{
     where: { tid: req.query.tid },
     include: [{
       model: Keywordgroup,
-      order: ['groupname', 'ASC']
+      order: [['groupname', 'ASC']]
     }]
   }).then((data)=>{
     res.status(200).send(data)
