@@ -1,5 +1,8 @@
 import io
 import re
+import json
+import mysql.connector
+from mysql.connector import Error
 from pythainlp import correct, sent_tokenize, word_tokenize
 from pdfminer3.layout import LAParams, LTTextBox
 from pdfminer3.pdfpage import PDFPage
@@ -61,36 +64,36 @@ def clean_text2(st):
         if '' in st[i]:
             st[i] = st[i].replace('', '็')
         if '' in st[i]:
-            st[i] = st[i].replace('', 'ี')
+            st[i] = st[i].replace('', 'ี') 
 
-def find_phrases(st, keyword):
-    keyword = 'สื่อโฆษณา'  #keyword from users
-    size_word = len(keyword)
-
-    print(f'Keyword: {keyword}\nLength of word: {size_word}')
-
-    matched_setences = []  #store index of matched keyword
-    matched_pages = []
-    p = re.compile(keyword)  #compile pattern of string
-
-    for i in range(len(st)):
-        temp_arr = []
-        for m in p.finditer(st[i]):  #find all position of matched keyword
-            if m is not None:
-                temp_arr.append(m.start())
-                matched_pages.append(i)
-            #matched_pages.append(i)
-            #print(m.start(), m.group())
-        if temp_arr is not None: 
-            matched_setences.append(temp_arr)
+#def find_phrases(st, keyword):
+#    keyword = 'สื่อโฆษณา'  #keyword from users
+#    size_word = len(keyword)
+#
+#    print(f'Keyword: {keyword}\nLength of word: {size_word}')
+#
+#    matched_setences = []  #store index of matched keyword
+#    matched_pages = []
+#    p = re.compile(keyword)  #compile pattern of string
+#
+#    for i in range(len(st)):
+#        temp_arr = []
+#        for m in p.finditer(st[i]):  #find all position of matched keyword
+#            if m is not None:
+#                temp_arr.append(m.start())
+#                matched_pages.append(i)
+#            #matched_pages.append(i)
+#            #print(m.start(), m.group())
+#        if temp_arr is not None: 
+#            matched_setences.append(temp_arr)
     
-    print(f'All matched index: {matched_setences}')
+#    print(f'All matched index: {matched_setences}')
 
-    for i in matched_pages:
-        for item in matched_setences:  #display sentences that matched keyword
-            for index in item:
-                print(sent_tokenize(st[i][index-50:index+size_word+50]))
-                print(f'Index {index}: {st[i][index-50:index+size_word+50]}')
+#    for i in matched_pages:
+#        for item in matched_setences:  #display sentences that matched keyword
+#            for index in item:
+#                print(sent_tokenize(st[i][index-50:index+size_word+50]))
+#                print(f'Index {index}: {st[i][index-50:index+size_word+50]}')
     #print(f'Keyword: {keyword}')
     
     #matched_setences = []  #store index of matched keyword
@@ -170,3 +173,66 @@ def clean_text(st):
         #    st[i] = st[i].replace('\xef\x80\x97', '\xe0\xb9\x8c')
 
         #st[i] = st[i].replace('\uf70b','้').replace('\uf70a','่').replace('\uf70e','์').replace('\uf702','ี').replace('\uf710','ั').replace('\uf712','็').replace('\uf70c','๊').replace('\x0c','\n').replace('\uf06c','*').replace('\uf701','ิ').replace('\uf705','่').replace('\uf0a7','*').replace('\uf713','่').replace(' ำ','ำ').replace('�','า').replace('ำา','ำ')
+
+def find_phrases(pdfid, pid, keywordgroups, tid):
+    query_result = []
+    try:
+        print("Finding phrases start")
+        try:
+            connection = mysql.connector.connect(host='localhost',
+                                         database='testdb',
+                                         user='root',
+                                         password='Decade65*')
+            cursor = connection.cursor()
+            for item in keywordgroups:
+                keyword = item['keywordtext']
+                kid = item['kid']
+                print(f'keyword {keyword}')
+                mySql_select_query = 'SELECT pdf_texts.pdftextid, pdf_texts.page_number, pdf_texts.text FROM pdf_texts JOIN pdffiles ON pdffiles.pdfid = ' + str(pdfid) + ' JOIN projects ON projects.pid = ' + str(pid) + ' WHERE pdf_texts.text LIKE "%' + keyword + '%";'
+                cursor.execute(mySql_select_query)
+                for (pdftextid, page_number, text) in cursor:
+                    print(keyword)
+                    temp_json = {}
+                    temp_json = json.dumps({"kid": str(kid), "keyword":str(keyword), "pdftextid":str(pdftextid), "page_number":str(page_number) , "text": str(text) },  ensure_ascii=False)
+                    print(temp_json)
+                    query_result.append(temp_json)
+                    #print(f"{str(v)}, {pdftextid}, {page_number}, {text}")
+            
+            cursor.close()
+        except mysql.connector.Error as error:
+            print("Failed to select record into pdf_texts table {}".format(error))
+        except ValueError as e:
+            print(e)
+        finally:
+            if (connection.is_connected()):
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+        #print(query_result[50]['page_number'])
+        print('result')
+        print(query_result)
+        #for item in query_result:
+        #    print(item)
+        #for item in query_result:
+        #    temp_text
+        for jdata in query_result:
+            
+        keyword = 'สื่อโฆษณา'  #keyword from users
+        size_word = len(keyword)
+
+        print(f'Keyword: {keyword}\nLength of word: {size_word}')
+
+        matched_setences = []  #store index of matched keyword
+        p = re.compile(keyword)  #compile pattern of string
+    
+        for m in p.finditer(st[11]):  #find all position of matched keyword
+            matched_setences.append(m.start())
+            #print(m.start(), m.group())
+    
+        print(f'All matched index: {matched_setences}')
+
+        for index in matched_setences:  #display sentences that matched keyword
+            print(sent_tokenize(st[11][index-50:index+size_word+50]))
+            print(f'Index {index}: {st[11][index-50:index+size_word+50]}')
+    except ValueError as e:
+        print(e)
