@@ -88,14 +88,17 @@ return(
     <td style={{color:"red" }}>Wait start/Extracting...</td>
     }
     <td>
-      {props.owner==localStorage.getItem("email") ?
+      
+      
+      
+      
+      <img onClick={showSetfileModal}style={{position:"relative", width:"22px",height:"22px",top:"-2px"}} src={require('./icon/Addfile.png')} alt="Set file to topic" />
+      <img onClick={showSetkeywordgroupModal}style={{position:"relative", width:"22px",height:"22px",top:"-4px",paddingRight:"2px"}} src={require('./icon/Keyword.png')} alt="Set keyword group to topic" />
+     
+        {props.owner==localStorage.getItem("email") ?
         <i className="fa fa-fw fa-play" style={{ fontSize: "18px" }} onClick={showSettingModal} data-toggle="tooltip" data-placement="top" title={"Start"}></i>
      :null
       }  
-      
-      
-      <i className="fa fa-fw fa-key" style={{ fontSize: "18px" }} onClick={showSetkeywordgroupModal} data-toggle="tooltip" data-placement="top" title={"Set keyword group to topic"}></i>
-        <i className="fa fa-fw fa-file" style={{ fontSize: "18px" }} onClick={showSetfileModal} data-toggle="tooltip" data-placement="top" title={"Set file to topic"}></i>
         <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal} data-toggle="tooltip" data-placement="top" title={"Edit"}></i>
         {props.owner==localStorage.getItem("email") ?
         <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal}data-toggle="tooltip" data-placement="top" title={"Delete"} ></i>

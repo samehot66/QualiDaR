@@ -168,7 +168,7 @@ const topics = (props) => {
 <tr key={f.pdfid}>
 <td style={{ color: "#007bff" }}>   
 <i className="fa fa-fw  fa-file-pdf" ></i> 
-{f.pdfname}vfgr
+{f.pdfname}
 </td>
 </tr>
                                        ))}

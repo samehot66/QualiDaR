@@ -39,9 +39,34 @@
     width: 58px;
     padding: 0;
     font-size: 12px;
-    top: 4px;
+    top: -4px;
     left: 182px;
     background-color: #007bff;
 }
 
 
+
+
+.Refresh
+{
+    position: absolute;
+    width: 65px;
+    padding: 0;
+    font-size: 12px;
+    top: 4px;
+    left: 243px;
+    background-color: #007bff;
+}
+
+
+
+.Refreshtopic
+{
+    position: absolute;
+    width: 65px;
+    padding: 0;
+    font-size: 12px;
+    top: -5px;
+    left: 150px;
+    background-color: #66bfed;
+}

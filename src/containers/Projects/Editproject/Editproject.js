@@ -184,7 +184,7 @@ const editProj = (props) => {
                         error={formElement.config.error}
                         checkError={checkErrorFunc(formElement.config.error)} />
                 ))}
-                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Edit</Button>
+                <Button btnType="Success" disabled={!FormIsValid} clicked={props.cancel} >Save</Button>
             </form>
             <Button btnType="Editproj" clicked={props.cancel}>Cancel</Button>
         </Auxi>

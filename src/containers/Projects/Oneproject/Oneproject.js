@@ -501,7 +501,10 @@ const oneproject = (props) => {
                         <div className={["card ", classes.Box].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#52a5ff"}}>
                                 <h3 className="card-title" style={{color:"white"}}>File(s) in this project 
-                                <i className="fa fa-fw fa-history" style={{ fontSize: "18px", left:"69px", position:"relative" }} data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={Getfiles}></i>
+                               
+                                
+                                <button type="button" className={["btn btn-block btn-success", classes.Refresh].join(" ")} onClick={Getfiles} style={{ backgroundColor: "white", borderColor: "#52a5ff",color:"#007bff" }}> <img style={{position:"relative", width:"11px",height:"11px",top:"-1px",left:"2px"}} src={require('./Topics/icon/Refresh.png')} /> Refresh </button>
+
                                  <button type="button" className={["btn btn-block btn-success", classes.Uploadmodal].join(" ")} onClick={showUploadModal} style={{ backgroundColor: "#007bff", borderColor: "#52a5ff" }}> + File</button>
                                 </h3>
                                 <div className="card-tools">
@@ -550,8 +553,9 @@ const oneproject = (props) => {
                             <div className={["card ", classes.Box2].join(' ') }>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#66bfed"}}>
                                 <h3 className="card-title" style={{color:"white"}}>Topic(s)
-                                <i className="fa fa-fw fa-history" style={{ fontSize: "18px", left:"69px", position:"relative" }} data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={Gettopic}></i>
+
                                 <button type="button" className={["btn btn-block btn-success", classes.AddTopic].join(" ")} onClick={shownewtopicModal} style={{ backgroundColor: "#52a5ff", borderColor: "#52a5ff" }}> + Topic</button>
+                                <button type="button" className={["btn btn-block btn-success", classes.Refreshtopic].join(" ")} onClick={Gettopic} style={{ backgroundColor: "white", borderColor: "#52a5ff",color:"#52a5ff" }}> <img style={{position:"relative", width:"11px",height:"11px",top:"-1px",left:"2px"}} src={require('./Topics/icon/Refresh.png')} /> Refresh </button>
                                     <Modal show={Newtopicemodal} modalClosed={closenewtopicModal} name="Add new topic to project">
                                             <Addtopic webid={props.match.params.id} cancel={closenewtopicModal}  onGettopic={handlerGettopic}/>
                                     </Modal>

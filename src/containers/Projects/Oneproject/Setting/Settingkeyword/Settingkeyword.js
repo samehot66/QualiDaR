@@ -3,7 +3,7 @@ import Errorpage from '../../../../../components/UI/Errorpage/Errorpage';
 import classes from './Settingkeyword.css';
 import Auxi from '../../../../../hoc/Auxi';
 import config from '../../../../../config.json';
-
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -238,7 +238,8 @@ const Setkeyword = (props) => {
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
                                 <h3 className="card-title">Keyword group(s) </h3>
                                 <div className="card-tools">
-                                   
+                                    <NavLink to='/keywords'>
+                                <i className="fa fa-fw fa-plus-square" data-toggle="tooltip" data-placement="top" title="Add" ></i></NavLink>
                                 </div>
                             </div>
                             {/* /.card-header */}
@@ -288,7 +289,7 @@ const Setkeyword = (props) => {
                                         {keywordgroupinuse.map(k => (
                                     <tr key={k.keywordgroupsid}>
                                                <td style={{ color: "#17a2b8" }}> <i  className="fa fa-fw  fa-folder" ></i> {k.groupname}</td>
-                                               <td><i id={k.keywordgroupsid} className="fa fa-fw fa-minus-square" style={{ fontSize: "18px", color:"#dc3545" }} data-toggle="tooltip" data-placement="top" title="Add" onClick={(e)=>removeGroupHandler(e.target.id)} ></i></td>
+                                               <td><i id={k.keywordgroupsid} className="fa fa-fw fa-minus-square" style={{ fontSize: "18px", color:"#dc3545" }} data-toggle="tooltip" data-placement="top" title="Remove" onClick={(e)=>removeGroupHandler(e.target.id)} ></i></td>
                                          </tr>
                                     ))}
                                            

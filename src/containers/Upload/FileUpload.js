@@ -41,7 +41,7 @@ const FileUpload = (props) => {
           );
          onGetfiles();
           // Clear percentage
-          setTimeout(() => setUploadPercentage(0), 2000);
+          setTimeout(() => setUploadPercentage(0), 5000);
         
       } })
      
