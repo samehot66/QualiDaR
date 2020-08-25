@@ -114,10 +114,82 @@ const Setfile = (props) => {
             .catch((err) => {
                 console.log("Add files Failed");
             })
-       
+       await onGetfile();
+       await onGetfileinuse();
     }
 
-    
+    const onGetfile=async()=>{
+        const allfiles = [];
+      
+        let data = {
+            params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") 
+        
+            ,"pid": props.pid
+        
+        }
+
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+      await  axios.get(config.URL + '/api/files', data, axiosConfig)
+            .then((res) => {
+          
+                for (const index in res.data) {
+                    allfiles.push({
+                    pdfid:  res.data[index].id,
+                    filename: res.data[index].pdffile.pdfname
+                    })
+                }
+               setfile(allfiles);
+            })
+            .catch((err) => {
+                console.log("Show files Failed");
+            })
+           
+    }
+    const onGetfileinuse=async()=>{
+        const allfilesinuse = [];
+       
+        let data = {
+            params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") 
+        
+            ,"tid": props.tid
+        
+        }
+
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+       await axios.get(config.URL + '/api/files/topic', data, axiosConfig)
+            .then((res) => {
+
+                for (const index in res.data.pdffiles) {
+      
+                    allfilesinuse.push({
+                    pdfid:  res.data.pdffiles[index].pdfid,
+                    filename:res.data.pdffiles[index].pdfname
+                    })
+                }
+           
+               setfileinuse(allfilesinuse);
+            })
+            .catch((err) => {
+                console.log("Show files in use Failed");
+            })
+          
+    }
+
+
+
+
     const removeFileHandler= async (pdfid)=>{
 
 
@@ -144,7 +216,8 @@ const Setfile = (props) => {
             .catch((err) => {
                 console.log("Remove files Failed");
             })
-       
+            await onGetfile();
+            await onGetfileinuse();
     }
     return (
         isauth ?
