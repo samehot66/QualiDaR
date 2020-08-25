@@ -576,8 +576,8 @@ const oneproject = (props) => {
                                         <tbody> 
                                         {  topicfiltersearch.map(top => (
                                           
-  <Topic owner={owner} pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
-                                     //  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+  //<Topic owner={owner} pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+                                       <Topic owner={owner} pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                         ))}
                                          </tbody>
                                     </table>

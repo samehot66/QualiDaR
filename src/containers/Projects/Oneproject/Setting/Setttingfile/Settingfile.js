@@ -31,12 +31,13 @@ const Setfile = (props) => {
 
         axios.get(config.URL + '/api/files', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-          
+         
                 for (const index in res.data) {
+                    if(res.data[index].pdffile.done){
                     allfiles.push({
                     pdfid:  res.data[index].id,
                     filename: res.data[index].pdffile.pdfname
-                    })
+                    })}
                 }
                setfile(allfiles);
             })
@@ -69,11 +70,11 @@ const Setfile = (props) => {
             .then((res) => {
 
                 for (const index in res.data.pdffiles) {
-      
+                    if(res.data[index].pdffile.done){
                     allfilesinuse.push({
                     pdfid:  res.data.pdffiles[index].pdfid,
                     filename:res.data.pdffiles[index].pdfname
-                    })
+                    })}
                 }
            
                setfileinuse(allfilesinuse);
