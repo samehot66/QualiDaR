@@ -82,7 +82,7 @@ return(
     }
  
    
-    { !props.done ?
+    { props.done ?
      <td style={{color:"green"}}>Done</td>
     :
     <td style={{color:"red" }}>Wait start/Extracting...</td>

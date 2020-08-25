@@ -113,7 +113,7 @@ const removeHandler2 =  (id)=>{
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
             <div className="list-group" style={{margin:"5px"}}>
-  <button type="button" className="list-group-item active" disabled style={{height:"30px" ,fontSize:"15px" ,padding:"0.03rem 0.75rem"}}>
+  <button type="button" className="list-group-item-info active " disabled style={{height:"30px" ,fontSize:"15px" ,padding:"0.03rem 0.75rem", borderTopRightRadius:"0.25rem",borderTopLeftRadius:"0.25rem"}}>
     ESG
   </button>
   <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{padding:"0.03rem 0.75rem"}}>key1</button>
