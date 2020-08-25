@@ -104,23 +104,23 @@ const removeHandler2 =  (id)=>{
                           
                             <div className={["card card-info", classes.Box].join(' ')}>
                             <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
-                                <h3 className="card-title">Keyword group(s)
+                                <h3 className="card-title">Keyword(s)
                                 </h3>
                                 <div className="card-tools">
-                                <input type="text" />
+                                <input type="text" className="form-control" style={{ height: "1.25rem", width:"120px" }} placeholder="Search..." />
                                 </div>
                             </div>
                             {/* /.card-header */}
                             <div className="card-body p-0 " style={{ overflow: "auto" }}>
-            <div className="list-group">
-  <button type="button" className="list-group-item active" disabled>
+            <div className="list-group" style={{margin:"5px"}}>
+  <button type="button" className="list-group-item active" disabled style={{height:"30px" ,fontSize:"15px" ,padding:"0.03rem 0.75rem"}}>
     ESG
   </button>
-  <button type="button" className="list-group-item list-group-item-action" onClick={x}>key1</button>
-  <button type="button" className="list-group-item list-group-item-action">key2</button>
-  <button type="button" className="list-group-item list-group-item-action">key3</button>
-
+  <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{padding:"0.03rem 0.75rem"}}>key1</button>
+  <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{padding:"0.03rem 0.75rem"}}>key1</button>
+  <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{padding:"0.03rem 0.75rem"}}>key1</button>
 </div>    
+ 
 
   
                         </div>

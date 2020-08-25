@@ -32,7 +32,6 @@ const Setkeyword = (props) => {
 
         axios.get(config.URL + '/api/keywords/usergroups', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-
                 for (const index in res.data[0].keywordgroups) {
                     addkeywordgroup.push({
                         keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
