@@ -1,5 +1,6 @@
 import io
 import re
+from pythainlp import correct, sent_tokenize, word_tokenize
 from pdfminer3.layout import LAParams, LTTextBox
 from pdfminer3.pdfpage import PDFPage
 from pdfminer3.pdfinterp import PDFResourceManager
@@ -61,6 +62,51 @@ def clean_text2(st):
             st[i] = st[i].replace('', '็')
         if '' in st[i]:
             st[i] = st[i].replace('', 'ี')
+
+def find_phrases(st, keyword):
+    keyword = 'สื่อโฆษณา'  #keyword from users
+    size_word = len(keyword)
+
+    print(f'Keyword: {keyword}\nLength of word: {size_word}')
+
+    matched_setences = []  #store index of matched keyword
+    matched_pages = []
+    p = re.compile(keyword)  #compile pattern of string
+
+    for i in range(len(st)):
+        temp_arr = []
+        for m in p.finditer(st[i]):  #find all position of matched keyword
+            if m is not None:
+                temp_arr.append(m.start())
+                matched_pages.append(i)
+            #matched_pages.append(i)
+            #print(m.start(), m.group())
+        if temp_arr is not None: 
+            matched_setences.append(temp_arr)
+    
+    print(f'All matched index: {matched_setences}')
+
+    for i in matched_pages:
+        for item in matched_setences:  #display sentences that matched keyword
+            for index in item:
+                print(sent_tokenize(st[i][index-50:index+size_word+50]))
+                print(f'Index {index}: {st[i][index-50:index+size_word+50]}')
+    #print(f'Keyword: {keyword}')
+    
+    #matched_setences = []  #store index of matched keyword
+    #for item in keyword:
+    #    for i in range(len(st)):
+            #print(item)
+    #        p = re.compile(item)  #compile pattern of string
+    #        for m in p.finditer(st[i]):  #find all position of matched keyword
+    #            matched_setences.append(m.start())
+                #print(m.start(), m.group())
+    
+    #print(f'All matched index: {matched_setences}')
+
+    #for index in matched_setences:  #display sentences that matched keyword
+    #    print(sent_tokenize(st[i][index-50:index+100]))
+    #    print(f'Index {index}: {st[i][index-100:index+100]}')
 
 def clean_text(st):
     print("Start clean texts!")

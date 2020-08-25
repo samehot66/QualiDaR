@@ -8,7 +8,7 @@ from mysql.connector import Error
 from celery import Celery
 from time import sleep
 from model.utils import TaskStatus, task_dao
-from worker.pdf_process import extract_text, clean_text, clean_text2
+from worker.pdf_process import extract_text, clean_text, clean_text2, find_phrases
 
 
 CELERY_ACCEPT_CONTENT = ["pickle"]
@@ -54,7 +54,7 @@ def pdf_process(task_id):
     except ValueError as e:
         print(e)
     
-    print(st[7])
+    find_phrases(st, ['สื่อโฆษณา', 'ด้านสิ่งแวดล้อม', 'ด้านสังคม'])
     task.job_result = "Task successfully finished."
     print(f"Long running operation finished.")
     print(f"Updating task with id {task.id}...")

@@ -16,7 +16,7 @@ router.get('', (req, res) =>{
     Topic.findAll({
         where: { pid: req.query.pid },
         attributes: ['tname', 'tid', 'done'],
-        order: ['tname', 'ASC'],  
+        order: [[ 'tname', 'ASC' ]],  
         include: [{
             model: User,
             attributes: ['uid', 'email'],
@@ -50,15 +50,16 @@ router.get('/detail', (req, res)=>{
         where: { tid: req.query.tid },
         include: [{
             model: Pdffiles,
-            order: ['pdfname', 'ASC']
+            order: [['pdfname', 'ASC']]
         }, {
             model: Keywordgroups,
-            order: ['groupname', 'ASC']
+            order: [['groupname', 'ASC']]
         }],
-        order: ['tname', 'ASC']
+        order: [['tname', 'ASC']]
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{
+        console.log(err)
         res.status(500).send(err)
     })
 })
