@@ -47,6 +47,7 @@ router.get('/usergroups', (req, res)=>{
     }, {
       model: ProjectRole,
       attributes: ['role'],
+      as: 'user',
       where: {pid: req.query.pid}
     }]
   }).then((data)=>{

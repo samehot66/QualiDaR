@@ -1,10 +1,11 @@
 import React from 'react';
 
 
-const Message = ({ msg }) => {
+const Message = (props) => {
   return (
-    <div className='alert alert-info alert-dismissible fade show' role='alert'>
-      {msg}
+    !props.type  ?
+    <div className='alert alert-danger alert-dismissible fade show' role='alert'>
+      {props.msg}
       <button
         type='button'
         className='close'
@@ -13,7 +14,17 @@ const Message = ({ msg }) => {
       >
         <span aria-hidden='true'>&times;</span>
       </button>
-    </div>
+    </div> :  <div className='alert alert-info alert-dismissible fade show' role='alert'>
+    {props.msg}
+    <button
+      type='button'
+      className='close'
+      data-dismiss='alert'
+      aria-label='Close'
+    >
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div> 
   );
 };
 

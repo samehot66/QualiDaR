@@ -9,6 +9,7 @@ const FileUpload = (props) => {
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState('');
+  const [type, settype] = useState(true);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [desc,setdesc]=useState('');
   const onChange = e => {
@@ -48,12 +49,19 @@ const FileUpload = (props) => {
       const { fileName, filePath } = res.data;
 
       setUploadedFile({ fileName, filePath });
-
+      settype(true);
       setMessage('File Uploaded');
     } catch (err) {
       if (err.response.status === 500) {
         setMessage('There was a problem with the server');
-      } else {
+        settype(false);
+      }
+      else if (err.response.status===400){
+      setMessage('File name has already exist!');
+      settype(false);
+    }
+      else { 
+        settype(false);
         setMessage(err.response.data.msg);
       }
     }
@@ -83,7 +91,7 @@ const FileUpload = (props) => {
 
   return (
     <Fragment>
-            {message ? <Message msg={message} /> : null}
+            {message ? <Message msg={message} type={type}/> : null}
       <form onSubmit={onSubmit}>
 
         <div className='custom-file mb-4'>

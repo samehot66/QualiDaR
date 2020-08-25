@@ -82,7 +82,13 @@ const addtopic = (props) => {
                 'Content-Type': 'application/json'
             }
         }
-        await axios.post(config.URL + '/api/topics', data, axiosConfig)
+        await axios.post(config.URL + '/api/topics', data, axiosConfig).then((res) => {
+        
+          })
+          .catch((err) => {
+          
+            alert("Topic name has already exist!");
+          })
         await onGetTopic();
     }
 

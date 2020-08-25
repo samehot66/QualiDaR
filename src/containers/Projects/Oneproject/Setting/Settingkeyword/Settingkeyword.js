@@ -11,6 +11,8 @@ const Setkeyword = (props) => {
 
     const [isauth, setisauth] = useState(localStorage.getItem('isAuth'));
     const [keywordgroup,setkeywordgroup]=useState([]);
+    const [keywordgroupinuse,setkeywordgroupinuse]=useState([]);
+
     useEffect(() => {
         const addkeywordgroup = [];
         let source = axios.CancelToken.source();
@@ -28,14 +30,23 @@ const Setkeyword = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords/usersgroups', data, axiosConfig,{ cancelToken: source.token})
+        axios.get(config.URL + '/api/keywords/usergroups', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
 
-                for (const index in res.data) {
-                   console.log(res.data);
+                for (const index in res.data[0].keywordgroups) {
+                    addkeywordgroup.push({
+                        keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
+                        groupname:  res.data[0].keywordgroups[index].groupname
+                        })
+                }
+                for (const index in res.data[0].subscribes) {
+                    addkeywordgroup.push({
+                        keywordgroupsid: res.data[0].subscribes[index].keywordgroup.keywordgroupsid,
+                        groupname:  res.data[0].subscribes[index].keywordgroup.groupname
+                        })
                 }
 
-                setkeywordgroup(addkeywordgroup);
+               setkeywordgroup(addkeywordgroup);
             })
             .catch((err) => {
                 console.log("Show keyword groups Failed");
@@ -45,6 +56,104 @@ const Setkeyword = (props) => {
                 source.cancel();
             }
     }, [])
+
+    const addGroupHandler= async (keywordgroupsid)=>{
+
+
+        let data = {
+            "uid": localStorage.getItem("uid"), 
+            "access_token": localStorage.getItem("access_token"),
+            "tid": props.tid,
+            "keywordgroupsid":keywordgroupsid
+        
+        }
+
+        
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+      await axios.post(config.URL + '/api/keywords/topic', data, axiosConfig)
+            .then((res) => {
+
+               
+            })
+            .catch((err) => {
+                console.log("Add keyword group Failed");
+            })
+       
+    }
+
+    useEffect(() => {
+        const addkeywordgroupinuse = [];
+        let source = axios.CancelToken.source();
+        let data = {
+            params: { "uid": localStorage.getItem("uid"), "access_token": localStorage.getItem("access_token") 
+        
+            ,"tid": props.tid
+        
+        }
+
+        }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        axios.get(config.URL + '/api/keywords/topic', data, axiosConfig,{ cancelToken: source.token})
+            .then((res) => {
+
+                for (const index in res.data.keywordgroups) {
+                    addkeywordgroupinuse.push({
+                        keywordgroupsid:  res.data.keywordgroups[index].keywordgroupsid,
+                        groupname:  res.data.keywordgroups[index].groupname
+                        })
+                }
+       
+               setkeywordgroupinuse(addkeywordgroupinuse);
+            })
+            .catch((err) => {
+                console.log("Show keyword groups Failed");
+            })
+            return ()=>
+            {
+                source.cancel();
+            }
+    }, [])
+
+    const removeGroupHandler= async (keywordgroupsid)=>{
+
+
+        let data = { params: {
+            "uid": localStorage.getItem("uid"), 
+            "access_token": localStorage.getItem("access_token"),
+            "tid": props.tid,
+            "keywordgroupsid":keywordgroupsid
+        }
+        }
+
+        
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+      await axios.delete(config.URL + '/api/keywords/topic      ', data, axiosConfig)
+            .then((res) => {
+
+               
+            })
+            .catch((err) => {
+                console.log("Remove keyword group Failed");
+            })
+       
+    }
+
+
     return (
         isauth ?
             <Auxi>
@@ -66,8 +175,12 @@ const Setkeyword = (props) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                               <td>fwef</td></tr>
+                                    {keywordgroup.map(k => (
+                                    <tr key={k.keywordgroupsid}>
+                                               <td style={{ color: "#17a2b8" }}> <i  className="fa fa-fw  fa-folder" ></i> {k.groupname}</td>
+                                               <td><i id={k.keywordgroupsid} className="fa fa-fw fa-plus-square" style={{ fontSize: "18px", color:"#007bff" }} data-toggle="tooltip" data-placement="top" title="Add" onClick={(e)=>addGroupHandler(e.target.id)} ></i></td>
+                                         </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                                 {/* /.table-responsive */}
@@ -94,10 +207,14 @@ const Setkeyword = (props) => {
                                                 <th>Tool</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                           
-                                        <tr>
-                                               <td>fwef</td></tr>
+                                        <tbody> 
+                                       
+                                        {keywordgroupinuse.map(k => (
+                                    <tr key={k.keywordgroupsid}>
+                                               <td style={{ color: "#17a2b8" }}> <i  className="fa fa-fw  fa-folder" ></i> {k.groupname}</td>
+                                               <td><i id={k.keywordgroupsid} className="fa fa-fw fa-minus-square" style={{ fontSize: "18px", color:"#dc3545" }} data-toggle="tooltip" data-placement="top" title="Add" onClick={(e)=>removeGroupHandler(e.target.id)} ></i></td>
+                                         </tr>
+                                    ))}
                                            
                                            
                                            </tbody>
