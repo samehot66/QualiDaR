@@ -218,9 +218,13 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
         #    print(item)
         #for item in query_result:
         #    temp_text
+        return_data = []
+
         for item in query_result:
             keyword = item['keyword']
             text = item['text']
+            kid = item['kid']
+            pdftextid = item['pdftextid']
             size_word = len(keyword)
             print(f'Keyword: {keyword}\nLength of word: {size_word}')
             matched_setences = []  #store index of matched keyword
@@ -235,6 +239,33 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
             for index in matched_setences:  #display sentences that matched keyword
                 print(sent_tokenize(text[index-200:index+size_word+200]))
                 print(f'Index {index}: {text[index-200:index+size_word+200]}')
+                tempJS = '{"start": ' + str(index-200) + ', "end": ' + str(index+size_word+200) + '}'
+                tempJS = tempJS.replace("'", '"')
+                kindex = json.dumps(str(tempJS))
+                kindex = kindex.replace('\\', '')
+                kindex = "'" + kindex[1:]
+                kindex = kindex[:len(kindex)-1] + "'"
+                print(kindex)
+                try:
+                    connection = mysql.connector.connect(host='localhost',
+                                         database='testdb',
+                                         user='root',
+                                         password='Decade65*')
+                    cursor = connection.cursor()
+                    mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-200:index+size_word+200]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
+                    print(mySql_insert_query)
+                    cursor.execute(mySql_insert_query)
+                    connection.commit()
+                    #print(cursor.rowcount, "Record inserted successfully into Laptop table")
+            
+                    cursor.close()
+                except mysql.connector.Error as error:
+                    print("Failed to insert record into phrases table {}".format(error))
+                finally:
+                    if (connection.is_connected()):
+                        cursor.close()
+                        connection.close()
+                        print("MySQL connection is closed")
 
         # for index in matched_setences:  #display sentences that matched keyword
         #     print(sent_tokenize(st[11][index-50:index+size_word+50]))
