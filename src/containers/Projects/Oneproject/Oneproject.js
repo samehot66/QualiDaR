@@ -229,7 +229,7 @@ const oneproject = (props) => {
             .then((res) => {
                 for (const index in res.data) {
                     loadfiles.push({
-                      pdfid: res.data[index].pdfid,
+                      pdfid: res.data[index].id,
                       filename: res.data[index].pdffile.pdfname,
                       description: res.data[index].pdffile.description,
                       uploadedby: res.data[index].user.email,
@@ -266,9 +266,10 @@ const oneproject = (props) => {
         }
         axios.get(config.URL  + '/api/files', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
-                for (const index in res.data) {
+         
+                for (const index in res.data) {       
                     loadfiles.push({
-                      pdfid: res.data[index].pdfid,
+                      pdfid: res.data[index].id,
                       filename: res.data[index].pdffile.pdfname,
                       description: res.data[index].pdffile.description,
                       uploadedby: res.data[index].user.email,
@@ -298,7 +299,7 @@ const oneproject = (props) => {
         let loadfiles = [];
         for (const index in newProjState) {
         loadfiles.push({
-              pdfid: newProjState[index].pdfid,
+              pdfid: newProjState[index].id,
               filename: newProjState[index].pdffile.pdfname,
               description: newProjState[index].pdffile.description,
               uploadedby: newProjState[index].user.email,
@@ -455,7 +456,7 @@ const oneproject = (props) => {
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Role</th>
-                                                <th>Tools</th>
+                                                <th>Tool</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -475,11 +476,12 @@ const oneproject = (props) => {
               </td>
                 <td style={{color: people.role == "owner" ? "#ccc" : "black" }}>
                 {
-                   role == localStorage.getItem("email") ?
+                  owner==localStorage.getItem("email")?
                    people.role == "owner" ? null:
+                  
               <i id={people.peopleid} key={people.peopleid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }}  onClick={(event) => deletepeopleHandler(event)} data-toggle="tooltip" data-placement="top" title={"Delete"}></i>  
-         
-         :null}
+    :null
+      }
          
          
          </td>
@@ -518,7 +520,7 @@ const oneproject = (props) => {
                                                 <th>Description</th>
                                                 <th>Status</th>
                                                 <th>Size</th> 
-                                                <th>Tools</th>
+                                                <th>Tool</th>
                                                 <th>Uploaded by</th>
                                                 <th>Role</th>
                                                
@@ -526,7 +528,7 @@ const oneproject = (props) => {
                                         </thead>
                                         <tbody>
                                         {filesfilterserch.map(file => (
-                                            <Files key={file.pdfid} onGetfiles={handleGetfiles} filename={file.filename} webid={props.match.params.id} description={file.description} uploadedby={file.uploadedby} progress={file.progress} size={file.size} pdfid={file.pdfid} role={file.role}/>
+                                            <Files  owner={owner} key={file.pdfid} onGetfiles={handleGetfiles} filename={file.filename} webid={props.match.params.id} description={file.description} uploadedby={file.uploadedby} progress={file.progress} size={file.size} pdfid={file.pdfid} role={file.role}/>
                                        
                                         
                                          ))}
@@ -574,7 +576,7 @@ const oneproject = (props) => {
                                         <tbody> 
                                         {  topicfiltersearch.map(top => (
                                           
-  <Topic pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
+  <Topic owner={owner} pname={projectdetail[1]} webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={true} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                      //  <Topic webid={props.match.params.id} tname={top.tname} email={top.createdby} role={top.role} done={top.status} tid={top.tid} key={top.tid} onGettopics={handlerGettopic}/>
                                         ))}
                                          </tbody>

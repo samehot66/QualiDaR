@@ -14,12 +14,11 @@ const TopicPdffiles = db.topic_pdffiles
 
 router.get('', (req, res) => {
   ProjectPdf.findAll({
-    attributes: ['pdfid'],
+    attributes: ['id'],
     where: { pid: req.query.pid },
     include: [{
       model: Pdffiles,
-      attributes: ['pdfname', 'description', 'done', 'size', 'uri'],
-      order: ['pdfname', 'ASC']
+      attributes: ['pdfname', 'description', 'done', 'size', 'uri']
     },
     {
       model: User,
@@ -29,7 +28,8 @@ router.get('', (req, res) => {
         as: 'user',
         attributes: ['role']
       }]
-    }]
+    }],
+    order: [ [Pdffiles , 'pdfname', 'ASC'] ]
   }).then((data) => {
     console.log(data)
     res.status(200).send(data)
@@ -44,7 +44,7 @@ router.get('/topic', (req, res)=>{
     where: { tid: req.query.tid },
     include: [{
       model: Pdffiles,
-      order: ['pdfname', 'ASC']
+      order: [['pdfname', 'ASC']]
     }]
   }).then((data)=>{
     res.status(200).send(data)
@@ -85,7 +85,6 @@ router.post('/topic', (req, res)=>{
 })
 
 router.post('/upload', async (req, res, next) => {
-    console.log(`first`)
     if (req.files === null) {
       return res.status(400).json({ msg: 'No file uploaded' });
     }
@@ -126,14 +125,15 @@ router.post('/upload', async (req, res, next) => {
       .map(dirent => dirent.name)
 
     console.log(getDirectories('../public/upload/'))
-    /*ProjectPdf.create({
-
-    })*/
 
     var dir = `../public/upload/${req.body.pid}`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
+    }
+
+    if (fs.existsSync(dir + `/${file.name}`)){
+       return res.status(400).send({ message: 'File is already exist in this project!' })
     }
 
     file.mv(`../public/upload/${req.body.pid}/${file.name}`,async (err) => {
@@ -206,14 +206,6 @@ router.post('/upload', async (req, res, next) => {
         console.log(err)
         return res.status(500).send(err)
       })
-
-      //return res.json({ fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`})
-      //.then(()=>{
-        
-      /*})
-      .catch((err)=>{
-        res.status(500).send(err)
-      });*/
     });
   });
 

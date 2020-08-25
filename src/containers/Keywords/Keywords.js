@@ -43,7 +43,7 @@ const Keywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords', data, axiosConfig, axiosConfig,{ cancelToken: source.token})
+        axios.get(config.URL + '/api/keywords', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
                 for (const index in res.data) {
                     pubkeywords.push({
@@ -122,7 +122,7 @@ const Keywords = (props) => {
             }
         }
 
-        axios.get(config.URL + '/api/keywords/groups', data, axiosConfig, axiosConfig,{ cancelToken: source.token})
+        axios.get(config.URL + '/api/keywords/groups', data, axiosConfig,{ cancelToken: source.token})
             .then((res) => {
 
                 for (const index in res.data) {

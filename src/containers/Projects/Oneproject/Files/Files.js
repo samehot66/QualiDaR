@@ -5,7 +5,6 @@ import Button from '../../../../components/UI/Button/Button';
 import axios from 'axios';
 
 const file= (props) => {
-
   const [Deletemodal, setDeletemodal] = useState(false);
   const showDeleteModal = () => { setDeletemodal(true) };
   const closeDeleteModal = () => { setDeletemodal(false) };
@@ -66,8 +65,9 @@ return(
 <td>{props.size} KB</td>
 
 <td>
+  {props.owner==localStorage.getItem("email")? 
     <i id={props.pdfid} key={props.pdfid} className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal} data-toggle="tooltip" data-placement="top" title={"Delete"}></i>
- 
+:null }
  <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete a file from project">
           <div  style={{fontSize: "22px",textAlign: "center"}}>Are you sure to delete
            <span style={{ color: "blue" }}> {props.filename} </span>

@@ -5,6 +5,9 @@ import Button from '../../../../components/UI/Button/Button';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import Edittopic from './Edittopics';
+import Settingfile from '../Setting/Setttingfile/Settingfile';
+import Settingkeyword from '../Setting/Settingkeyword/Settingkeyword';
+
 const topic= (props) => {
 
   const [Deletemodal, setDeletemodal] = useState(false);
@@ -18,6 +21,15 @@ const topic= (props) => {
   const [Settingmodal, setSettingmodal] = useState(false);
   const showSettingModal = () => { setSettingmodal(true) };
   const closeSettingModal = () => { setSettingmodal(false) };
+  const closeSettingModal2 = () => { setSettingmodal(false); alert("Start extracting...")};
+
+  const [Setfilemodal, setSetfilemodal] = useState(false);
+  const showSetfileModal = () => { setSetfilemodal(true) };
+  const closeSetfileModal = () => { setSetfilemodal(false) };
+
+  const [Setkeywordgroupmodal, setSetkeywordgroupmodal] = useState(false);
+  const showSetkeywordgroupModal = () => { setSetkeywordgroupmodal(true) };
+  const closeSetkeywordgroupModal = () => { setSetkeywordgroupmodal(false) };
 
   const deleteHandler = async () => {
     let data = {
@@ -76,12 +88,35 @@ return(
     <td style={{color:"red" }}>Wait start/Extracting...</td>
     }
     <td>
+      {props.owner==localStorage.getItem("email") ?
         <i className="fa fa-fw fa-play" style={{ fontSize: "18px" }} onClick={showSettingModal} data-toggle="tooltip" data-placement="top" title={"Start"}></i>
+     :null
+      }  
+      
+      
+      <i className="fa fa-fw fa-key" style={{ fontSize: "18px" }} onClick={showSetkeywordgroupModal} data-toggle="tooltip" data-placement="top" title={"Set keyword group to topic"}></i>
+        <i className="fa fa-fw fa-file" style={{ fontSize: "18px" }} onClick={showSetfileModal} data-toggle="tooltip" data-placement="top" title={"Set file to topic"}></i>
         <i className="fa fa-fw fa-edit" style={{ fontSize: "18px" }} onClick={showEditModal} data-toggle="tooltip" data-placement="top" title={"Edit"}></i>
+        {props.owner==localStorage.getItem("email") ?
         <i className="fa fa-fw fa-trash" style={{ fontSize: "18px" }} onClick={showDeleteModal}data-toggle="tooltip" data-placement="top" title={"Delete"} ></i>
-     
-        <Modal show={Settingmodal} modalClosed={closeSettingModal} name="Setting a topic">
-       
+        :null
+      }  
+
+        <Modal show={Setkeywordgroupmodal} modalClosed={closeSetkeywordgroupModal} name="Set keyword group(s) to topic">
+          <Settingkeyword  pid={props.webid} tid={props.tid}/>
+        </Modal> 
+        <Modal show={Setfilemodal} modalClosed={closeSetfileModal} name="Set file(s) to topic">
+        <Settingfile pid={props.webid} tid={props.tid}/>
+        </Modal> 
+
+
+
+        <Modal show={Settingmodal} modalClosed={closeSettingModal} name="Comfirm to start">
+        <div  style={{fontSize: "22px",textAlign: "center"}}>   
+        Are you sure to start processing this topic?
+           </div>
+        <Button btnType="Success" clicked={closeSettingModal2} >Start</Button>
+          <Button btnType="Start" clicked={closeSettingModal}>Cancel</Button>
         </Modal> 
 
 
