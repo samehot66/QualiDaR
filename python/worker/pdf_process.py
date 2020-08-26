@@ -185,17 +185,17 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
                                          password='Decade65*')
             cursor = connection.cursor()
             for item in keywordgroups:
-                print(item)
+                #print(item)
                 keyword = item['keywordtext']
                 kid = item['kid']
-                print(f'keyword {keyword}')
+                #print(f'keyword {keyword}')
                 mySql_select_query = 'SELECT pdf_texts.pdftextid, pdf_texts.page_number, pdf_texts.text FROM pdf_texts JOIN pdffiles ON pdffiles.pdfid = ' + str(pdfid) + ' JOIN projects ON projects.pid = ' + str(pid) + ' WHERE pdf_texts.text LIKE "%' + keyword + '%";'
                 cursor.execute(mySql_select_query)
                 for (pdftextid, page_number, text) in cursor:
                     j = '{"kid": "' + str(kid) + '", "keyword": "' + str(keyword) + '", "pdftextid": "' + str(pdftextid) + '", "page_number": "' + str(page_number) + '", "text": "' + str(text) + '"}'
                     j = j.replace("'", '"')
                     j = j.replace('\r\n', '')
-                    print(j)
+                    #print(j)
                     temp_json = {}
                     temp_json = json.loads(str(j), strict=False)
                     #print(temp_json)
@@ -218,15 +218,15 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
         #    print(item)
         #for item in query_result:
         #    temp_text
-        return_data = []
 
         for item in query_result:
+            page = item['page_number']
             keyword = item['keyword']
             text = item['text']
             kid = item['kid']
             pdftextid = item['pdftextid']
             size_word = len(keyword)
-            print(f'Keyword: {keyword}\nLength of word: {size_word}')
+            #print(f'Keyword: {keyword}\nLength of word: {size_word}')
             matched_setences = []  #store index of matched keyword
             p = re.compile(keyword)  #compile pattern of string
 
@@ -234,18 +234,18 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
              matched_setences.append(m.start())
              #print(m.start(), m.group())
     
-            print(f'All matched index: {matched_setences}')
+            #print(f'All matched index: {matched_setences}')
 
             for index in matched_setences:  #display sentences that matched keyword
-                print(sent_tokenize(text[index-200:index+size_word+200]))
-                print(f'Index {index}: {text[index-200:index+size_word+200]}')
+                #print(sent_tokenize(text[index-200:index+size_word+200]))
+                print(f'keyword {keyword}, page {page}: {text[index-200:index+size_word+200]}')
                 tempJS = '{"start": ' + str(index-200) + ', "end": ' + str(index+size_word+200) + '}'
                 tempJS = tempJS.replace("'", '"')
                 kindex = json.dumps(str(tempJS))
                 kindex = kindex.replace('\\', '')
                 kindex = "'" + kindex[1:]
                 kindex = kindex[:len(kindex)-1] + "'"
-                print(kindex)
+                #print(kindex)
                 try:
                     connection = mysql.connector.connect(host='localhost',
                                          database='testdb',
@@ -253,7 +253,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
                                          password='Decade65*')
                     cursor = connection.cursor()
                     mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-200:index+size_word+200]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
-                    print(mySql_insert_query)
+                    #print(mySql_insert_query)
                     cursor.execute(mySql_insert_query)
                     connection.commit()
                     #print(cursor.rowcount, "Record inserted successfully into Laptop table")
