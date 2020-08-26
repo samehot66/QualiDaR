@@ -47,6 +47,21 @@ router.get('', (req, res) =>{
     })*/
 })
 
+router.get('/projects/checkaccess', (req, res)=>{
+    Topic.findOne({
+        where: { tid: req.query.tid, pid: req.query.pid, uid: req.query.uid }
+    }).then((data)=>{
+        if(data){
+            return res.status(200).send({ access: true })
+        }else{
+            return res.status(200).send({ access: false })
+        }
+    }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+    })
+})
+
 router.get('/detail', (req, res)=>{
     Topic.findOne({
         where: { tid: req.query.tid },
