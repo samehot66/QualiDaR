@@ -20,8 +20,8 @@ const topics = (props) => {
     //  console.log(props.match.params.tid);
     //  console.log(props.match.params.id);
 
-    const [projects, setprojects] = useState([]);
-    const [projects2, setprojects2] = useState([]);
+    const [paragraphall, setparagraphall] = useState([]);
+    const [paragraphinuse, setparagraphinuse] = useState([]);
 
     useEffect(() => {
 
@@ -70,17 +70,15 @@ const topics = (props) => {
         }
     }, [])
 
+    useEffect(() => {
 
-
-
-
-    const x = () => {
-        const loadprojects = [];
         let source = axios.CancelToken.source();
+        const keywordgroupinfo = [];
         let data = {
             params: {
                 "uid": localStorage.getItem("uid"),
-                "access_token": localStorage.getItem("access_token")
+                "access_token": localStorage.getItem("access_token"),
+                "tid": props.match.params.tid
             }
         }
         let axiosConfig = {
@@ -88,20 +86,59 @@ const topics = (props) => {
                 'Content-Type': 'application/json'
             }
         }
-        axios.get(config.URL + '/api/projects', data, axiosConfig, { cancelToken: source.token })
+        axios.get(config.URL + '/api/keywords/topic/keywords', data, axiosConfig, { cancelToken: source.token })
             .then((res) => {
-                for (const index in res.data) {
-                    loadprojects.push({
-                        id: res.data[index].pid,
-                        pname: res.data[index].pname,
-                        description: res.data[index].description
-                    });
-                }
-                setprojects(loadprojects);
+           console.log("fewgreger",res.data)
+                // for (const index in res.data.keywordgroups) {
+                //     keywordgroupinfo.push({
+                //         keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,
+                //         groupname: res.data.keywordgroups[index].groupname
+                //     })
+                // }
+
+              
+
             })
             .catch((err) => {
-                alert("Show all projects Failed");
+                alert("Show keyword(s) Failed");
             })
+        return () => {
+            source.cancel();
+        }
+    }, [])
+
+
+
+
+
+    const getParagraphs = () => {
+        const loadparagraphs = [];
+        
+                    loadparagraphs.push({
+                        phraseid: "1",
+text: "คาดการณ์ว่าจะเพิ่ม มากขึ้นเรื่อยๆ เนื่องจากแคมเปญต่างๆ เริ่มหันมาใช้การสื่อสารกับ ลูกค้าผ่านสื่อโฆษณาในหลากหลายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
+                        pdfname:"BTS.pdf",
+                        page:"44",
+                            
+                            status:"unseen"
+                        });
+                        loadparagraphs.push({
+                            phraseid: "3",
+    text: "fefefefeายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
+                            pdfname:"BTS.pdf",
+                            page:"44",
+                                
+                                status:"unseen"
+                            });   loadparagraphs.push({
+                                phraseid: "2",
+        text: "คาดการณ์ว่าจะเพิ่ม มากขึ้นเรื่อยๆ เนื่องจากแคมเปญต่างๆ เริ่มหันมาใช้การสื่อสารกับ ลูกค้าผ่านสื่อโฆษณาในหลากหลายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
+                                pdfname:"BTS.pdf",
+                                page:"44",
+                                    
+                                    status:"unseen"
+                                });
+                    setparagraphall(loadparagraphs);
+   
 
     };
 
@@ -109,24 +146,24 @@ const topics = (props) => {
 
     const removeHandler = (id) => {
 
-        var x = [...projects];
+        var x = [...paragraphall];
 
-        setprojects2([...projects2, x[id]]);
-        console.log(projects2);
+        setparagraphinuse([...paragraphinuse, x[id]]);
+        console.log(paragraphinuse);
         x.splice(id, 1)
 
-        setprojects(x);
+        setparagraphall(x);
 
 
     };
 
     const removeHandler2 = (id) => {
-        var x = [...projects2]
+        var x = [...paragraphinuse]
 
-        setprojects([...projects, x[id]]);
+        setparagraphall([...paragraphall, x[id]]);
         x.splice(id, 1)
 
-        setprojects2(x);
+        setparagraphinuse(x);
 
 
     };
@@ -252,36 +289,73 @@ const topics = (props) => {
                                 <div className="card-body p-0 " style={{ overflow: "auto" }}>
                                     <div className="list-group" style={{ margin: "5px" }}>
                                         <button type="button" className="list-group-item-info active " disabled style={{ height: "30px", fontSize: "15px", padding: "0.03rem 0.75rem", borderTopRightRadius: "0.25rem", borderTopLeftRadius: "0.25rem" }}>
-                                            ESG
+                                            ESG: Social by ISNE#5
   </button>
-                                        <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{ padding: "0.03rem 0.75rem" }}>key1</button>
-                                        <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{ padding: "0.03rem 0.75rem" }}>key1</button>
-                                        <button type="button" className="list-group-item list-group-item-action" onClick={x} style={{ padding: "0.03rem 0.75rem" }}>key1</button>
+                                        <button type="button" className="list-group-item list-group-item-action" onClick={getParagraphs} style={{ padding: "0.03rem 0.75rem" }}>สื่อโฆษณา</button>
+                                        <button type="button" className="list-group-item list-group-item-action"  style={{ padding: "0.03rem 0.75rem" }}>สังคมออนไลน์</button>
+                                        <button type="button" className="list-group-item list-group-item-action"  style={{ padding: "0.03rem 0.75rem" }}>การประชาสัมพันธ์</button>
                                     </div>
 
+ <div className="list-group" style={{ margin: "5px" }}>
+                                        <button type="button" className="list-group-item-info active " disabled style={{ height: "30px", fontSize: "15px", padding: "0.03rem 0.75rem", borderTopRightRadius: "0.25rem", borderTopLeftRadius: "0.25rem" }}>
+                                            Environment
+  </button>
+                                        <button type="button" className="list-group-item list-group-item-action"  style={{ padding: "0.03rem 0.75rem" }}>สื่อโฆษณา</button>
+                                        <button type="button" className="list-group-item list-group-item-action"  style={{ padding: "0.03rem 0.75rem" }}>สังคมออนไลน์</button>
+                                        <button type="button" className="list-group-item list-group-item-action"  style={{ padding: "0.03rem 0.75rem" }}>การประชาสัมพันธ์</button>
+                                    </div>
 
 
                                 </div>
 
+                                   
 
+
+                          
                             </div>
 
                             <div className={["card card-info", classes.Box2].join(' ')}>
-                                <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" }}>
+                                <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem", backgroundColor:"#66bfed" }}>
                                     <h3 className="card-title"> Paragarph(s)
                                 </h3>
                                     <div className="card-tools">
                                         hgrthtr
                                 </div>
                                 </div>
-                                {/* /.card-header */}
+                                {/* /.card-header  <Ckeditor />*/}
                                 <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                    <Ckeditor />
-                                    {projects.map((project, i) => (
-                                        <div id={project.id} key={project.id} onClick={() => removeHandler(i)}>
-                                            {project.pname}
-                                        </div>
-                                    ))}
+                                 <div style={{ overflow: "auto",height:"600px" }} >
+                                    {paragraphall.map((p, i) => (
+                                    
+                                    
+                                   <div className="card card-info" id={p.phraseid}  style={{ margin:"10px"}} >
+  <div className="card-header border-transparent " style={{ padding: "0.2rem 1rem" , backgroundColor:"#66bfed"}}>
+    <h3 className="card-title"> Paragraph ID: {p.phraseid}, File: <a href={"./upload/"+props.match.params.id+"/"+p.pdfname+"#page="+p.page} target="_blank">{p.pdfname}</a></h3>
+    <div className="card-tools">
+                                        <button onClick={() => removeHandler(i)}>Add to in use</button>
+                                        <button><a href={"./upload/"+props.match.params.id+"/"+p.pdfname+"#page="+p.page} target="_blank">File</a></button>
+                                        <button>Edit</button>
+                                        <button>Remove</button>
+
+    </div>
+    {/* /.card-tools */}
+  </div>
+  {/* /.card-header */}
+  <div className="card-body">
+  {p.text}
+  </div>
+  {/* /.card-body */}
+  <div className="card-footer">
+   page: {p.page}
+  </div>
+  {/* /.card-footer */}
+</div>
+
+                                    
+
+
+                                        
+                                    ))}</div>
                                 </div>
 
 
@@ -296,11 +370,12 @@ const topics = (props) => {
                                 </div>
                                 {/* /.card-header */}
                                 <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                                    {projects2.map((project, i) => (
-                                        <div id={project.id} key={project.id} onClick={() => removeHandler2(i)}>
-                                            {project.pname}
+                                {paragraphinuse.map((project, i) => (
+                                        <div id={project.phraseid} key={project.phraseid} onClick={() => removeHandler2(i)}>
+                                            {project.text}
                                         </div>
                                     ))}
+                                  
                                 </div>
 
 

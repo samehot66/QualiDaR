@@ -31,6 +31,25 @@ router.get('/mygroups', (req, res)=>{
   })
 })
 
+router.get('/topic/keywords', (req, res)=>{
+  keywordgroupTopics.findAll({
+    attributes: ['keywordgroupsid', 'tid'],
+    where: { tid: req.query.tid },
+    include: [{
+      model: Keywordgroup,
+      as: 'keywordgroup',
+      include: [{
+        model: Keyword
+      }]
+    }]
+  }).then((data)=>{
+    res.status(200).send(data)
+  }).catch((err)=>{
+    console.log(err)
+    res.status(500).send(err)
+  })
+})
+
 router.get('/usergroups', (req, res)=>{
   User.findAll({
     attributes: ['uid', 'email'],
@@ -46,8 +65,8 @@ router.get('/usergroups', (req, res)=>{
       }]
     }, {
       model: ProjectRole,
-      attributes: ['role'],
       as: 'user',
+      attributes: ['role'],
       where: {pid: req.query.pid}
     }]
   }).then((data)=>{

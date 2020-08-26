@@ -30,8 +30,7 @@ def pdf_process(task_id):
             connection = mysql.connector.connect(host='localhost',
                                          database='testdb',
                                          user='root',
-                                         password='Decade65*',
-                                          auth_plugin='mysql_native_password')
+                                         password='Decade65*')
             cursor = connection.cursor()
 
             for i in range(len(st)):
@@ -55,7 +54,7 @@ def pdf_process(task_id):
     except ValueError as e:
         print(e)
     
-    #print(st[7])
+    #find_phrases(st, ['สื่อโฆษณา', 'ด้านสิ่งแวดล้อม', 'ด้านสังคม'])
     task.job_result = "Task successfully finished."
     print(f"Long running operation finished.")
     print(f"Updating task with id {task.id}...")
