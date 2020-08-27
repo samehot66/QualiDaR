@@ -1,17 +1,16 @@
 .Modal {
-    position: fixed;
-    z-index: 500;
-    width: 35%;
-    left: 35%;
-    top: 10%;
-    box-sizing: border-box;
-    transition: all 0.3s ease-out;
-
+  position: fixed;
+  z-index: 500;
+  width: 35%;
+  left: 35%;
+  top: 10%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
 }
 
 .Name {
-    margin-bottom: 12px;
-    background-color: #61c9ff;
-    text-align: center;
-    color: #ffffff;
+  margin-bottom: 12px;
+  background-color: #61c9ff;
+  text-align: center;
+  color: #ffffff;
 }

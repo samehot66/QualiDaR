@@ -32,12 +32,11 @@ router.get('/mygroups', (req, res)=>{
 })
 
 router.get('/topic/keywords', (req, res)=>{
-  keywordgroupTopics.findAll({
-    attributes: ['keywordgroupsid', 'tid'],
+  Topic.findAll({
+    attributes: ['tid', 'tname'],
     where: { tid: req.query.tid },
     include: [{
       model: Keywordgroup,
-      as: 'keywordgroup',
       include: [{
         model: Keyword
       }]

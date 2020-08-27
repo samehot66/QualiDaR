@@ -1,25 +1,20 @@
-.Gname
-{
+.Gname {
   color: #17a2b8;
   cursor: default;
-
 }
-.Gname:hover
-{
-    text-decoration: underline;
+
+.Gname:hover {
+  text-decoration: underline;
 }
 
 .Delete {
-    font-size: 22px;
-    text-align: center;
-    color: black;
+  font-size: 22px;
+  text-align: center;
+  color: black;
 }
 
-
-.Box
-{
-    height:300px;
-
-    top:10px;
-    position: relative;
+.Box {
+  height: 300px;
+  top: 10px;
+  position: relative;
 }

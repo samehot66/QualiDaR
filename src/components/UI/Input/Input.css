@@ -1,43 +1,43 @@
 .Input {
-    width: 100%;
-    padding: 3px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 3px;
+  box-sizing: border-box;
 }
 
 .Label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .InputElement {
-    outline: none;
-    border: 1px solod #ccc;
-    background-color: white;
-    font: inherit;
-    padding: 6px 0px;
-    width:100%;
-    display:block;
+  outline: none;
+  border: 1px solod #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 6px 0px;
+  width: 100%;
+  display: block;
 }
 
-.InputElement:Focus {
-    outline: none;
-    background-color: #ccc;
+.InputElement:focus {
+  outline: none;
+  background-color: #ccc;
 }
 
 .Selectlabel {
-    color:gray;
-    position:relative;
-    top:5px;
+  color: gray;
+  position: relative;
+  top: 5px;
 }
 
 .Select {
-    outline: none;
-    border: 1px solod #ccc;
-    background-color: white;
-    font: inherit;
-    width:100%;
-    display:block;
-    position:relative;
-    top:3px;
+  outline: none;
+  border: 1px solod #ccc;
+  background-color: white;
+  font: inherit;
+  width: 100%;
+  display: block;
+  position: relative;
+  top: 3px;
 }

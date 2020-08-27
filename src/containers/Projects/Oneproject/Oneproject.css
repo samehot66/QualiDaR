@@ -1,72 +1,56 @@
-
-.Box
-{
-    height:300px;
-
-    position: relative;
-}
-.Box2
-{
-    height:617px;
-
-    position: relative;
-}
-.AddIcon
-{
-    position: absolute;
-    width: 100px;
-    padding: 0;
-    font-size: 12px;
-    top: 4px;
-    left: 200px;
+.Box {
+  height: 300px;
+  position: relative;
 }
 
-
-.AddTopic
-{
-    position: absolute;
-    width: 58px;
-    padding: 0;
-    font-size: 12px;
-    top: 4px;
-    left: 88px;
+.Box2 {
+  height: 617px;
+  position: relative;
+}
+.AddIcon {
+  position: absolute;
+  width: 100px;
+  padding: 0;
+  font-size: 12px;
+  top: 4px;
+  left: 200px;
 }
 
-
-.Uploadmodal
-{
-    position: absolute;
-    width: 58px;
-    padding: 0;
-    font-size: 12px;
-    top: -4px;
-    left: 182px;
-    background-color: #007bff;
+.AddTopic {
+  position: absolute;
+  width: 58px;
+  padding: 0;
+  font-size: 12px;
+  top: 4px;
+  left: 88px;
 }
 
-
-
-
-.Refresh
-{
-    position: absolute;
-    width: 65px;
-    padding: 0;
-    font-size: 12px;
-    top: 4px;
-    left: 243px;
-    background-color: #007bff;
+.Uploadmodal {
+  position: absolute;
+  width: 58px;
+  padding: 0;
+  font-size: 12px;
+  top: -4px;
+  left: 182px;
+  background-color: #007bff;
 }
 
+.Refresh {
+  position: absolute;
+  width: 65px;
+  padding: 0;
+  font-size: 12px;
+  top: 4px;
+  left: 243px;
+  background-color: #007bff;
+}
 
-
-.Refreshtopic
-{
-    position: absolute;
-    width: 65px;
-    padding: 0;
-    font-size: 12px;
-    top: -5px;
-    left: 150px;
-    background-color: #66bfed;
+.Refreshtopic {
+  position: absolute;
+  width: 65px;
+  padding: 0;
+  font-size: 12px;
+  top: -5px;
+  left: 150px;
+  background-color: #66bfed;
 }

@@ -1,81 +1,114 @@
-import React from 'react';
-import classes from './Input.css';
-import TextField from '@material-ui/core/TextField';
-import Auxi from '../../../hoc/Auxi';
+import React from "react";
+import classes from "./Input.css";
+import TextField from "@material-ui/core/TextField";
+import Auxi from "../../../hoc/Auxi";
 const input = (props) => {
+  let inputElement = null;
 
-    let inputElement = null;
+  switch (props.elementType) {
+    case "input":
+      if (props.checkError === "No") {
+        inputElement = (
+          <TextField
+            rowsMax={1}
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+        );
+      } else {
+        inputElement = (
+          <TextField
+            rowsMax={1}
+            error
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            helperText={props.error}
+            onChange={props.changed}
+          />
+        );
+      }
+      break;
+    case "textarea":
+      if (props.checkError === "No") {
+        inputElement = (
+          <TextField
+            multiline
+            rowsMax={3}
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+        );
+      } else {
+        inputElement = (
+          <TextField
+            multiline
+            rowsMax={3}
+            error
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            helperText={props.error}
+            onChange={props.changed}
+          />
+        );
+      }
+      break;
+    case "select":
+      inputElement = (
+        <Auxi>
+          <span className={classes.Selectlabel}>{props.elementLabel}</span>
+          <select
+            className={classes.Select}
+            value={props.value}
+            onChange={props.changed}
+          >
+            {props.elementConfig.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.displayValue}
+              </option>
+            ))}
+          </select>
+        </Auxi>
+      );
+      break;
+    default:
+      if (props.checkError === "No") {
+        inputElement = (
+          <TextField
+            rowsMax={1}
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            onChange={props.changed}
+          />
+        );
+      } else {
+        inputElement = (
+          <TextField
+            rowsMax={1}
+            error
+            label={props.elementLabel}
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            helperText={props.error}
+            onChange={props.changed}
+          />
+        );
+      }
+  }
 
-    switch (props.elementType) {
-        case ('input'):
-            if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1} label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    onChange={props.changed} />;
-            }
-            else {
-                inputElement = <TextField rowsMax={1} error label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    helperText={props.error}
-                    onChange={props.changed} />;
-            } break;
-        case ('textarea'):
-            if (props.checkError === 'No') {
-                inputElement = <TextField multiline rowsMax={3} label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    onChange={props.changed} />;
-            }
-            else {
-                inputElement = <TextField multiline rowsMax={3} error label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    helperText={props.error}
-                    onChange={props.changed} />;
-            } break;
-        case ('select'):
-            inputElement = <Auxi>
-                <span className={classes.Selectlabel}>{props.elementLabel}</span>
-                <select
-                    className={classes.Select}
-                    value={props.value}
-                    onChange={props.changed}>
-                    {props.elementConfig.options.map(option => (
-                        <option key={option.value} value={option.value}>
-                            {option.displayValue}
-                        </option>
-                    ))}
-
-                </select></Auxi>; break;
-        default:
-            if (props.checkError === 'No') {
-                inputElement = <TextField rowsMax={1} label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    onChange={props.changed} />;
-            }
-            else {
-                inputElement = <TextField rowsMax={1} error label={props.elementLabel}
-                    className={classes.InputElement}
-                    {...props.elementConfig}
-                    value={props.value}
-                    helperText={props.error}
-                    onChange={props.changed} />;
-            }
-    }
-
-    return (
-        <div className={classes.Input}>
-            {inputElement}
-        </div>
-    )
-}
+  return <div className={classes.Input}>{inputElement}</div>;
+};
 
 export default input;

@@ -1,76 +1,73 @@
 .Button {
-    color: white;
-    outline: none;
-    cursor: pointer;
-    font: inherit;
-    padding: 7px;
-    margin-right: 10px;
-    margin-left: 0px;
-    margin-top: 10px;
-    font-weight: bold;
-    text-align: center;
-    position: relative;
-    float:right;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 7px;
+  margin-right: 10px;
+  margin-left: 0px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  float: right;
 }
 
 .Button:disabled {
-    color: white;
-    cursor:not-allowed;
-    background-color: #ccc;
+  color: white;
+  cursor: not-allowed;
+  background-color: #ccc;
 }
 
-.Success { 
-    background-color: #3F9BCB;
-    left:-68px;
+.Success {
+  background-color: #3f9bcb;
+  left: -68px;
 }
 
 .Danger {
-    background-color: #FF5533;
-    left: 92px;
+  background-color: #ff5533;
+  left: 92px;
 }
 
 .Editproj {
-    background-color: #FF5533;
-    left: 72px;
+  background-color: #ff5533;
+  left: 72px;
 }
 
 .Logout {
-    background-color: #FF5533;
-    float:none;
-    
+  background-color: #ff5533;
+  float: none;
 }
 
 .DangerEmail {
-    background-color: #FF5533;
-    left: 69px;
+  background-color: #ff5533;
+  left: 69px;
 }
 
-.SuccessPubkey
-{
-    background-color: #FF5533;
-    width: 30px;
-    padding: 0;
-    height: 30px;
-    left:10px;
+.SuccessPubkey {
+  background-color: #ff5533;
+  width: 30px;
+  padding: 0;
+  height: 30px;
+  left: 10px;
 }
 
-.Successdeletegroup { 
-    background-color: #3F9BCB;
-    left:-56px;
+.Successdeletegroup {
+  background-color: #3f9bcb;
+  left: -56px;
 }
 
-.Successaddgroup { 
-    background-color: #3F9BCB;
-    left:-73px;
+.Successaddgroup {
+  background-color: #3f9bcb;
+  left: -73px;
 }
 
-.Successaddkeyword
-{
-    left:-68px;
-    background-color: #007bff;
+.Successaddkeyword {
+  left: -68px;
+  background-color: #007bff;
 }
 
 .Start {
-    background-color: #FF5533;
-    left: 75px;
+  background-color: #ff5533;
+  left: 75px;
 }
