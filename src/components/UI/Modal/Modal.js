@@ -29,7 +29,7 @@ const Modal = (props) => {
               </button>
             </div>
           </div>
-          <div className="card-body text-wrap">{props.children}</div>
+      <div className="card-body text-wrap">{props.children}</div>
           <div className="card-footer"></div>
         </div>
       </div>

@@ -26,14 +26,26 @@ const topics = (props) => {
   const [kw, setkw] = useState("");
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
-
+  const [textinfo,settextinfo] = useState([]);
   const [Edittext, setEdittextmodal] = useState(false);
-  const showEdittextModal = () => {
+  const showEdittextModal = (text,index,phraseid) => {
+
+    settextinfo({index:index,text:text, phraseid:phraseid})
     setEdittextmodal(true);
   };
   const closeEdittextModal = () => {
     setEdittextmodal(false);
   };
+
+  const [Edittext2, setEdittextmodal2] = useState(false);
+  const showEdittextModal2 = (text,index,phraseid) => {
+    settextinfo({index:index,text:text, phraseid:phraseid})
+    setEdittextmodal2(true);
+  };
+  const closeEdittextModal2 = () => {
+    setEdittextmodal2(false);
+  };
+
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -121,7 +133,7 @@ const topics = (props) => {
     const loadparagraphs = [];
 
     loadparagraphs.push({
-      phraseid: "1",
+      phraseid: "3",
       text:
         "คาดการณ์ว่าจะเพิ่ม มากขึ้นเรื่อยๆ เนื่องจากแคมเปญต่างๆ เริ่มหันมาใช้การสื่อสารกับ ลูกค้าผ่านสื่อโฆษณาในหลากหลายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
       pdfname: "BTS.pdf",
@@ -130,7 +142,7 @@ const topics = (props) => {
       status: "unseen",
     });
     loadparagraphs.push({
-      phraseid: "2",
+      phraseid: "4",
       text:
         "โฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลายมิติ รวมไปถึงการเลือกเป้าหมายได้อย่างแม่นยำพร้อมทั้งให้ผลลัพธ์การวัดผลที่มีประสิทธิภาพที่มากขึ้น ด้วยเหตุนี้สื่อโฆษณาทั้งสองรูปแบบจะสามารถครอง ส่วนแบ่งตลาดจากการใช้จ่ายด้านโฆษณาจากรูปแบบอื่นๆ โดยเฉพาะ ในส่วนของสื่อโฆษณาแบบดั้งเดิมได้มากยิ่งขึ้น ภาพรวมธุรกิจและภาวะอุตสาหกรรม:ธุรกิจสื่อโฆษณา",
       pdfname: "BTS.pdf",
@@ -161,8 +173,35 @@ const topics = (props) => {
     setparagraphinuse(x);
   };
 
-  const textUpdate = (newText) => console.log(newText);
+  const textUpdate = (newText) => {
 
+    console.log(newText[0].phraseid)
+    let items = [...paragraphall];
+
+    let item = {...items[newText[0].index]};
+  
+    item.text = newText[0].text;
+   
+    items[newText[0].index] = item;
+
+   setparagraphall(items);
+
+  };
+
+  const textUpdate2 = (newText) => {
+
+    let items = [...paragraphinuse];
+
+    let item = {...items[newText[0].index]};
+  
+    item.text = newText[0].text;
+   
+    items[newText[0].index] = item;
+   console.log(newText[0].phraseid)
+
+   setparagraphinuse(items);
+
+  };
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem" }}>
@@ -402,7 +441,7 @@ const topics = (props) => {
                           <i
                             className="fa fa-fw fa-edit"
                             style={{ fontSize: "18px" }}
-                            onClick={showEdittextModal}
+                            onClick={()=>showEdittextModal(p.text, i ,p.phraseid)}
                             data-toggle="tooltip"
                             data-placement="top"
                             title={"Edit"}
@@ -445,8 +484,10 @@ const topics = (props) => {
                         <Ckeditor
                           id={p.phraseid}
                           key={i}
+                          textinfo={textinfo}
                           onUpdate={textUpdate}
-                          index={{ i }}
+                          index={i}
+                          modalClosed={closeEdittextModal}
                         />
                       </Modal>
                     </div>
@@ -514,6 +555,7 @@ const topics = (props) => {
                             className="fa fa-fw fa-edit"
                             style={{ fontSize: "18px" }}
                             data-toggle="tooltip"
+                            onClick={()=>showEdittextModal2(p.text,i,p.phraseid)}
                             data-placement="top"
                             title={"Edit"}
                           ></i>
@@ -546,6 +588,20 @@ const topics = (props) => {
                           </a>
                         </span>
                       </div>
+                      <Modal
+                        show={Edittext2}
+                        modalClosed={closeEdittextModal2}
+                        name="Edit paragraph"
+                      >
+                        <Ckeditor
+                          id={p.phraseid}
+                          key={i}
+                          textinfo={textinfo}
+                          onUpdate={textUpdate2}
+                          index={i}
+                          modalClosed={closeEdittextModal2}
+                        />
+                      </Modal>
                     </div>
                   ))}
                 </div>

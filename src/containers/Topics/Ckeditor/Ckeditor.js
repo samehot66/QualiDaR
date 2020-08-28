@@ -7,9 +7,8 @@ import "./Ckeditor.css";
 import config from "../../../config.json";
 import axios from "axios";
 const topics = (props) => {
-  const [content, setcontent] = useState("hthrhtrhtr");
-
-  console.log(props.index);
+  const [content, setcontent] = useState("");
+  
   //   useEffect(() => {
 
   //     let source = axios.CancelToken.source();
@@ -64,13 +63,15 @@ const topics = (props) => {
 
     language: "en",
   };
-  const Updatetext = () => {
-    let x = [];
-    x.push({
-      index: props.index,
+  const Updatetext = async () => {
+    let textinfo = [];
+    textinfo.push({
+      index: props.textinfo.index,
       text: content,
+      phraseid: props.textinfo.phraseid
     });
-    props.onUpdate(x);
+    await props.onUpdate(textinfo);
+    await props.modalClosed();
   };
 
   return (
@@ -79,7 +80,7 @@ const topics = (props) => {
         editor={FullEditor}
         onInit={(editor) => {}}
         onChange={handleChange}
-        data={content}
+        data={props.textinfo.text}
       />
       <button onClick={Updatetext}>Ok</button>
       {/* <div>
