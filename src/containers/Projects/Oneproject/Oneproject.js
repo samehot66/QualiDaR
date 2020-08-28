@@ -10,6 +10,8 @@ import Files from "./Files/Files";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import Addtopic from "./Topics/Addtopics";
 import Topic from "./Topics/Topics";
+import Auxi from '../../../hoc/Auxi';
+import Button from '../../../components/UI/Button/Button';
 
 const oneproject = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
@@ -44,6 +46,10 @@ const oneproject = (props) => {
   const [topic, settopic] = useState([]);
   const [searchtopic, setsearchtopic] = useState("");
   const [topicfiltersearch, settopicfiltersearch] = useState([]);
+
+  const [Deletemodal, setDeletemodal] = useState(false);
+  const showDeleteModal = () => { setDeletemodal(true) };
+  const closeDeleteModal = () => { setDeletemodal(false) };
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -102,13 +108,13 @@ const oneproject = (props) => {
     );
   }, [searchallpeople, allpeople]);
 
-  const deletepeopleHandler = async (event) => {
+  const deletepeopleHandler = async (peopleid) => {
     let data = {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
         pid: props.match.params.id,
-        peopleid: event.target.id,
+        peopleid: peopleid,
       },
     };
     let axiosConfig = {
@@ -120,12 +126,12 @@ const oneproject = (props) => {
     await axios
       .delete(config.URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {
-        alert("Delete Successful");
       })
       .catch((err) => {
         alert("Delete Failed");
       });
     await handleGetpeople();
+    await closeDeleteModal();
   };
 
   const handleGetpeople = async () => {
@@ -497,18 +503,26 @@ const oneproject = (props) => {
                             >
                               {owner == localStorage.getItem("email") ? (
                                 people.role == "owner" ? null : (
-                                  <i
+                                 <Auxi> <i
                                     id={people.peopleid}
                                     key={people.peopleid}
                                     className="fa fa-fw fa-trash"
                                     style={{ fontSize: "18px" }}
-                                    onClick={(event) =>
-                                      deletepeopleHandler(event)
-                                    }
+                                    onClick={showDeleteModal}
                                     data-toggle="tooltip"
                                     data-placement="top"
                                     title={"Delete"}
                                   ></i>
+                                   <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete co-worker in project">
+          <div className={classes.Delete}>Are you sure to delete
+           <span style={{ color: "blue" }}>  {people.email} </span>
+          from this project?
+           </div>
+          <Button btnType="Success" clicked={()=>deletepeopleHandler(people.peopleid)} >Delete</Button>
+          <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
+        </Modal>
+                                  
+                                </Auxi>
                                 )
                               ) : null}
                             </td>
@@ -546,11 +560,11 @@ const oneproject = (props) => {
                           width: "11px",
                           height: "11px",
                           top: "-1px",
-                          left: "2px",
+                          left: "0px",
                         }}
                         src={require("./Topics/icon/Refresh.png")}
-                      />{" "}
-                      Refresh{" "}
+                      />
+                      Refresh
                     </button>
                     <button
                       type="button"
@@ -564,7 +578,6 @@ const oneproject = (props) => {
                         borderColor: "#52a5ff",
                       }}
                     >
-                      {" "}
                       + File
                     </button>
                   </h3>
@@ -673,11 +686,11 @@ const oneproject = (props) => {
                           width: "11px",
                           height: "11px",
                           top: "-1px",
-                          left: "2px",
+                          left: "0px",
                         }}
                         src={require("./Topics/icon/Refresh.png")}
-                      />{" "}
-                      Refresh{" "}
+                      />
+                      Refresh
                     </button>
                     <Modal
                       show={Newtopicemodal}

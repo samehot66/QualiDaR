@@ -514,7 +514,6 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          {" "}
                           Paragraph ID: {p.phraseid}
                         </h3>
                         <div className="card-tools">
