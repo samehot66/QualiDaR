@@ -135,7 +135,7 @@ const topics = (props) => {
 
   const getParagraphs = (kwindex,kw) => {
     const loadparagraphs = [];
-    console.log(kwindex);
+
     loadparagraphs.push({
       phraseid: "1",
       text:

@@ -1,53 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import FullEditor from "ckeditor5-build-full";
 import Auxi from "../../../hoc/Auxi";
-import ReactHtmlParser from "react-html-parser";
 import "./Ckeditor.css";
-import config from "../../../config.json";
-import axios from "axios";
+import Button from '../../../components/UI/Button/Button';
+
 const topics = (props) => {
   const [content, setcontent] = useState("");
   
-  //   useEffect(() => {
-
-  //     let source = axios.CancelToken.source();
-  //     const keywordgroupinfo = [];
-  //     let data = {
-  //         params: {
-  //             "uid": localStorage.getItem("uid"),
-  //             "access_token": localStorage.getItem("access_token"),
-  //             "tid": 1
-  //         }
-  //     }
-  //     let axiosConfig = {
-  //         headers: {
-  //             'Content-Type': 'application/json'
-  //         }
-  //     }
-  //     axios.get(config.URL + '/api/keywords/topic/keywords', data, axiosConfig, { cancelToken: source.token })
-  //         .then((res) => {
-  //       setcontent(res.data[0].keywordgroup.groupname);
-  //             // for (const index in res.data.keywordgroups) {
-  //             //     keywordgroupinfo.push({
-  //             //         keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,
-  //             //         groupname: res.data.keywordgroups[index].groupname
-  //             //     })
-  //             // }
-
-  //         })
-  //         .catch((err) => {
-  //             alert("Show keyword(s) Failed");
-  //         })
-  //     return () => {
-  //         source.cancel();
-  //     }
-  // }, [])
   const handleChange = (event, editor) => {
-    // const target = event.target.value;
     const data = editor.getData();
     setcontent(data);
-  }; //<textarea cols="25" row="14" type="text" name="content" value={content} onChange={handleChange}/>
+  };
 
   FullEditor.defaultConfig = {
     toolbar: [
@@ -82,10 +46,7 @@ const topics = (props) => {
         onChange={handleChange}
         data={props.textinfo.text}
       />
-      <button onClick={Updatetext}>Ok</button>
-      {/* <div>
-{ReactHtmlParser(content)}
- </div> */}
+      <Button btnType="Save" clicked={Updatetext}>Ok</Button>
     </Auxi>
   );
 };
