@@ -12,6 +12,7 @@ import ReactHtmlParser from "react-html-parser";
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [Infomodal, setInfomodal] = useState(false);
+  const [checkaccess,setcheckaccess] = useState(false);
   const showInfoModal = () => {
     setInfomodal(true);
   };
@@ -133,6 +134,34 @@ const topics = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    let source = axios.CancelToken.source();
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        tid: props.match.params.tid,
+        pid: props.match.params.id
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig, { cancelToken: source.token,
+      })
+      .then((res) => {
+       setcheckaccess(res.data.status);
+      })
+      .catch((err) => {
+      });
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
   const getParagraphs = (kwindex,kw) => {
     const loadparagraphs = [];
 
@@ -208,7 +237,7 @@ const topics = (props) => {
   };
   return isauth ? (
     <Auxi>
-      <div className="content-header" style={{ padding: "1px .5rem" }}>
+      <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
@@ -288,8 +317,7 @@ const topics = (props) => {
                           {kwgroup.map((k) => (
                             <tr key={k.keywordgroupsid}>
                               <td style={{ color: "#17a2b8" }}>
-                                {" "}
-                                <i className="fa fa-fw  fa-folder"></i>{" "}
+                                <i className="fa fa-fw  fa-folder"></i>
                                 {k.groupname}
                               </td>
                             </tr>
@@ -325,7 +353,7 @@ const topics = (props) => {
           </div>
         </div>
       </div>
-      <div className="content">
+      <div className="content" style={{ display: checkaccess ? "block" : "none"  }}>
         <div className="container-fluid">
           <div className="row">
             <div className={["card card-info", classes.Box].join(" ")}>

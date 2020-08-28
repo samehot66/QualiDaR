@@ -10,8 +10,8 @@ import Files from "./Files/Files";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import Addtopic from "./Topics/Addtopics";
 import Topic from "./Topics/Topics";
-import Auxi from '../../../hoc/Auxi';
-import Button from '../../../components/UI/Button/Button';
+import Auxi from "../../../hoc/Auxi";
+import Button from "../../../components/UI/Button/Button";
 
 const oneproject = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
@@ -48,8 +48,12 @@ const oneproject = (props) => {
   const [topicfiltersearch, settopicfiltersearch] = useState([]);
 
   const [Deletemodal, setDeletemodal] = useState(false);
-  const showDeleteModal = () => { setDeletemodal(true) };
-  const closeDeleteModal = () => { setDeletemodal(false) };
+  const showDeleteModal = () => {
+    setDeletemodal(true);
+  };
+  const closeDeleteModal = () => {
+    setDeletemodal(false);
+  };
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -125,13 +129,12 @@ const oneproject = (props) => {
 
     await axios
       .delete(config.URL + "/api/projects/people", data, axiosConfig)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         alert("Delete Failed");
       });
     await handleGetpeople();
-    await closeDeleteModal();
+    closeDeleteModal();
   };
 
   const handleGetpeople = async () => {
@@ -503,26 +506,47 @@ const oneproject = (props) => {
                             >
                               {owner == localStorage.getItem("email") ? (
                                 people.role == "owner" ? null : (
-                                 <Auxi> <i
-                                    id={people.peopleid}
-                                    key={people.peopleid}
-                                    className="fa fa-fw fa-trash"
-                                    style={{ fontSize: "18px" }}
-                                    onClick={showDeleteModal}
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    title={"Delete"}
-                                  ></i>
-                                   <Modal show={Deletemodal} modalClosed={closeDeleteModal} name="Delete co-worker in project">
-          <div className={classes.Delete}>Are you sure to delete
-           <span style={{ color: "blue" }}>  {people.email} </span>
-          from this project?
-           </div>
-          <Button btnType="Success" clicked={()=>deletepeopleHandler(people.peopleid)} >Delete</Button>
-          <Button btnType="Danger" clicked={closeDeleteModal}>Cancel</Button>
-        </Modal>
-                                  
-                                </Auxi>
+                                  <Auxi>
+                                    {" "}
+                                    <i
+                                      id={people.peopleid}
+                                      key={people.peopleid}
+                                      className="fa fa-fw fa-trash"
+                                      style={{ fontSize: "18px" }}
+                                      onClick={showDeleteModal}
+                                      data-toggle="tooltip"
+                                      data-placement="top"
+                                      title={"Delete"}
+                                    ></i>
+                                    <Modal
+                                      show={Deletemodal}
+                                      modalClosed={closeDeleteModal}
+                                      name="Delete co-worker in project"
+                                    >
+                                      <div className={classes.Delete}>
+                                        Are you sure to delete
+                                        <span style={{ color: "blue" }}>
+                                          {" "}
+                                          {people.email}{" "}
+                                        </span>
+                                        from this project?
+                                      </div>
+                                      <Button
+                                        btnType="Success"
+                                        clicked={() =>
+                                          deletepeopleHandler(people.peopleid)
+                                        }
+                                      >
+                                        Delete
+                                      </Button>
+                                      <Button
+                                        btnType="Danger"
+                                        clicked={closeDeleteModal}
+                                      >
+                                        Cancel
+                                      </Button>
+                                    </Modal>
+                                  </Auxi>
                                 )
                               ) : null}
                             </td>
