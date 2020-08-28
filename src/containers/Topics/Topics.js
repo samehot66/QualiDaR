@@ -27,6 +27,8 @@ const topics = (props) => {
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
   const [textinfo,settextinfo] = useState([]);
+  const [kwgroupinfo,setkwgroupinfo] = useState([]);
+  
   const [Edittext, setEdittextmodal] = useState(false);
   const showEdittextModal = (text,index,phraseid) => {
 
@@ -113,13 +115,15 @@ const topics = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log("fewgreger", res.data);
-        // for (const index in res.data.keywordgroups) {
-        //     keywordgroupinfo.push({
-        //         keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,
-        //         groupname: res.data.keywordgroups[index].groupname
-        //     })
-        // }
+        for (const index in res.data[0].keywordgroups) {
+            keywordgroupinfo.push({
+                keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
+                groupname: res.data[0].keywordgroups[index].groupname,
+                keywords: res.data[0].keywordgroups[index].keywords
+            })       
+        }
+ 
+        setkwgroupinfo(keywordgroupinfo);
       })
       .catch((err) => {
         alert("Show keyword(s) Failed");
@@ -129,11 +133,11 @@ const topics = (props) => {
     };
   }, []);
 
-  const getParagraphs = (kw) => {
+  const getParagraphs = (kwindex,kw) => {
     const loadparagraphs = [];
-
+    console.log(kwindex);
     loadparagraphs.push({
-      phraseid: "3",
+      phraseid: "1",
       text:
         "คาดการณ์ว่าจะเพิ่ม มากขึ้นเรื่อยๆ เนื่องจากแคมเปญต่างๆ เริ่มหันมาใช้การสื่อสารกับ ลูกค้าผ่านสื่อโฆษณาในหลากหลายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
       pdfname: "BTS.pdf",
@@ -142,7 +146,7 @@ const topics = (props) => {
       status: "unseen",
     });
     loadparagraphs.push({
-      phraseid: "4",
+      phraseid: "2",
       text:
         "โฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลายมิติ รวมไปถึงการเลือกเป้าหมายได้อย่างแม่นยำพร้อมทั้งให้ผลลัพธ์การวัดผลที่มีประสิทธิภาพที่มากขึ้น ด้วยเหตุนี้สื่อโฆษณาทั้งสองรูปแบบจะสามารถครอง ส่วนแบ่งตลาดจากการใช้จ่ายด้านโฆษณาจากรูปแบบอื่นๆ โดยเฉพาะ ในส่วนของสื่อโฆษณาแบบดั้งเดิมได้มากยิ่งขึ้น ภาพรวมธุรกิจและภาวะอุตสาหกรรม:ธุรกิจสื่อโฆษณา",
       pdfname: "BTS.pdf",
@@ -340,7 +344,10 @@ const topics = (props) => {
                 </div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
-                <div className="list-group" style={{ margin: "5px" }}>
+
+
+                {kwgroupinfo.map((k)=>(
+                <div key={k.keywordgroupsid} className="list-group" style={{ margin: "5px" }}>
                   <button
                     type="button"
                     className="list-group-item-info active "
@@ -353,31 +360,19 @@ const topics = (props) => {
                       borderTopLeftRadius: "0.25rem",
                     }}
                   >
-                    ESG: Social by ISNE#5
+                    {k.groupname}
                   </button>
+                  {k.keywords.map((keyword)=>( 
                   <button
+                    key={keyword.kid}
                     type="button"
                     className="list-group-item list-group-item-action"
-                    onClick={() => getParagraphs("สื่อโฆษณา")}
+                    onClick={() => getParagraphs(keyword.kid,keyword.keywordtext)}
                     style={{ padding: "0.03rem 0.75rem" }}
                   >
-                    สื่อโฆษณา
-                  </button>
-                  <button
-                    type="button"
-                    className="list-group-item list-group-item-action"
-                    style={{ padding: "0.03rem 0.75rem" }}
-                  >
-                    สังคมออนไลน์
-                  </button>
-                  <button
-                    type="button"
-                    className="list-group-item list-group-item-action"
-                    style={{ padding: "0.03rem 0.75rem" }}
-                  >
-                    การประชาสัมพันธ์
-                  </button>
-                </div>
+                    {keyword.keywordtext}
+                  </button>))}
+                </div>))}
               </div>
             </div>
 
@@ -389,7 +384,6 @@ const topics = (props) => {
                 <h3 className="card-title"> Paragarph(s)</h3>
                 <div className="card-tools">{kw}</div>
               </div>
-              {/* /.card-header  <Ckeditor />*/}
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
                 <div style={{ overflow: "auto", height: "600px" }}>
                   {paragraphall.map((p, i) => (
