@@ -72,7 +72,7 @@ const Setfile = (props) => {
       })
       .then((res) => {
         for (const index in res.data.pdffiles) {
-          if (res.data[index].pdffile.done) {
+          if (res.data.pdffiles[index].done) {
             allfilesinuse.push({
               pdfid: res.data.pdffiles[index].pdfid,
               filename: res.data.pdffiles[index].pdfname,
@@ -83,7 +83,7 @@ const Setfile = (props) => {
         setfileinuse(allfilesinuse);
       })
       .catch((err) => {
-        console.log("Show files in use Failed");
+        console.log(err);
       });
     return () => {
       source.cancel();
