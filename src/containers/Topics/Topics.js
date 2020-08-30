@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Ckeditor from "./Ckeditor/Ckeditor";
 import { NavLink } from "react-router-dom";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
@@ -363,12 +363,6 @@ const topics = (props) => {
               >
                 <h3 className="card-title">Keyword(s)</h3>
                 <div className="card-tools">
-                  <input
-                    type="text"
-                    className="form-control"
-                    style={{ height: "1.25rem", width: "120px" }}
-                    placeholder="Search..."
-                  />
                 </div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
