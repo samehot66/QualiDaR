@@ -83,7 +83,7 @@ const Setfile = (props) => {
         setfileinuse(allfilesinuse);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Show files Failed!");
       });
     return () => {
       source.cancel();
