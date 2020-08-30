@@ -188,7 +188,7 @@ const Keywords = (props) => {
             groupname: res.data[index].groupname,
             owner: res.data[index].email,
           });
-          console.log(res);
+
         }
         setpublickeywords(pubkeywords);
       })
@@ -219,7 +219,6 @@ const Keywords = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log("RESPONSE RECEIVED: ", res);
         for (const index in res.data) {
           yourkeywords.push({
             keywordgroupsid: res.data[index].keywordgroupsid,
@@ -230,7 +229,7 @@ const Keywords = (props) => {
         setprivatekeywords(yourkeywords);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err);
+        alert("Show your keywords Failed!");
       });
     return () => {
       source.cancel();

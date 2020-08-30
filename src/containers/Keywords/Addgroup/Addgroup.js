@@ -122,7 +122,7 @@ const addgroup = (props) => {
         props.onGetyourgroups(res.data);
       })
       .catch((err) => {
-        console.log("Show all your keyword groups Failed");
+        alert("Show all your keyword groups Failed");
       });
   };
 

@@ -331,7 +331,6 @@ const yourkeywords = (props) => {
         {props.gname}
       </td>
       <td style={{ color: "#ccc" }}>me</td>
-      {console.log(props.share)}
       <td>
         <i
           className="fa fa-fw fa-edit"
