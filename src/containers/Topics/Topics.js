@@ -545,7 +545,7 @@ const topics = (props) => {
                             onClick={() => removeHandler2(i)}
                             data-toggle="tooltip"
                             data-placement="top"
-                            title={"Add to in use paragraph"}
+                            title={"Remove from in use paragraph"}
                           ></i>
                           <a
                             href={
