@@ -7,8 +7,10 @@ const db = require('../../config/db.config.js');
 const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
+const PdfTexts = db.pdf_text
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
+const Phrases = db.phrase
 const Topic = db.topic
 const TopicPdffiles = db.topic_pdffiles
 
@@ -99,6 +101,30 @@ router.delete('/topic', (req, res) => {
     res.status(500).send(err)
   })
 })
+
+/*router.delete('', (req, res) =>{
+  ProjectRole.findOne({
+    where: { pid: req.query.pid, uid: req.query.uid, role: 'owner' }
+  }).then((data)=>{
+    if(data){
+      Pdffiles.destroy({
+        where: { pdfid: req.query.pdfid }
+      }).then((data)=>{
+        if(data==1){
+          PdfTexts.destroy({
+            where: { pdfid: null }
+          }).then((data)=>{
+            Phrases.destroy({
+              where: { pdftextid: null }
+            })
+          })
+        }
+      })
+    }else if(data==0){
+      res.status(404).send({ message: 'File not found' })
+    }
+  })
+})*/
 
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {

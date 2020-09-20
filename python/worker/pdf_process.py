@@ -23,7 +23,7 @@ def extract_text_by_page(pdf_path):
                                       check_extractable=True):
             resource_manager = PDFResourceManager()
             fake_file_handle = io.StringIO()
-            converter = TextConverter(resource_manager, fake_file_handle, codec="tis-620")
+            converter = TextConverter(resource_manager, fake_file_handle, codec="utf-8")
             page_interpreter = PDFPageInterpreter(resource_manager, converter)
             page_interpreter.process_page(page)
 
@@ -39,7 +39,7 @@ def extract_text_by_page(pdf_path):
 def extract_text(pdf_path):
     text = []
     for page in extract_text_by_page(pdf_path):
-        text.append(page)
+        text.append(page.encode(encoding="utf-8",errors="ignore"))
     return text
 
 def clean_text2(st):
@@ -231,7 +231,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
             p = re.compile(keyword)  #compile pattern of string
 
             for m in p.finditer(text):  #find all position of matched keyword
-             matched_setences.append(m.start())
+                matched_setences.append(m.start())
              #print(m.start(), m.group())
     
             #print(f'All matched index: {matched_setences}')
