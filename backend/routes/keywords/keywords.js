@@ -143,6 +143,22 @@ router.delete('/subscribe', (req, res) => {
       })
 })
 
+router.delete('/topic', (req, res) => {
+  keywordgroupTopics.destroy({
+    where: { keywordgroupsid: req.query.keywordgroupKeywordgroupsid, tid: req.query.tid }
+  }).then((data)=>{
+    if(data==1){
+      console.log('success')
+      res.status(200).send({ message: 'Remove keyword group ' + req.query.keywordgroupKeywordgroupsid + ' in topic ' + req.query.tid + ' success!' })
+    }else if(data==0){
+      console.log('not found')
+      res.status(404).send({ message: 'Cannot found keyword group ' + req.query.keywordgroupKeywordgroupsid + ' in topic ' + req.query.tid })
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.post('/groups', (req, res) => {
   Keywordgroup.findOne({
     where: {keywordgroupsid: req.body.keywordgroupsid, shared: "1"}

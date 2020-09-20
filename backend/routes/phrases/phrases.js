@@ -10,6 +10,7 @@ const Keywordgroup_topics = db. keywordgroup_topics
 const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 const Phrases = db.phrase
+const PdfText = db.pdf_text
 
 router.get('', (req, res)=>{
     Phrases.findAll({
@@ -54,6 +55,16 @@ router.put('/status', (req, res)=>{
             res.status(404).send({"message": "Phrase not found"})
         }
     }).catch((err)=>{
+        res.status(500).send(err)
+    })
+})
+
+router.get('/test', (req, res)=>{
+    PdfText.findAll().then((data)=>{
+        console.log(data)
+        res.status(200).send(data)
+    }).catch((err)=>{
+        console.log(err)
         res.status(500).send(err)
     })
 })
