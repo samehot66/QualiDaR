@@ -59,6 +59,26 @@ router.put('/status', (req, res)=>{
     })
 })
 
+router.put('/edit', (res, req) =>{
+    Phrases.findOne({
+        where: { phraseid: req.body.phraseid }
+    }).then((data)=>{
+        if(data){
+            data.update({
+                text: req.body.text
+            }).then((data)=>{
+                res.status(200).send({ message: 'Update phrase' + req.body.phraseid + ' text success!' })
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }else{
+            res.status(404).send({"message": "Phrase not found"})
+        }
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
+})
+
 router.get('/test', (req, res)=>{
     PdfText.findAll().then((data)=>{
         console.log(data)
