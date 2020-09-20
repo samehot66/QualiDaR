@@ -208,7 +208,7 @@ const Setkeyword = (props) => {
         "Content-Type": "application/json",
       },
     };
-
+console.log(data)
     await axios
       .delete(config.URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})

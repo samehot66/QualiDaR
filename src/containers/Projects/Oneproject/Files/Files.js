@@ -27,8 +27,8 @@ const file = (props) => {
         "Content-Type": "application/json",
       },
     };
-
-    //await axios.delete(config.URL + '/api/files', data, axiosConfig)
+    console.log(data)
+    await axios.delete(config.URL + '/api/files', data, axiosConfig)
     await onGetfiles();
     closeDeleteModal();
   };

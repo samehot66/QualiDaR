@@ -32,8 +32,22 @@ const topic = (props) => {
   const closeSettingModal = () => {
     setSettingmodal(false);
   };
-  const closeSettingModal2 = () => {
+  const closeSettingModal2 = async() => {
     setSettingmodal(false);
+
+    let data = {
+      uid: localStorage.getItem("uid"),
+      access_token: localStorage.getItem("access_token"),
+      tid: props.tid,
+      done: false
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig);
     alert("Start extracting...");
   };
 
@@ -58,7 +72,7 @@ const topic = (props) => {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
-        tid: props.tid,
+        tid: props.tid
       },
     };
 
@@ -95,6 +109,11 @@ const topic = (props) => {
         alert("Show all files Failed");
       });
   };
+
+  const onGettopicafteredit=(newState) =>{
+    //console.log(newState)
+    props.onGettopics(newState);
+  }
   return (
     <tr>
       {props.done ? (
@@ -112,7 +131,7 @@ const topic = (props) => {
               props.tid
             }
           >
-            {" "}
+
             {props.tname}
           </NavLink>
         </td>
@@ -217,7 +236,8 @@ const topic = (props) => {
             tid={props.tid}
             tname={props.tname}
             cancel={closeEditModal}
-            onGetprojects={onGettopics}
+            onGettopicafteredit={onGettopicafteredit}
+            webid={props.webid}
           />
         </Modal>
         <Modal

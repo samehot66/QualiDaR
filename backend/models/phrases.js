@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
 	const Phrase = sequelize.define('phrases', {
-	  pharseid: {
+	  phraseid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true

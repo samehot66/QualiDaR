@@ -407,6 +407,7 @@ const oneproject = (props) => {
   }, [searchtopic, topic]);
 
   const handlerGettopic = (newState) => {
+
     let loadtopic = [];
     for (const index in newState) {
       loadtopic.push({
@@ -577,7 +578,6 @@ const oneproject = (props) => {
                         color: "#007bff",
                       }}
                     >
-                      {" "}
                       <img
                         style={{
                           position: "relative",
@@ -687,7 +687,6 @@ const oneproject = (props) => {
                         borderColor: "#52a5ff",
                       }}
                     >
-                      {" "}
                       + Topic
                     </button>
                     <button
@@ -703,7 +702,7 @@ const oneproject = (props) => {
                         color: "#52a5ff",
                       }}
                     >
-                      {" "}
+
                       <img
                         style={{
                           position: "relative",
