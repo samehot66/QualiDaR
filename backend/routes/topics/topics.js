@@ -112,6 +112,26 @@ router.post('', (req, res)=>{
     })
 })
 
+router.put('', (req, res) => {
+    Topic.findOne({
+        where: { tid: req.body.tid }
+    }).then((data)=>{
+        if(data){
+            data.update({
+                tname: req.body.tname
+            }).then((data)=>{
+                res.status.send({message: 'Update topic name success!'})
+            }).catch((err)=>{
+                res.status(500).send(err)
+            })
+        }else{
+            res.status(404).send({ message: 'Topic not found!' })
+        }
+    }).catch((err)=>{
+        res.status(500).send(err)
+    })
+})
+
 router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
     var pdfid
     var pid
