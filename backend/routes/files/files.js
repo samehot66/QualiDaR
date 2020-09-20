@@ -84,6 +84,22 @@ router.post('/topic', (req, res)=>{
   })
 })
 
+router.delete('/topic', (req, res) => {
+  TopicPdffiles.destroy({
+    where: { pdfid: req.query.pdfid, tid: req.query.tid }
+  }).then((data)=>{
+    if(data==1){
+      console.log('success')
+      res.status(200).send({ message: 'Remove file ' + req.query.pdfid + ' in topic ' + req.query.tid + ' success!' })
+    }else if(data==0){
+      console.log('not found')
+      res.status(404).send({ message: 'Cannot found file '  + req.query.pdfid + ' in topic ' + req.query.tid })
+    }
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {
       return res.status(400).json({ msg: 'No file uploaded' });
