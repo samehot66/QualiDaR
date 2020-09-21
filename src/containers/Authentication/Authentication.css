@@ -1,31 +1,39 @@
 .App {
-    position: relative;
-    text-align: center;
-    padding: 165px;
-    color: #66bfed;
+  position: relative;
+  text-align: center;
+  padding: 165px;
+  color: #66bfed;
 }
 
 .Welcome {
-    font-size: 50px;
-    font-weight: bold;
+  font-size: 50px;
+  font-weight: bold;
 }
 
 .Qbdrrs {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .Lets {
-    font-size: 20px;
-    color:#ccc;
-    font-weight: Italic;
+  font-size: 20px;
+  color: #ccc;
+
+  padding-bottom: 5px;
 }
 
 .Yourlogin {
-    font-size: 25px;
-    font-weight: bold;
-    color:#ccc;
+  font-size: 25px;
+  font-weight: bold;
+  color: #ccc;
 }
 
 .Name {
-    font-size: 30px;
+  font-size: 30px;
+}
+
+.Btn {
+  display: inline-block;
+  width: 85px;
+  top: 5px;
+  position: relative;
 }

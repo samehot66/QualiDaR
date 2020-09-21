@@ -1,0 +1,14 @@
+.Gname {
+  color: #007bff;
+  cursor: default;
+}
+
+.Gname:hover {
+  text-decoration: underline;
+}
+
+.Box {
+  height: 300px;
+  top: 10px;
+  position: relative;
+}

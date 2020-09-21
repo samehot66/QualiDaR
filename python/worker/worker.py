@@ -24,8 +24,13 @@ def pdf_process(task_id):
         print("Processing start")
         print(task.location)
         st = extract_text(task.location)
+<<<<<<< HEAD
         #clean_text(st)
         #clean_text2(st)
+=======
+        clean_text(st)
+        clean_text2(st)
+>>>>>>> origin/master
         try:
             connection = mysql.connector.connect(host='localhost',
                                          database='testdb',
@@ -34,7 +39,11 @@ def pdf_process(task_id):
             cursor = connection.cursor()
 
             for i in range(len(st)):
+<<<<<<< HEAD
                 mySql_insert_query = "INSERT INTO pdf_texts (page_number, text, createdAt, updatedAt, pdfid) VALUES (" + str(i + 1) + ", '" + st[i].decode(encoding='utf-8',errors="ignore") + "', CURRENT_TIME(), CURRENT_TIME(), " + str(task.pdfid) + ");"
+=======
+                mySql_insert_query = "INSERT INTO pdf_texts (page_number, text, createdAt, updatedAt, pdfid) VALUES (" + str(i + 1) + ", '" + str(st[i]) + "', CURRENT_TIME(), CURRENT_TIME(), " + str(task.pdfid) + ");"
+>>>>>>> origin/master
                 cursor.execute(mySql_insert_query)
                 connection.commit()
                 print(cursor.rowcount, "Record inserted successfully into Laptop table")

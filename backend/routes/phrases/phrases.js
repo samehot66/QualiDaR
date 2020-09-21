@@ -10,7 +10,10 @@ const Keywordgroup_topics = db. keywordgroup_topics
 const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 const Phrases = db.phrase
+<<<<<<< HEAD
 const PdfText = db.pdf_text
+=======
+>>>>>>> origin/master
 
 router.get('', (req, res)=>{
     Phrases.findAll({
@@ -18,7 +21,10 @@ router.get('', (req, res)=>{
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{
+<<<<<<< HEAD
         console.log(err)
+=======
+>>>>>>> origin/master
         res.status(500).send(err)
     })
 })
@@ -60,6 +66,7 @@ router.put('/status', (req, res)=>{
     })
 })
 
+<<<<<<< HEAD
 router.put('/edit', (res, req) =>{
     Phrases.findOne({
         where: { phraseid: req.body.phraseid }
@@ -90,4 +97,6 @@ router.get('/test', (req, res)=>{
     })
 })
 
+=======
+>>>>>>> origin/master
 module.exports = router

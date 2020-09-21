@@ -1,0 +1,29 @@
+.Sharedwithme {
+  margin-top: 67px;
+  position: relative;
+  font-size: 30px;
+  color: #3f9bcb;
+  margin-bottom: 5px;
+  left: 50px;
+}
+
+.Projects {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  margin-left: 40px;
+}
+
+.Search {
+  position: relative;
+  left: 13px;
+  top: -4px;
+  width: 176px;
+  height: 26px;
+  font-size: 15px;
+}
+.Box {
+  height: 639px;
+  top: 10px;
+  position: relative;
+}

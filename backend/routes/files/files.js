@@ -7,10 +7,15 @@ const db = require('../../config/db.config.js');
 const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
+<<<<<<< HEAD
 const PdfTexts = db.pdf_text
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
 const Phrases = db.phrase
+=======
+const ProjectPdf = db.project_pdffile
+const ProjectRole = db.project_role
+>>>>>>> origin/master
 const Topic = db.topic
 const TopicPdffiles = db.topic_pdffiles
 
@@ -86,6 +91,7 @@ router.post('/topic', (req, res)=>{
   })
 })
 
+<<<<<<< HEAD
 router.delete('/topic', (req, res) => {
   TopicPdffiles.destroy({
     where: { pdfid: req.query.pdfid, tid: req.query.tid }
@@ -126,6 +132,8 @@ router.delete('/topic', (req, res) => {
   })
 })*/
 
+=======
+>>>>>>> origin/master
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {
       return res.status(400).json({ msg: 'No file uploaded' });
@@ -213,6 +221,7 @@ router.post('/upload', async (req, res, next) => {
         return res.status(500).send(err)
       })
 
+<<<<<<< HEAD
       createTask(req.body.pid, file.name, pdfid)
       .then((data) => {
         console.log(data)
@@ -277,5 +286,71 @@ router.post('/upload', async (req, res, next) => {
       })
       return promise
   }
+=======
+      // createTask(req.body.pid, file.name, pdfid)
+      // .then((data) => {
+      //   console.log(data)
+      //   performTask(data)
+      //   .then((data) => {
+      //     if(data==202){
+      //       console.log('data: ' + data)
+      //       Pdffiles.findOne({
+      //         where: { pdfid: pdfid }
+      //       }).then((data)=>{
+      //         data.update({
+      //           done: true
+      //         }).catch((err)=>{
+      //           console.log(err)
+      //           return res.status(500).send(err)
+      //         })
+      //       }).catch((err)=>{
+      //         console.log(err)
+      //         return res.status(500).send(err)
+      //       })
+      //       return res.status(data).send({message: 'Upload file complete!', fileName: file.name, filePath: `../public/uploads/${req.body.pid}/${file.name}`}) 
+      //     }else{
+      //       console.log(data)
+      //       return res.status(500).send({message: 'An error occur!'})
+      //     }
+      //   }).catch((err)=>
+      //   {
+      //     console.log(err)
+      //     return res.status(500).send(err)
+      //   })
+      // }).catch((err)=>
+      // {
+      //   console.log(err)
+      //   return res.status(500).send(err)
+      // })
+    });
+  });
+
+  // createTask = async (pid, fileName, pdfid) => {
+  //   var promise = await axios.post("http://localhost:5000/task", {
+  //       file: `../public/upload/${pid}/${fileName}`,
+  //       pdfid: pdfid
+  //   }).then((res) => {
+  //       console.log(res)
+  //       console.log('createTask: ' + res.data)
+  //       return res.data
+  //     }).catch((err)=>{
+  //         console.log(err)
+  //         return err
+  //     })
+  //     return promise
+  // }
+
+  // performTask = async (taskId) => {
+  //   var promise = await axios.put("http://localhost:5000/task/" + taskId)
+  //   .then((res) => {
+  //     console.log(res.status)
+  //     return res.status
+  //   }).catch((err)=>{
+  //         console.log(err)
+  //         return err
+  //     })
+  //     return promise
+  // }
+>>>>>>> origin/master
 
 module.exports = router
