@@ -9,7 +9,7 @@ import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
 //import ReactHtmlParser from "react-html-parser";
 import Highlighter from "react-highlight-words";
-import EdiText from 'react-editext'
+
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [Infomodal, setInfomodal] = useState(false);
@@ -22,19 +22,11 @@ const topics = (props) => {
     setInfomodal(false);
   };
 
-
-  const showDeletephraseModal = () => {
-    setDeletemodal(true);
-  };
-  const  closeDeletephraseModal = () => {
-    setDeletemodal(false);
-  };
-
   const [file, setfile] = useState([]);
   const [kwgroup, setkwgroup] = useState([]);
   //  console.log(props.match.params.tid);
   //  console.log(props.match.params.id);
-  const [kw, setkw] = useState("");
+  const [kw, setkw] = useState([]);
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
   const [textinfo,settextinfo] = useState([]);
@@ -175,7 +167,7 @@ const topics = (props) => {
   const getParagraphs = (kwindex,kw) => {
     const loadparagraphs = [];
     const loadinuse =[];
-
+    const keywset = [];
     let data = {
       params: {
         uid: localStorage.getItem("uid"),
@@ -221,10 +213,10 @@ const topics = (props) => {
         setparagraphall(loadparagraphs);
       })
       .catch((err) => {
-        alert("Show paragraphs failed")
+        alert("Show sections failed")
       });
- 
-    setkw(kw);
+    keywset.push(kw);
+    setkw(keywset);
   };
 
   const removeHandler =async (id,phraseid) => {
@@ -346,7 +338,10 @@ const topics = (props) => {
     setparagraphinuse(x);
 
   }
-
+var test = []
+test.push("ธุร")
+test.push("สื่อโฆษณา")
+test.push("โต")
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
@@ -515,7 +510,7 @@ const topics = (props) => {
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
               >
-                <h3 className="card-title"> Paragarph(s)</h3>
+                <h3 className="card-title"> Section(s)</h3>
                 <div className="card-tools">{kw}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
@@ -536,7 +531,7 @@ const topics = (props) => {
                       >
                         <h3 className="card-title">
                           {" "}
-                          Paragraph No. {p.phraseid}
+                          Section No. {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -545,7 +540,7 @@ const topics = (props) => {
                             onClick={() => removeHandler(i,p.phraseid)}
                             data-toggle="tooltip"
                             data-placement="top"
-                            title={"Add to in use paragraph"}
+                            title={"Add to in use section"}
                           ></i>
                           <a
                             href={
@@ -588,7 +583,7 @@ const topics = (props) => {
                         
                       <Highlighter
     highlightClassName="YourHighlightClass"
-    searchWords={[kw]}
+    searchWords={kw}
     autoEscape={true}
     textToHighlight={p.text}
   />
@@ -617,7 +612,7 @@ const topics = (props) => {
                       <Modal
                         show={Edittext}
                         modalClosed={closeEdittextModal}
-                        name="Edit paragraph"
+                        name="Edit text section"
                       >
                       
                         <Textedit
@@ -659,7 +654,7 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          Paragraph No. {p.phraseid}
+                          Section No. {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -668,7 +663,7 @@ const topics = (props) => {
                             onClick={() => removeHandler2(i,p.phraseid)}
                             data-toggle="tooltip"
                             data-placement="top"
-                            title={"Remove from in use paragraph"}
+                            title={"Remove from in use section"}
                           ></i>
                           <a
                             href={
@@ -710,7 +705,7 @@ const topics = (props) => {
                       </div>
                       <div className="card-body"> <Highlighter
     highlightClassName="YourHighlightClass"
-    searchWords={[kw]}
+    searchWords={kw}
     autoEscape={true}
     textToHighlight={p.text}
   /></div>
@@ -736,7 +731,7 @@ const topics = (props) => {
                       <Modal
                         show={Edittext2}
                         modalClosed={closeEdittextModal2}
-                        name="Edit paragraph"
+                        name="Edit text section"
                       >
                          <Textedit
                           id={p.phraseid}
