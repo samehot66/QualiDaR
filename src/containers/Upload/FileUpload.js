@@ -103,7 +103,7 @@ const FileUpload = (props) => {
           </label>
         </div>
         <Progress percentage={uploadPercentage} />
-        Description:{" "}
+        Description: 
         <input
           type="text"
           style={{ marginTop: "3px", height: "25px" }}

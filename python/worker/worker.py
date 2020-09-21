@@ -25,11 +25,16 @@ def pdf_process(task_id):
         print(task.location)
         st = extract_text(task.location)
 <<<<<<< HEAD
+<<<<<<< HEAD
         #clean_text(st)
         #clean_text2(st)
 =======
         clean_text(st)
         clean_text2(st)
+>>>>>>> origin/master
+=======
+        #clean_text(st)
+        #clean_text2(st)
 >>>>>>> origin/master
         try:
             connection = mysql.connector.connect(host='localhost',

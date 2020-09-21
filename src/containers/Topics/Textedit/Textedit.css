@@ -1,0 +1,16 @@
+mark {
+  background-color: #ffff8a;
+}
+.mycustomviewwrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.mycustomviewwrapper div:last-child {
+  /* Here we are styling the button container. */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}

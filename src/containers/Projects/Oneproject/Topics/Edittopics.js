@@ -79,6 +79,7 @@ const edittopic = (props) => {
         "Content-Type": "application/json",
       },
     };
+
     await axios.put(config.URL + "/api/topics", data, axiosConfig);
     await onGetTopic();
   };
@@ -100,7 +101,7 @@ const edittopic = (props) => {
     await axios
       .get(config.URL + "/api/topics", data, axiosConfig)
       .then((res) => {
-        props.onGettopic(res.data);
+        props.onGettopicafteredit(res.data);
       })
       .catch((err) => {
         alert("Show all topics Failed");

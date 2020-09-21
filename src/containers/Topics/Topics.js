@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Ckeditor from "./Ckeditor/Ckeditor";
+import Textedit from "./Textedit/Textedit";
 import { NavLink } from "react-router-dom";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
 import Auxi from "../../hoc/Auxi";
@@ -7,11 +7,13 @@ import classes from "./Topics.css";
 import config from "../../config.json";
 import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
-import ReactHtmlParser from "react-html-parser";
+//import ReactHtmlParser from "react-html-parser";
+import Highlighter from "react-highlight-words";
 
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [Infomodal, setInfomodal] = useState(false);
+  const [DeleteModal, setDeletemodal] = useState(false);
   const [checkaccess,setcheckaccess] = useState(false);
   const showInfoModal = () => {
     setInfomodal(true);
@@ -24,7 +26,7 @@ const topics = (props) => {
   const [kwgroup, setkwgroup] = useState([]);
   //  console.log(props.match.params.tid);
   //  console.log(props.match.params.id);
-  const [kw, setkw] = useState("");
+  const [kw, setkw] = useState([]);
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
   const [textinfo,settextinfo] = useState([]);
@@ -164,30 +166,74 @@ const topics = (props) => {
 
   const getParagraphs = (kwindex,kw) => {
     const loadparagraphs = [];
+    const loadinuse =[];
+    const keywset = [];
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        tid: props.match.params.tid,
+        kid: kwindex,
+        status: "seen"
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(config.URL + "/api/phrases", data, axiosConfig)
+      .then((res) => {
+        console.log(res.data)
+        for (const index in res.data) {
+          if(res.data[index].status=="unseen"){
+          loadparagraphs.push({
+            phraseid: res.data[index].phraseid,
+            text: res.data[index].text,
+            pdfname: "BTS.pdf",
+            page: "44",
+      
+            status: res.data[index].status,
+          });
+        }
+          else{
+            loadinuse.push({
+              phraseid: res.data[index].phraseid,
+              text: res.data[index].text,
+              pdfname: "BTS.pdf",
+              page: "44",
+        
+              status: res.data[index].status,
+            });
+          }
 
-    loadparagraphs.push({
-      phraseid: "1",
-      text:
-        "คาดการณ์ว่าจะเพิ่ม มากขึ้นเรื่อยๆ เนื่องจากแคมเปญต่างๆ เริ่มหันมาใช้การสื่อสารกับ ลูกค้าผ่านสื่อโฆษณาในหลากหลายช่องทางมากยิ่งขึ้นนอกจากนีรายงานของ Future Market Insights ได้คาดว่าช่วง ปี 2561 – 2571 สื่อโฆษณานอกบ้านแบบดิจิทัลทั่วโลกจะเติบโตเพิ่มขึ้นอย่างต่อเนื่องกว่า 11.0% ต่อปี ด้วยศักยภาพในการเชื่อมโยงระหว่างสื่อโฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลาย",
-      pdfname: "BTS.pdf",
-      page: "44",
-
-      status: "unseen",
-    });
-    loadparagraphs.push({
-      phraseid: "2",
-      text:
-        "โฆษณานอกบ้านและสื่อโฆษณาทางออนไลน์/ดิจิทัล ทำให้สามารถ นำเสนอสื่อโฆษณาที่มีคุณภาพได้หลากหลายมิติ รวมไปถึงการเลือกเป้าหมายได้อย่างแม่นยำพร้อมทั้งให้ผลลัพธ์การวัดผลที่มีประสิทธิภาพที่มากขึ้น ด้วยเหตุนี้สื่อโฆษณาทั้งสองรูปแบบจะสามารถครอง ส่วนแบ่งตลาดจากการใช้จ่ายด้านโฆษณาจากรูปแบบอื่นๆ โดยเฉพาะ ในส่วนของสื่อโฆษณาแบบดั้งเดิมได้มากยิ่งขึ้น ภาพรวมธุรกิจและภาวะอุตสาหกรรม:ธุรกิจสื่อโฆษณา",
-      pdfname: "BTS.pdf",
-      page: "44",
-
-      status: "unseen",
-    });
-    setparagraphall(loadparagraphs);
-    setkw(kw);
+      }
+      setparagraphinuse(loadinuse)
+        setparagraphall(loadparagraphs);
+      })
+      .catch((err) => {
+        alert("Show sections failed")
+      });
+    keywset.push(kw);
+    setkw(keywset);
   };
 
-  const removeHandler = (id) => {
+  const removeHandler =async (id,phraseid) => {
+
+    let data = {
+      uid: localStorage.getItem("uid"),
+      access_token: localStorage.getItem("access_token"),
+      phraseid: phraseid,
+      status:"seen"
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+
     var x = [...paragraphall];
 
     setparagraphinuse([...paragraphinuse, x[id]]);
@@ -197,7 +243,21 @@ const topics = (props) => {
     setparagraphall(x);
   };
 
-  const removeHandler2 = (id) => {
+  const removeHandler2 = async (id,phraseid) => {
+   
+    let data = {
+      uid: localStorage.getItem("uid"),
+      access_token: localStorage.getItem("access_token"),
+      phraseid: phraseid,
+      status:"unseen"
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+   await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+
     var x = [...paragraphinuse];
 
     setparagraphall([...paragraphall, x[id]]);
@@ -208,7 +268,7 @@ const topics = (props) => {
 
   const textUpdate = (newText) => {
 
-    console.log(newText[0].phraseid)
+    
     let items = [...paragraphall];
 
     let item = {...items[newText[0].index]};
@@ -235,6 +295,53 @@ const topics = (props) => {
    setparagraphinuse(items);
 
   };
+  const deleteHandler =async (index,phraseid) =>{
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        phraseid: phraseid
+      },
+    };
+
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    var x = [...paragraphall];
+    x.splice(index, 1);
+    setparagraphall(x);
+
+  }
+
+  const deleteHandler2 =async (index,phraseid) =>{
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        phraseid: phraseid
+      },
+    };
+
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    var x = [...paragraphinuse];
+    x.splice(index, 1);
+    setparagraphinuse(x);
+
+  }
+var test = []
+test.push("ธุร")
+test.push("สื่อโฆษณา")
+test.push("โต")
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
@@ -403,7 +510,7 @@ const topics = (props) => {
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
               >
-                <h3 className="card-title"> Paragarph(s)</h3>
+                <h3 className="card-title"> Section(s)</h3>
                 <div className="card-tools">{kw}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
@@ -424,16 +531,16 @@ const topics = (props) => {
                       >
                         <h3 className="card-title">
                           {" "}
-                          Paragraph ID: {p.phraseid}
+                          Section No. {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
                             className="fa fa-fw fa-plus-square"
                             style={{ fontSize: "18px" }}
-                            onClick={() => removeHandler(i)}
+                            onClick={() => removeHandler(i,p.phraseid)}
                             data-toggle="tooltip"
                             data-placement="top"
-                            title={"Add to in use paragraph"}
+                            title={"Add to in use section"}
                           ></i>
                           <a
                             href={
@@ -467,11 +574,21 @@ const topics = (props) => {
                             style={{ fontSize: "18px" }}
                             data-toggle="tooltip"
                             data-placement="top"
+                            onClick={()=>deleteHandler(i,p.phraseid)}
                             title={"Delete"}
                           ></i>
                         </div>
                       </div>
-                      <div className="card-body">{ReactHtmlParser(p.text)}</div>
+                      <div className="card-body">
+                        
+                      <Highlighter
+    highlightClassName="YourHighlightClass"
+    searchWords={kw}
+    autoEscape={true}
+    textToHighlight={p.text}
+  />
+                        
+                       </div>
                       <div className="card-footer">
                         <span style={{ float: "left" }}> page: {p.page}</span>
                         <span style={{ float: "right" }}>
@@ -491,13 +608,14 @@ const topics = (props) => {
                           </a>
                         </span>
                       </div>
-
+                   
                       <Modal
                         show={Edittext}
                         modalClosed={closeEdittextModal}
-                        name="Edit paragraph"
+                        name="Edit text section"
                       >
-                        <Ckeditor
+                      
+                        <Textedit
                           id={p.phraseid}
                           key={i}
                           textinfo={textinfo}
@@ -536,16 +654,16 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          Paragraph ID: {p.phraseid}
+                          Section No. {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
                             className="fa fa-fw fa-minus-square"
                             style={{ fontSize: "18px" }}
-                            onClick={() => removeHandler2(i)}
+                            onClick={() => removeHandler2(i,p.phraseid)}
                             data-toggle="tooltip"
                             data-placement="top"
-                            title={"Remove from in use paragraph"}
+                            title={"Remove from in use section"}
                           ></i>
                           <a
                             href={
@@ -578,12 +696,19 @@ const topics = (props) => {
                             className="fa fa-fw fa-trash"
                             style={{ fontSize: "18px" }}
                             data-toggle="tooltip"
+                            onClick={()=>deleteHandler2(i,p.phraseid)}
                             data-placement="top"
+             
                             title={"Delete"}
                           ></i>
                         </div>
                       </div>
-                      <div className="card-body">{ReactHtmlParser(p.text)}</div>
+                      <div className="card-body"> <Highlighter
+    highlightClassName="YourHighlightClass"
+    searchWords={kw}
+    autoEscape={true}
+    textToHighlight={p.text}
+  /></div>
                       <div className="card-footer">
                         <span style={{ float: "left" }}> page: {p.page}</span>
                         <span style={{ float: "right" }}>
@@ -606,9 +731,9 @@ const topics = (props) => {
                       <Modal
                         show={Edittext2}
                         modalClosed={closeEdittextModal2}
-                        name="Edit paragraph"
+                        name="Edit text section"
                       >
-                        <Ckeditor
+                         <Textedit
                           id={p.phraseid}
                           key={i}
                           textinfo={textinfo}
@@ -616,6 +741,14 @@ const topics = (props) => {
                           index={i}
                           modalClosed={closeEdittextModal2}
                         />
+                        {/* <Ckeditor
+                          id={p.phraseid}
+                          key={i}
+                          textinfo={textinfo}
+                          onUpdate={textUpdate2}
+                          index={i}
+                          modalClosed={closeEdittextModal2}
+                        /> */}
                       </Modal>
                     </div>
                   ))}

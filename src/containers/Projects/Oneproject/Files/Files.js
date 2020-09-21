@@ -19,6 +19,7 @@ const file = (props) => {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
         pdfid: props.pdfid,
+        pid:  props.webid
       },
     };
 
@@ -27,8 +28,8 @@ const file = (props) => {
         "Content-Type": "application/json",
       },
     };
-
-    //await axios.delete(config.URL + '/api/files', data, axiosConfig)
+    console.log(data)
+    await axios.delete(config.URL + '/api/files', data, axiosConfig)
     await onGetfiles();
     closeDeleteModal();
   };
@@ -38,7 +39,7 @@ const file = (props) => {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
-        pid: props.webid,
+        pid: props.webid
       },
     };
     let axiosConfig = {

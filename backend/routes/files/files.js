@@ -8,13 +8,19 @@ const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 const PdfTexts = db.pdf_text
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
 const Phrases = db.phrase
+<<<<<<< HEAD
 =======
 const ProjectPdf = db.project_pdffile
 const ProjectRole = db.project_role
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 const Topic = db.topic
 const TopicPdffiles = db.topic_pdffiles
@@ -92,6 +98,9 @@ router.post('/topic', (req, res)=>{
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 router.delete('/topic', (req, res) => {
   TopicPdffiles.destroy({
     where: { pdfid: req.query.pdfid, tid: req.query.tid }
@@ -108,11 +117,27 @@ router.delete('/topic', (req, res) => {
   })
 })
 
+<<<<<<< HEAD
 /*router.delete('', (req, res) =>{
+=======
+router.delete('', (req, res) =>{
+>>>>>>> origin/master
   ProjectRole.findOne({
     where: { pid: req.query.pid, uid: req.query.uid, role: 'owner' }
   }).then((data)=>{
     if(data){
+<<<<<<< HEAD
+=======
+      Pdffiles.findOne({
+        pdfid: req.query.pdfid
+      }).then((data)=>{
+        try{
+          fs.unlinkSync(data.dataValues.uri)
+        }catch(err){
+          return res.status(500).send(err)
+        }
+      })
+>>>>>>> origin/master
       Pdffiles.destroy({
         where: { pdfid: req.query.pdfid }
       }).then((data)=>{
@@ -122,6 +147,7 @@ router.delete('/topic', (req, res) => {
           }).then((data)=>{
             Phrases.destroy({
               where: { pdftextid: null }
+<<<<<<< HEAD
             })
           })
         }
@@ -133,6 +159,39 @@ router.delete('/topic', (req, res) => {
 })*/
 
 =======
+>>>>>>> origin/master
+=======
+            }).then((data)=>{
+              ProjectPdf.destroy({
+                where: { pdfid: null }
+              }).then((data)=>{
+                return res.status(200).send({ message: 'Delete file and remove related item complete!' })
+              }).catch((err)=>{
+                console.log(err)
+                return res.status(500).send(err)
+              })
+            }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
+            })
+          }).catch((err)=>{
+            console.log(err)
+            return res.status(500).send(err)
+          })
+        }
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Only owner of project can delete files!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+})
+
 >>>>>>> origin/master
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {
@@ -222,6 +281,9 @@ router.post('/upload', async (req, res, next) => {
       })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
       createTask(req.body.pid, file.name, pdfid)
       .then((data) => {
         console.log(data)
@@ -257,6 +319,7 @@ router.post('/upload', async (req, res, next) => {
         console.log(err)
         return res.status(500).send(err)
       })
+<<<<<<< HEAD
     });
   });
 
@@ -351,6 +414,37 @@ router.post('/upload', async (req, res, next) => {
   //     })
   //     return promise
   // }
+>>>>>>> origin/master
+=======
+    });
+  });
+
+  createTask = async (pid, fileName, pdfid) => {
+    var promise = await axios.post("http://localhost:5000/task", {
+        file: `../public/upload/${pid}/${fileName}`,
+        pdfid: pdfid
+    }).then((res) => {
+        console.log(res)
+        console.log('createTask: ' + res.data)
+        return res.data
+      }).catch((err)=>{
+          console.log(err)
+          return err
+      })
+      return promise
+  }
+
+  performTask = async (taskId) => {
+    var promise = await axios.put("http://localhost:5000/task/" + taskId)
+    .then((res) => {
+      console.log(res.status)
+      return res.status
+    }).catch((err)=>{
+          console.log(err)
+          return err
+      })
+      return promise
+  }
 >>>>>>> origin/master
 
 module.exports = router

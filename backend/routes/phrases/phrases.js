@@ -11,19 +11,27 @@ const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 const Phrases = db.phrase
 <<<<<<< HEAD
+<<<<<<< HEAD
 const PdfText = db.pdf_text
 =======
+>>>>>>> origin/master
+=======
+const PdfText = db.pdf_text
 >>>>>>> origin/master
 
 router.get('', (req, res)=>{
     Phrases.findAll({
-        where: { tid: req.query.tid, kid: req.query.kid, status: req.query.status }
+        where: { tid: req.query.tid, kid: req.query.kid }
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{
 <<<<<<< HEAD
+<<<<<<< HEAD
         console.log(err)
 =======
+>>>>>>> origin/master
+=======
+        console.log(err)
 >>>>>>> origin/master
         res.status(500).send(err)
     })
@@ -67,6 +75,9 @@ router.put('/status', (req, res)=>{
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 router.put('/edit', (res, req) =>{
     Phrases.findOne({
         where: { phraseid: req.body.phraseid }
@@ -77,12 +88,20 @@ router.put('/edit', (res, req) =>{
             }).then((data)=>{
                 res.status(200).send({ message: 'Update phrase' + req.body.phraseid + ' text success!' })
             }).catch((err)=>{
+<<<<<<< HEAD
+=======
+                console.log(err)
+>>>>>>> origin/master
                 res.status(500).send(err)
             })
         }else{
             res.status(404).send({"message": "Phrase not found"})
         }
     }).catch((err)=>{
+<<<<<<< HEAD
+=======
+        console.log(err)
+>>>>>>> origin/master
         res.status(500).send(err)
     })
 })
@@ -97,6 +116,9 @@ router.get('/test', (req, res)=>{
     })
 })
 
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 module.exports = router
