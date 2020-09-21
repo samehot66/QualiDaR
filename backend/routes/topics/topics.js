@@ -113,10 +113,6 @@ router.post('', (req, res)=>{
     })
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
 router.put('', (req, res) => {
     Topic.findOne({
         where: { tid: req.body.tid }
@@ -139,10 +135,6 @@ router.put('', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
-=======
 router.delete('', (req, res)=>{
     Topic.destroy({
         where: { tid: req.query.tid }
@@ -182,7 +174,6 @@ router.delete('', (req, res)=>{
     })
 })
 
->>>>>>> origin/master
 router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
     var pdfid
     var pid
@@ -194,15 +185,7 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
         pid = data.dataValues.pid
         if(data){
             data.update({
-<<<<<<< HEAD
-<<<<<<< HEAD
                 done: req.body.done
-=======
-                done: true
->>>>>>> origin/master
-=======
-                done: req.body.done
->>>>>>> origin/master
             }).then((data)=>{
                 console.log('aaaa' + data)
                 //return res.status(200).send({ message: 'Update topic status success!' })
