@@ -102,11 +102,20 @@ router.delete('/topic', (req, res) => {
   })
 })
 
-/*router.delete('', (req, res) =>{
+router.delete('', (req, res) =>{
   ProjectRole.findOne({
     where: { pid: req.query.pid, uid: req.query.uid, role: 'owner' }
   }).then((data)=>{
     if(data){
+      Pdffiles.findOne({
+        pdfid: req.query.pdfid
+      }).then((data)=>{
+        try{
+          fs.unlinkSync(data.dataValues.uri)
+        }catch(err){
+          return res.status(500).send(err)
+        }
+      })
       Pdffiles.destroy({
         where: { pdfid: req.query.pdfid }
       }).then((data)=>{
@@ -116,15 +125,36 @@ router.delete('/topic', (req, res) => {
           }).then((data)=>{
             Phrases.destroy({
               where: { pdftextid: null }
+            }).then((data)=>{
+              ProjectPdf.destroy({
+                where: { pdfid: null }
+              }).then((data)=>{
+                return res.status(200).send({ message: 'Delete file and remove related item complete!' })
+              }).catch((err)=>{
+                console.log(err)
+                return res.status(500).send(err)
+              })
+            }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
             })
+          }).catch((err)=>{
+            console.log(err)
+            return res.status(500).send(err)
           })
         }
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
       })
-    }else if(data==0){
-      res.status(404).send({ message: 'File not found' })
+    }else{
+      return res.status(404).send({ message: 'Only owner of project can delete files!' })
     }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
   })
-})*/
+})
 
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {

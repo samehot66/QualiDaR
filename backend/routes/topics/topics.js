@@ -12,6 +12,7 @@ const Pdffiles = db.pdf_file
 const Keywordgroups = db.keyword_group
 const PdfTexts = db.pdf_text
 const Keywords = db.keyword
+const Phrases = db.phrase
 
 router.get('', (req, res) =>{
     //db.sequelize.query('SELECT topics.tid, topics.tname, users.email, users.uid, project_roles.role FROM topics JOIN users ON topics.uid = users.uid JOIN projects ON topics.pid = projects.pid JOIN project_roles ON topics.pid = project_roles.pid AND topics.uid = project_roles.uid WHERE projects.pid = ' + req.query.pid + ' ORDER topics.tname BY ASC;')
@@ -128,6 +129,45 @@ router.put('', (req, res) => {
         }else{
             res.status(404).send({ message: 'Topic not found!' })
         }
+    }).catch((err)=>{
+        console.log(err)
+        res.status(500).send(err)
+    })
+})
+
+router.delete('', (req, res)=>{
+    Topic.destroy({
+        where: { tid: req.query.tid }
+    }).then((data)=>{
+        console.log(data)
+          if(data==1){
+            console.log('success')
+            Keywordgroup_topics.destroy({
+                where: { tid: null }
+            }).then((data)=>{
+                Topic_pdffiles.destroy({
+                    where: { tid: null }
+                }).then((data)=>{
+                    Phrases.destroy({
+                        where: { tid: null }
+                    }).then((data)=>{
+                        res.status(200).send({ message: 'Delete topic and remove related item complete!' })
+                    }).catch((err)=>{
+                        console.log(err)
+                        res.status(500).send(err)
+                    })
+                }).catch((err)=>{
+                    console.log(err)
+                    res.status(500).send(err)
+                })
+            }).catch((err)=>{
+                console.log(err)
+                res.status(500).send(err)
+            })
+          }else if(data==0){
+            console.log('not found')
+            res.status(404).send({message: "Topic not found."})
+          }
     }).catch((err)=>{
         console.log(err)
         res.status(500).send(err)

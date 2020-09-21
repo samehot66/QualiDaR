@@ -70,12 +70,14 @@ router.put('/edit', (res, req) =>{
             }).then((data)=>{
                 res.status(200).send({ message: 'Update phrase' + req.body.phraseid + ' text success!' })
             }).catch((err)=>{
+                console.log(err)
                 res.status(500).send(err)
             })
         }else{
             res.status(404).send({"message": "Phrase not found"})
         }
     }).catch((err)=>{
+        console.log(err)
         res.status(500).send(err)
     })
 })

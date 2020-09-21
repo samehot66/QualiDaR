@@ -19,6 +19,7 @@ const file = (props) => {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
         pdfid: props.pdfid,
+        pid:  props.webid
       },
     };
 
@@ -38,7 +39,7 @@ const file = (props) => {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
-        pid: props.webid,
+        pid: props.webid
       },
     };
     let axiosConfig = {

@@ -218,6 +218,7 @@ const topics = (props) => {
       }
       setparagraphinuse(loadinuse)
         setparagraphall(loadparagraphs);
+        alert("Wait a moment...");
       })
       .catch((err) => {
         alert("Show paragraphs failed")

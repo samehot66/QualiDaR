@@ -82,7 +82,7 @@ const topic = (props) => {
       },
     };
 
-    //await axios.delete(config.URL + '/api/topics', data, axiosConfig)
+    await axios.delete(config.URL + '/api/topics', data, axiosConfig)
     await onGettopics();
     closeDeleteModal();
   };
