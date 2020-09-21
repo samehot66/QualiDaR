@@ -21,7 +21,6 @@ const topics = (props) => {
   const closeInfoModal = () => {
     setInfomodal(false);
   };
-
   const [file, setfile] = useState([]);
   const [kwgroup, setkwgroup] = useState([]);
   //  console.log(props.match.params.tid);
