@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-import classes from './Authentication.css';
-import { GoogleLogin } from 'react-google-login';
-import config from '../../config.json';
-import Button from '../../components/UI/Button/Button';
-import axios from 'axios';
-
-class authentication extends Component {
-
-    constructor() {
-        super();
-        { sessionStorage.setItem('iSAuth', false) }
-        this.state = { isAuthenticated: false, user: null, token: '', data: null };
-=======
 import React, { Component } from "react";
 import classes from "./Authentication.css";
 import { GoogleLogin } from "react-google-login";
@@ -24,35 +9,15 @@ class authentication extends Component {
     super();
     {
       localStorage.setItem("iSAuth", false);
->>>>>>> origin/master
     }
     this.state = { isAuthenticated: false, user: null, token: "" };
   }
 
-<<<<<<< HEAD
-     /*componentDidMount(){
-        const response =  axios.get('http://localhost:4000/api/phrases/test?access_token=ya29.a0AfH6SMCsws9ZjauSRrvY0l7g-yNIYRVS33E5IJBIolFDSVkKCgWbvaUG4UjYzLLgcOZVmWQw9g_uHYMsnb9QCjZVNv_JYRaV7PR-oR0BCjtD11MT-gMp8BnU2ekWfsLlaXr-k70eQ7lv247gITbKD86N06cNW43K4RFF9g&uid=1')
-        .then(response.data)
-        this.setState({data:data})
-        console.log('first ',this.state.data)
-    }*/
-
-    logout = () => {
-        this.setState({ isAuthenticated: false, token: '', user: null })
-        sessionStorage.clear();
-        window.location.reload();
-    };
-
-    onFailure = (error) => {
-        alert("Login Failed");
-    };
-=======
   logout = () => {
     this.setState({ isAuthenticated: false, token: "", user: null });
     localStorage.clear();
     window.location.reload();
   };
->>>>>>> origin/master
 
   onFailure = (error) => {
     alert("Login Failed");
@@ -86,44 +51,6 @@ class authentication extends Component {
       });
   };
 
-<<<<<<< HEAD
-    render() {
-        //const listItems = this.state.data.map((item) =>{item.map((num)=><li>{num.text}</li>)});
-        let content = !!sessionStorage.getItem('isAuth') ?
-            (
-                <div>
-                    <div className={classes.Yourlogin}>You are currently logging name as</div>
-                    <div className={classes.Name}> {sessionStorage.getItem('email')} </div>
-                    <div>
-                        <Button clicked={this.logout} btnType="Logout">
-                            Log out
-                        </Button>
-                    </div>
-                </div>
-            ) :
-            (
-                <div>
-                    
-                    <div className={classes.Welcome}>Welcome to QualiDaR!</div>
-                    <div className={classes.Qbdrrs}>The Qualitative Business Data Repository System</div>
-                    <div className={classes.Lets}>Let's start your analysis...</div>
-                    <GoogleLogin
-                        clientId={config.GOOGLE_CLIENT_ID}
-                        buttonText="Login"
-                        scope="profile email"
-                        onSuccess={this.googleResponse}
-                        onFailure={this.onFailure}
-                    />
-                </div>
-            );
-
-        return (
-            <div className={classes.App}>
-                {content}
-            </div>
-        );
-    }
-=======
   render() {
     let content = !!localStorage.getItem("iSAuthenticated") ? (
       <div style={{ top: "-23px", position: "relative" }}>
@@ -171,7 +98,6 @@ class authentication extends Component {
     );
     return <div className={classes.App}>{content}</div>;
   }
->>>>>>> origin/master
 }
 
 export default authentication;
