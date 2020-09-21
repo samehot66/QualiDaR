@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Ckeditor from "./Ckeditor/Ckeditor";
+import Textedit from "./Textedit/Textedit";
 import { NavLink } from "react-router-dom";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
 import Auxi from "../../hoc/Auxi";
@@ -7,8 +7,9 @@ import classes from "./Topics.css";
 import config from "../../config.json";
 import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
-import ReactHtmlParser from "react-html-parser";
-
+//import ReactHtmlParser from "react-html-parser";
+import Highlighter from "react-highlight-words";
+import EdiText from 'react-editext'
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [Infomodal, setInfomodal] = useState(false);
@@ -218,18 +219,11 @@ const topics = (props) => {
       }
       setparagraphinuse(loadinuse)
         setparagraphall(loadparagraphs);
-        alert("Wait a moment...");
       })
       .catch((err) => {
         alert("Show paragraphs failed")
       });
  
-
-
-
-
-   
-  
     setkw(kw);
   };
 
@@ -352,6 +346,7 @@ const topics = (props) => {
     setparagraphinuse(x);
 
   }
+
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
@@ -589,7 +584,16 @@ const topics = (props) => {
                           ></i>
                         </div>
                       </div>
-                      <div className="card-body">{ReactHtmlParser(p.text)}</div>
+                      <div className="card-body">
+                        
+                      <Highlighter
+    highlightClassName="YourHighlightClass"
+    searchWords={[kw]}
+    autoEscape={true}
+    textToHighlight={p.text}
+  />
+                        
+                       </div>
                       <div className="card-footer">
                         <span style={{ float: "left" }}> page: {p.page}</span>
                         <span style={{ float: "right" }}>
@@ -615,7 +619,8 @@ const topics = (props) => {
                         modalClosed={closeEdittextModal}
                         name="Edit paragraph"
                       >
-                        <Ckeditor
+                      
+                        <Textedit
                           id={p.phraseid}
                           key={i}
                           textinfo={textinfo}
@@ -703,7 +708,12 @@ const topics = (props) => {
                           ></i>
                         </div>
                       </div>
-                      <div className="card-body">{ReactHtmlParser(p.text)}</div>
+                      <div className="card-body"> <Highlighter
+    highlightClassName="YourHighlightClass"
+    searchWords={[kw]}
+    autoEscape={true}
+    textToHighlight={p.text}
+  /></div>
                       <div className="card-footer">
                         <span style={{ float: "left" }}> page: {p.page}</span>
                         <span style={{ float: "right" }}>
@@ -728,7 +738,7 @@ const topics = (props) => {
                         modalClosed={closeEdittextModal2}
                         name="Edit paragraph"
                       >
-                        <Ckeditor
+                         <Textedit
                           id={p.phraseid}
                           key={i}
                           textinfo={textinfo}
@@ -736,6 +746,14 @@ const topics = (props) => {
                           index={i}
                           modalClosed={closeEdittextModal2}
                         />
+                        {/* <Ckeditor
+                          id={p.phraseid}
+                          key={i}
+                          textinfo={textinfo}
+                          onUpdate={textUpdate2}
+                          index={i}
+                          modalClosed={closeEdittextModal2}
+                        /> */}
                       </Modal>
                     </div>
                   ))}
