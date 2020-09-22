@@ -40,7 +40,10 @@ router.get('/topic/keywords', (req, res)=>{
       include: [{
         model: Keyword
       }]
-    }]
+    }],
+    order: [
+      [ Keywordgroup, Keyword, 'keywordtext', 'asc' ]
+    ]
   }).then((data)=>{
     res.status(200).send(data)
   }).catch((err)=>{
