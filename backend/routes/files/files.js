@@ -20,10 +20,7 @@ router.get('', (req, res) => {
     where: { pid: req.query.pid },
     include: [{
       model: Pdffiles,
-      attributes: ['pdfname', 'description', 'done', 'size', 'uri'],
-      order: [
-        [Pdffiles, 'pdfname', 'asc']
-      ]
+      attributes: ['pdfname', 'description', 'done', 'size', 'uri']
     },
     {
       model: User,
@@ -34,7 +31,7 @@ router.get('', (req, res) => {
         attributes: ['role']
       }]
     }],
-    order: [ [Pdffiles , 'pdfname', 'ASC'] ]
+    order: [ [Pdffiles , 'pdfname', 'asc'] ]
   }).then((data) => {
     console.log(data)
     res.status(200).send(data)
