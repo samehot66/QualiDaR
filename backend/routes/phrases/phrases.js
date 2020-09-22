@@ -60,7 +60,7 @@ router.put('/status', (req, res)=>{
     })
 })
 
-router.put('/edit', (res, req) =>{
+router.put('/edit', (req, res) =>{
     Phrases.findOne({
         where: { phraseid: req.body.phraseid }
     }).then((data)=>{

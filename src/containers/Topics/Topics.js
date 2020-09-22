@@ -9,6 +9,7 @@ import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
 //import ReactHtmlParser from "react-html-parser";
 import Highlighter from "react-highlight-words";
+import Multisearch from "./Mutisearch/Multisearch";
 
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
@@ -50,7 +51,14 @@ const topics = (props) => {
     setEdittextmodal2(false);
   };
 
-
+  const [showsearchmulti,setsearchmulti] = useState(false);
+  const showsearchmultiModal = () => {
+  
+    setsearchmulti(true);
+  };
+  const closesearchmultiModal = () => {
+    setsearchmulti(false);
+  };
   useEffect(() => {
     let source = axios.CancelToken.source();
     const keywordgroupinfo = [];
@@ -215,6 +223,8 @@ const topics = (props) => {
         alert("Show sections failed")
       });
     keywset.push(kw);
+    keywset.push("หลัก");
+    keywset.push("ส่วน");
     setkw(keywset);
   };
 
@@ -236,7 +246,7 @@ const topics = (props) => {
     var x = [...paragraphall];
 
     setparagraphinuse([...paragraphinuse, x[id]]);
-    console.log(paragraphinuse);
+
     x.splice(id, 1);
 
     setparagraphall(x);
@@ -310,6 +320,13 @@ const topics = (props) => {
     };
 
     await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    .then((res) => {
+    
+    alert("Delete Section No."+phraseid+" Successful.")
+    })
+    .catch((err) => {
+      alert("Delete Section No."+phraseid+" Failed.")
+    });
     var x = [...paragraphall];
     x.splice(index, 1);
     setparagraphall(x);
@@ -331,16 +348,26 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
+    
+      alert("Delete Section No."+phraseid+" Successful.")
+      })
+      .catch((err) => {
+        alert("Delete Section No."+phraseid+" Failed.")
+      });
     var x = [...paragraphinuse];
     x.splice(index, 1);
     setparagraphinuse(x);
 
   }
-var test = []
-test.push("ธุร")
-test.push("สื่อโฆษณา")
-test.push("โต")
+  const onGetphrasemulti =async (newState)=>
+  {
+    console.log(newState);
+  }
+  const onSetkw =async (newState)=>
+  {
+    setkw(newState)
+  }
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
@@ -467,8 +494,34 @@ test.push("โต")
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem" }}
               >
-                <h3 className="card-title">Keyword(s)</h3>
+                <h3 className="card-title">Keyword(s)
+              </h3>
                 <div className="card-tools">
+                  <button
+                      type="button"
+                      className={[
+                        "btn btn-block btn-success",
+                        classes.Searchmulti,
+                      ].join(" ")}
+                      onClick={showsearchmultiModal}
+                    >  <i
+                    className="fa fa-fw  fa-search"
+                    style={{ fontSize: "12px",paddingRight:"3px" ,paddingleft:"0"}}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title={"Search with multi-keywords"}
+                  ></i>
+                            Multi-keywords
+                    </button>
+                    <Modal
+                        show={showsearchmulti}
+                        modalClosed={closesearchmultiModal}
+                        name="Seach with multi-keywords"
+                      >
+                      
+                      <Multisearch tid={props.match.params.tid} cancel={()=>closesearchmultiModal()} onGetphrasemulti={onGetphrasemulti} onSetkw={onSetkw}/>
+                      
+                      </Modal>
                 </div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
@@ -510,7 +563,9 @@ test.push("โต")
                 style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
               >
                 <h3 className="card-title"> Section(s)</h3>
-                <div className="card-tools">{kw}</div>
+                <div className="card-tools text-truncate"  data-toggle="tooltip"
+                data-placement="top"
+                title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
                 <div style={{ overflow: "auto", height: "600px" }}>
@@ -634,7 +689,9 @@ test.push("โต")
                 style={{ padding: "0.2rem 1rem" }}
               >
                 <h3 className="card-title">In use</h3>
-                <div className="card-tools">{kw}</div>
+                <div className="card-tools text-truncate"  data-toggle="tooltip"
+                data-placement="top"
+                title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
                 <div style={{ overflow: "auto", height: "600px" }}>

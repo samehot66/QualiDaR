@@ -25,3 +25,12 @@ mark {
   height: 200px;
   position: relative;
 }
+
+.Searchmulti {
+  
+  width: 120px;
+  padding: 0;
+  font-size: 12px;
+  top: 3px;
+
+}
