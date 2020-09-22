@@ -53,10 +53,7 @@ const Setfile = (props) => {
               });
               keywords.push({
                 kid:"2",
-                keywordtext: "หลัก",
-              });keywords.push({
-                kid:"3",
-                keywordtext: "3",
+                keywordtext: "ภาพลักษณ์",
               });
               setallkeywords(keywords);
   }, []);

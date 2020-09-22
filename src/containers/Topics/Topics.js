@@ -223,8 +223,8 @@ const topics = (props) => {
         alert("Show sections failed")
       });
     keywset.push(kw);
-    keywset.push("หลัก");
-    keywset.push("ส่วน");
+    //keywset.push("หลัก");
+    //keywset.push("ส่วน");
     setkw(keywset);
   };
 
@@ -322,10 +322,10 @@ const topics = (props) => {
     await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
     .then((res) => {
     
-    alert("Delete Section No."+phraseid+" Successful.")
+    alert("Delete Section ID: ["+phraseid+"] Successful.")
     })
     .catch((err) => {
-      alert("Delete Section No."+phraseid+" Failed.")
+      alert("Delete Section ID: ["+phraseid+"] Failed.")
     });
     var x = [...paragraphall];
     x.splice(index, 1);
@@ -350,10 +350,10 @@ const topics = (props) => {
 
     await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
     
-      alert("Delete Section No."+phraseid+" Successful.")
+      alert("Delete Section ID:"+phraseid+" Successful.")
       })
       .catch((err) => {
-        alert("Delete Section No."+phraseid+" Failed.")
+        alert("Delete Section ID:"+phraseid+" Failed.")
       });
     var x = [...paragraphinuse];
     x.splice(index, 1);
@@ -585,7 +585,7 @@ const topics = (props) => {
                       >
                         <h3 className="card-title">
                           {" "}
-                          Section No. {p.phraseid}
+                          Section ID: {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -710,7 +710,7 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          Section No. {p.phraseid}
+                          Section ID: {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i

@@ -33,6 +33,7 @@ const topic = (props) => {
     setSettingmodal(false);
   };
   const closeSettingModal2 = async() => {
+    alert("Start extracting ["+ props.tname + "] topic...");
     setSettingmodal(false);
 
     let data = {
@@ -46,9 +47,9 @@ const topic = (props) => {
         "Content-Type": "application/json",
       },
     };
-
-    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig);
-    alert("Start extracting...");
+    
+    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig)
+   
   };
 
   const [Setfilemodal, setSetfilemodal] = useState(false);
