@@ -8,6 +8,7 @@ const ProjectRole = db.project_role
 const User = db.user
 const Topic = db.topic
 const keywordgroupTopics = db.keywordgroup_topics
+const Phrases = db.phrase
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
 router.get('', (req, res)=>{
@@ -120,7 +121,42 @@ router.post('', (req, res) => {
 })
 
 router.delete('/subscribe', (req, res) => {
-    Keyword.destroy({
+  Keywordgroup.destroy({
+    where: {
+        keywordgroupsid: req.query.keywordgroupsid
+    }
+  }).then((data)=>{
+    if(data==1){
+      Keyword.destroy({
+        where: { keywordgroupsid: null }
+      }).then((data)=>{
+        Phrases.destroy({
+          where: { kid: null }
+        }).catch((err)=>{
+          console.log(err)
+          return res.status(500).send(err)
+        })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+
+      keywordgroupTopics.destroy({
+        where: { keywordgroupsid: null }
+      }).then((data)=>{
+        return res.status(200).send({ message: 'Delete keyword group and remove related item complete!' })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Keyword group not found!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+    /*Keyword.destroy({
         where: {
             keywordgroupsid: req.query.keywordgroupsid
         }
@@ -143,7 +179,7 @@ router.delete('/subscribe', (req, res) => {
           })
       }).catch((err) => {
         res.status(500).send(err)
-      })
+      })*/
 })
 
 router.delete('/topic', (req, res) => {
