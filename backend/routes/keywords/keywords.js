@@ -356,7 +356,27 @@ router.post('/private', (req, res)=>{
 })
 
 router.delete('', (req, res)=>{
-  Keyword.findOne({
+  Keyword.destroy({
+    where: { kid: req.query.kid }
+  }).then((data)=>{
+    if(data==1){
+      Phrases.destroy({
+        where: { kid: null }
+      }).then((data)=>{
+        return res.status(200).send({ message: 'Delete keyword and remove related item complete!' })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Keyword not found1' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+
+  /*Keyword.findOne({
     where:{kid: req.query.kid, uid: req.query.uid}
   }).then((data)=>{
     if(data){
@@ -366,20 +386,20 @@ router.delete('', (req, res)=>{
         console.log(data)
         if(data==1){
           console.log('success')
-          res.status(200).send({"message": "Delete keyword from keywordgroup success"})
+          return res.status(200).send({"message": "Delete keyword from keywordgroup success"})
         }else if(data==0){
           console.log('not found')
-          res.status(404).send({"message": "Keyword not found."})
+          return res.status(404).send({"message": "Keyword not found."})
         }
       }).catch((err)=>{
-        res.status(500).send(err)
+        return res.status(500).send(err)
       })
     }else{
-      res.status(404).send({"message": "Keyword not found"})
+      return res.status(404).send({"message": "Keyword not found"})
     }
   }).catch((err)=>{
-    res.status(500).send(err)
-  }) 
+    return res.status(500).send(err)
+  }) */
 })
 
 
