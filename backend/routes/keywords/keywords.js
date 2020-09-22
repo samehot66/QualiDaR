@@ -369,7 +369,7 @@ router.delete('', (req, res)=>{
         return res.status(500).send(err)
       })
     }else{
-      return res.status(404).send({ message: 'Keyword not found1' })
+      return res.status(404).send({ message: 'Keyword not found!' })
     }
   }).catch((err)=>{
     console.log(err)
