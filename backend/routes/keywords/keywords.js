@@ -32,6 +32,15 @@ router.get('/mygroups', (req, res)=>{
   })
 })
 
+router.get('/topic/keywords/all', (req, res)=>{
+  db.sequelize.query('SELECT keywords.kid, keywords.keywordtext FROM topics JOIN keywordgroup_topics ON keywordgroup_topics.tid = topics.tid JOIN keywords ON keywords.keywordgroupsid = keywordgroup_topics.keywordgroupsid WHERE topics.tid = ' + req.query.tid + ';')
+  .then((data)=>{
+    res.status(200).send(data[0])
+  }).catch((err)=>{
+    res.status(500).send(err)
+  })
+})
+
 router.get('/topic/keywords', (req, res)=>{
   Topic.findAll({
     attributes: ['tid', 'tname'],
