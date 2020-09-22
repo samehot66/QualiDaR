@@ -14,7 +14,15 @@ const PdfText = db.pdf_text
 
 router.get('', (req, res)=>{
     Phrases.findAll({
-        where: { tid: req.query.tid, kid: req.query.kid }
+        where: { tid: req.query.tid, kid: req.query.kid },
+        include: [{
+            model: PdfText,
+            attributes: ['page_number'],
+            include: [{
+                model: Pdffiles,
+                attributes: ['pdfname']
+            }]
+        }]
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{

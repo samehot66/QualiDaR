@@ -4,6 +4,11 @@ const db = require('../../config/db.config.js');
 const Project = db.project
 const ProjectRole = db.project_role
 const User = db.user
+const Topics = db.topic
+const Phrases = db.phrase
+const Keywordgroup_topics = db.keywordgroup_topics
+const Topic_pdffiles = db.topic_pdffiles
+const ProjectPdffiles = db.project_pdffile
 
 //GET
 //URL - http://localhost:4000/api/projects 
@@ -97,7 +102,65 @@ router.post('', async (req, res) => {
 })
 
 router.delete('', async (req, res) => {
-  var deleteProject = await Project.destroy({
+  Project.destroy({
+    where: {pid: req.query.pid}
+  }).then((data)=>{
+    if(data==1){
+      ProjectRole.destroy({
+        where: { pid: null }
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+
+      ProjectPdffiles.destroy({
+        where: { pid: null }
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+
+      Topics.destroy({
+        where: { pid: null }
+      }).then((data)=>{
+        console.log(data)
+          if(data==1){
+            console.log('success')
+            Keywordgroup_topics.destroy({
+                where: { tid: null }
+            }).then((data)=>{
+                Topic_pdffiles.destroy({
+                    where: { tid: null }
+                }).then((data)=>{
+                    Phrases.destroy({
+                        where: { tid: null }
+                    }).then((data)=>{
+                      return res.status(200).send({ message: 'Delete project and remove related item complete!' })
+                    }).catch((err)=>{
+                        console.log(err)
+                        return res.status(500).send(err)
+                    })
+                }).catch((err)=>{
+                    console.log(err)
+                    return res.status(500).send(err)
+                })
+            }).catch((err)=>{
+                console.log(err)
+                return res.status(500).send(err)
+            })
+          }
+    }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+    })
+    }else{
+      return res.status(404).send({ message: 'Project not found!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+  /*var deleteProject = await Project.destroy({
     where: {
       pid: req.query.pid
     }
@@ -122,7 +185,7 @@ router.delete('', async (req, res) => {
     role: deleteProjectRole
   }
 
-  await res.json(responseData)
+  await res.json(responseData)*/
 })
 
 router.get('/people', (req, res) => {

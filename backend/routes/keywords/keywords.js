@@ -8,6 +8,7 @@ const ProjectRole = db.project_role
 const User = db.user
 const Topic = db.topic
 const keywordgroupTopics = db.keywordgroup_topics
+const Phrases = db.phrase
 const { Op, QueryTypes, Sequelize } = require("sequelize");
 
 router.get('', (req, res)=>{
@@ -27,6 +28,15 @@ router.get('/mygroups', (req, res)=>{
   }).then((data)=>{
     res.json(data)
   }).catch((err) => {
+    res.status(500).send(err)
+  })
+})
+
+router.get('/topic/keywords/all', (req, res)=>{
+  db.sequelize.query('SELECT keywords.kid, keywords.keywordtext FROM topics JOIN keywordgroup_topics ON keywordgroup_topics.tid = topics.tid JOIN keywords ON keywords.keywordgroupsid = keywordgroup_topics.keywordgroupsid WHERE topics.tid = ' + req.query.tid + ';')
+  .then((data)=>{
+    res.status(200).send(data[0])
+  }).catch((err)=>{
     res.status(500).send(err)
   })
 })
@@ -120,7 +130,42 @@ router.post('', (req, res) => {
 })
 
 router.delete('/subscribe', (req, res) => {
-    Keyword.destroy({
+  Keywordgroup.destroy({
+    where: {
+        keywordgroupsid: req.query.keywordgroupsid
+    }
+  }).then((data)=>{
+    if(data==1){
+      Keyword.destroy({
+        where: { keywordgroupsid: null }
+      }).then((data)=>{
+        Phrases.destroy({
+          where: { kid: null }
+        }).catch((err)=>{
+          console.log(err)
+          return res.status(500).send(err)
+        })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+
+      keywordgroupTopics.destroy({
+        where: { keywordgroupsid: null }
+      }).then((data)=>{
+        return res.status(200).send({ message: 'Delete keyword group and remove related item complete!' })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Keyword group not found!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+    /*Keyword.destroy({
         where: {
             keywordgroupsid: req.query.keywordgroupsid
         }
@@ -143,7 +188,7 @@ router.delete('/subscribe', (req, res) => {
           })
       }).catch((err) => {
         res.status(500).send(err)
-      })
+      })*/
 })
 
 router.delete('/topic', (req, res) => {
@@ -320,7 +365,27 @@ router.post('/private', (req, res)=>{
 })
 
 router.delete('', (req, res)=>{
-  Keyword.findOne({
+  Keyword.destroy({
+    where: { kid: req.query.kid }
+  }).then((data)=>{
+    if(data==1){
+      Phrases.destroy({
+        where: { kid: null }
+      }).then((data)=>{
+        return res.status(200).send({ message: 'Delete keyword and remove related item complete!' })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Keyword not found!' })
+    }
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(500).send(err)
+  })
+
+  /*Keyword.findOne({
     where:{kid: req.query.kid, uid: req.query.uid}
   }).then((data)=>{
     if(data){
@@ -330,20 +395,20 @@ router.delete('', (req, res)=>{
         console.log(data)
         if(data==1){
           console.log('success')
-          res.status(200).send({"message": "Delete keyword from keywordgroup success"})
+          return res.status(200).send({"message": "Delete keyword from keywordgroup success"})
         }else if(data==0){
           console.log('not found')
-          res.status(404).send({"message": "Keyword not found."})
+          return res.status(404).send({"message": "Keyword not found."})
         }
       }).catch((err)=>{
-        res.status(500).send(err)
+        return res.status(500).send(err)
       })
     }else{
-      res.status(404).send({"message": "Keyword not found"})
+      return res.status(404).send({"message": "Keyword not found"})
     }
   }).catch((err)=>{
-    res.status(500).send(err)
-  }) 
+    return res.status(500).send(err)
+  }) */
 })
 
 

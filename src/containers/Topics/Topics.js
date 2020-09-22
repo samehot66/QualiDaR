@@ -195,25 +195,25 @@ const topics = (props) => {
         console.log(res.data)
         for (const index in res.data) {
           if(res.data[index].status=="unseen"){
+            if(res.data[index].text!==''){
           loadparagraphs.push({
             phraseid: res.data[index].phraseid,
             text: res.data[index].text,
-            pdfname: "BTS.pdf",
-            page: "44",
-      
+            pdfname: res.data[index].pdf_text.pdffile.pdfname,
+            page: res.data[index].pdf_text.page_number,
             status: res.data[index].status,
-          });
+          });}
         }
           else{
+            if(res.data[index].text!==''){
             loadinuse.push({
               phraseid: res.data[index].phraseid,
               text: res.data[index].text,
-              pdfname: "BTS.pdf",
-              page: "44",
-        
+              pdfname: res.data[index].pdf_text.pdffile.pdfname,
+              page: res.data[index].pdf_text.page_number,
               status: res.data[index].status,
             });
-          }
+          }}
 
       }
       setparagraphinuse(loadinuse)
@@ -516,7 +516,7 @@ const topics = (props) => {
                     <Modal
                         show={showsearchmulti}
                         modalClosed={closesearchmultiModal}
-                        name="Seach with multi-keywords"
+                        name="Search with multi-keywords"
                       >
                       
                       <Multisearch tid={props.match.params.tid} cancel={()=>closesearchmultiModal()} onGetphrasemulti={onGetphrasemulti} onSetkw={onSetkw}/>

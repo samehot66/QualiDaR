@@ -32,10 +32,11 @@ const topic = (props) => {
   const closeSettingModal = () => {
     setSettingmodal(false);
   };
+  const [done,setdone] =useState(props.done);
   const closeSettingModal2 = async() => {
     alert("Start extracting ["+ props.tname + "] topic...");
     setSettingmodal(false);
-
+    setdone(false);
     let data = {
       uid: localStorage.getItem("uid"),
       access_token: localStorage.getItem("access_token"),
@@ -48,8 +49,16 @@ const topic = (props) => {
       },
     };
     
-    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig)
-   
+    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig).then((res) => {
+      setdone(true);
+    })
+    .catch((err) => {
+      alert("Processing Failed");
+      setdone(false);
+    });
+
+  
+    await onGettopics();
   };
 
   const [Setfilemodal, setSetfilemodal] = useState(false);
@@ -117,7 +126,7 @@ const topic = (props) => {
   }
   return (
     <tr>
-      {props.done ? (
+      {done ? (
         <td>
           <i className="fa fa-fw  fa-archive" style={{ color: "#007bff" }}></i>
           <NavLink
@@ -142,7 +151,7 @@ const topic = (props) => {
         </td>
       )}
 
-      {props.done ? (
+      {done ? (
         <td style={{ color: "green" }}>Done</td>
       ) : (
         <td style={{ color: "red" }}>Wait start/Extracting...</td>

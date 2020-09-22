@@ -14,48 +14,39 @@ const Setfile = (props) => {
   const [inusekeyword, setinusekeyword] = useState([]);
   useEffect(() => {
     const keywords = [];
-    // let source = axios.CancelToken.source();
-    // let data = {
-    //   params: {
-    //     uid: localStorage.getItem("uid"),
-    //     access_token: localStorage.getItem("access_token"),
-    //     keywordgroupsid: props.groupid,
-    //   },
-    // };
-    // let axiosConfig = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
+    let source = axios.CancelToken.source();
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        tid: props.tid,
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-    // axios
-    //   .get(config.URL + "/api/keywords/public", data, axiosConfig, {
-    //     cancelToken: source.token,
-    //   })
-    //   .then((res) => {
-    //     for (const index in res.data) {
-    //       keywords.push({
-    //         kid: res.data[index].kid,
-    //         keywordtext: res.data[index].keywordtext,
-    //       });
-    //     }
-    //     setallkeywords(keywords);
-    //   })
-    //   .catch((err) => {
-    //     alert("Show keywords Failed!");
-    //   });
-    // return () => {
-    //   source.cancel();
-    // };
-    keywords.push({
-                kid:"1",
-                keywordtext: "สื่อโฆษณา",
-              });
-              keywords.push({
-                kid:"2",
-                keywordtext: "ภาพลักษณ์",
-              });
-              setallkeywords(keywords);
+    axios
+      .get(config.URL + "/api/keywords/topic/keywords/all", data, axiosConfig, {
+        cancelToken: source.token,
+      })
+      .then((res) => {
+        for (const index in res.data) {
+          keywords.push({
+            kid: res.data[index].kid,
+            keywordtext: res.data[index].keywordtext,
+          });
+        }
+        setallkeywords(keywords);   
+      })
+      .catch((err) => {
+        alert("Show keywords Failed!");
+      });
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   useEffect(() => {
@@ -88,7 +79,6 @@ const Setfile = (props) => {
     let x = [...inusekeyword]
     x.splice(index, 1);
     setinusekeyword(x)
-    console.log(index)
   }
 
   const onSearch= async()=>{

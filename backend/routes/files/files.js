@@ -31,7 +31,7 @@ router.get('', (req, res) => {
         attributes: ['role']
       }]
     }],
-    order: [ [Pdffiles , 'pdfname', 'ASC'] ]
+    order: [ [Pdffiles , 'pdfname', 'asc'] ]
   }).then((data) => {
     console.log(data)
     res.status(200).send(data)
