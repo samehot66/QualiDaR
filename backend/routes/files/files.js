@@ -42,14 +42,15 @@ router.get('', (req, res) => {
 })
 
 router.get('/topic', (req, res)=>{
-  Topic.findOne({
+  db.sequelize.query("SELECT * FROM pdffiles WHERE pdfid NOT IN (SELECT pdfid FROM topic_pdffiles WHERE tid = " + req.query.tid +") ORDER BY pdfname ASC;")
+  /*Topic.findOne({
     where: { tid: req.query.tid },
     include: [{
       model: Pdffiles,
       order: [['pdfname', 'ASC']]
     }]
-  }).then((data)=>{
-    res.status(200).send(data)
+  })*/.then((data)=>{
+    res.status(200).send(data[0])
   }).catch((err)=>{
     res.status(500).send(err)
   })
