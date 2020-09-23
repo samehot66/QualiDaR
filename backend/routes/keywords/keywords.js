@@ -291,8 +291,10 @@ router.get('/private', (req, res)=>{
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
     include:[{
-      model: Keywordgroup
-    }]
+      model: Keywordgroup,
+      where: { shared: "0" }
+    }],
+    order: [[ 'keywordtext', 'asc' ]]
   }).then((data)=>{
       res.json(data)
   }).catch((err)=>{
