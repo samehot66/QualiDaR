@@ -277,7 +277,8 @@ router.get('/public', (req, res)=>{
     include:[{
       model: Keywordgroup,
       where: { shared: "1"}
-    }]
+    }],
+    order: [[ 'keywordtext', 'asc' ]]
   }).then((data)=>{
         res.json(data)
     }).catch((err)=>{
