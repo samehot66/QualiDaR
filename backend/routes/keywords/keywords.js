@@ -100,14 +100,15 @@ router.get('/groups', (req, res)=>{
 })
 
 router.get('/topic', (req, res)=>{
-  Topic.findOne({
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywordgroups.shared FROM keywordgroups LEFT JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroup_topics.keywordgroupsid WHERE keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroups.keywordgroupsid FROM keywordgroups RIGHT JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroup_topics.keywordgroupsid);")
+  /*Topic.findOne({
     where: { tid: req.query.tid },
     include: [{
       model: Keywordgroup,
       order: [['groupname', 'ASC']]
     }]
-  }).then((data)=>{
-    res.status(200).send(data)
+  })*/.then((data)=>{
+    res.status(200).send(data[0])
   }).catch((err)=>{
     res.status(500).send(err)
   })
