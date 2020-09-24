@@ -252,7 +252,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid):
                                          user='root',
                                          password='Decade65*')
                     cursor = connection.cursor()
-                    if(str(text[index-200:index+size_word+200])!=''):
+                    if(str(text[index-200:index+size_word+200])!='' or  str(text[index-200:index+size_word+200])!=None or str(text[index-200:index+size_word+200])!=' '):
                         mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-200:index+size_word+200]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
                         #print(mySql_insert_query)
                         cursor.execute(mySql_insert_query)

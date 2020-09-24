@@ -127,6 +127,7 @@ const yourkeywords = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
+        console.log(res.data)
         for (const index in res.data) {
           keywords.push({
             kid: res.data[index].kid,

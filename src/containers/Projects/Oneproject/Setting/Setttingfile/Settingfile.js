@@ -166,6 +166,7 @@ const Setfile = (props) => {
     await axios
       .get(config.URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {
+        console.log(res.data)
         for (const index in res.data.pdffiles) {
           allfilesinuse.push({
             pdfid: res.data.pdffiles[index].pdfid,
