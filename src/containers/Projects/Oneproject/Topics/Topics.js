@@ -1,14 +1,77 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../../../../components/UI/Modal/Modal";
 import config from "../../../../config.json";
-import Button from "../../../../components/UI/Button/Button";
+import Button2 from "../../../../components/UI/Button/Button";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import Edittopic from "./Edittopics";
 import Settingfile from "../Setting/Setttingfile/Settingfile";
 import Settingkeyword from "../Setting/Settingkeyword/Settingkeyword";
-
+import { makeStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Auxi from '../../../../hoc/Auxi';
+import Settingwordlength from '../Setting/Settingwordlength/Settingwordlength';
 const topic = (props) => {
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  button: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
+
+function getSteps() {
+  return ['Setting file(s)', 'Setting keyword group(s)', 'Setting word length'];
+}
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <Settingfile pid={props.webid} tid={props.tid} />;
+    case 1:
+      return   <Settingkeyword pid={props.webid} tid={props.tid} />;
+    case 2:
+      return  <Settingwordlength cancel={handleNext} onSetwordlength={Setwordlength} />;
+    default:
+      return 'Unknown step';
+  }
+}
+const [wordlength,setwordlength]=useState(200);
+const Setwordlength = (newState) =>{
+  setwordlength(newState);
+}
+const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set());
+  const steps = getSteps();
+
+  const isStepSkipped = (step) => {
+    return skipped.has(step);
+  };
+
+  const handleNext = () => {
+    let newSkipped = skipped;
+   
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
   const [Deletemodal, setDeletemodal] = useState(false);
   const showDeleteModal = () => {
     setDeletemodal(true);
@@ -41,14 +104,15 @@ const topic = (props) => {
       uid: localStorage.getItem("uid"),
       access_token: localStorage.getItem("access_token"),
       tid: props.tid,
-      done: false
+      done: false,
+      wordlength: wordlength
     };
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    
+
     await axios.put(config.URL + "/api/topics/finish", data, axiosConfig).then((res) => {
       setdone(true);
     })
@@ -157,39 +221,15 @@ const topic = (props) => {
         <td style={{ color: "red" }}>Wait start/Extracting...</td>
       )}
       <td>
-        <img
-          onClick={showSetfileModal}
-          style={{
-            position: "relative",
-            width: "22px",
-            height: "22px",
-            top: "-2px",
-          }}
-          src={require("./icon/Addfile.png")}
-          alt="Set file to topic"
-        />
-        <img
-          onClick={showSetkeywordgroupModal}
-          style={{
-            position: "relative",
-            width: "22px",
-            height: "22px",
-            top: "-4px",
-            paddingRight: "2px",
-          }}
-          src={require("./icon/Keyword.png")}
-          alt="Set keyword group to topic"
-        />
-        {props.owner == localStorage.getItem("email") ? (
           <i
             className="fa fa-fw fa-play"
             style={{ fontSize: "18px" }}
             onClick={showSettingModal}
             data-toggle="tooltip"
             data-placement="top"
-            title={"Start"}
+            title={"Start Process"}
           ></i>
-        ) : null}
+
         <i
           className="fa fa-fw fa-edit"
           style={{ fontSize: "18px" }}
@@ -208,34 +248,66 @@ const topic = (props) => {
             title={"Delete"}
           ></i>
         ) : null}
-        <Modal
-          show={Setkeywordgroupmodal}
-          modalClosed={closeSetkeywordgroupModal}
-          name="Set keyword group(s) to topic"
-        >
-          <Settingkeyword pid={props.webid} tid={props.tid} />
-        </Modal>
-        <Modal
-          show={Setfilemodal}
-          modalClosed={closeSetfileModal}
-          name="Set file(s) to topic"
-        >
-          <Settingfile pid={props.webid} tid={props.tid} />
-        </Modal>
+     
         <Modal
           show={Settingmodal}
           modalClosed={closeSettingModal}
-          name="Comfirm to start"
+          name="Setting for process"
+          settingtype={true}
         >
-          <div style={{ fontSize: "22px", textAlign: "center" }}>
+ <div className={classes.root}>
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+      
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <div>
+        {activeStep === steps.length ? (
+          <div>
+          
+            <div style={{ fontSize: "22px", textAlign: "center" }}>
             Are you sure to start processing this topic?
           </div>
-          <Button btnType="Success" clicked={closeSettingModal2}>
-            Start
-          </Button>
-          <Button btnType="Start" clicked={closeSettingModal}>
+          <Button2 btnType="Starttopic" clicked={closeSettingModal2}>
+            Process
+          </Button2>
+          <Button2 btnType="Cancletopic" clicked={closeSettingModal}>
             Cancel
-          </Button>
+          </Button2>
+          
+            <Button onClick={handleReset}  color="primary"  className={classes.button}>
+              REDO
+            </Button> 
+          </div>
+        ) : (
+          <div>
+          {getStepContent(activeStep)}
+            <div>
+              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                Back
+              </Button>
+            
+              {activeStep ===2 ? '' :
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.button}
+              >
+                {'Next'}
+              </Button> }
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
         </Modal>
         <Modal
           show={Editmodal}
@@ -260,12 +332,12 @@ const topic = (props) => {
             <span style={{ color: "blue" }}> {props.tname} </span>
             topic?
           </div>
-          <Button btnType="Success" clicked={deleteHandler}>
+          <Button2 btnType="Success" clicked={deleteHandler}>
             Delete
-          </Button>
-          <Button btnType="Danger" clicked={closeDeleteModal}>
+          </Button2>
+          <Button2 btnType="Danger" clicked={closeDeleteModal}>
             Cancel
-          </Button>
+          </Button2>
         </Modal>{" "}
       </td>
       <td>{props.email}</td>
