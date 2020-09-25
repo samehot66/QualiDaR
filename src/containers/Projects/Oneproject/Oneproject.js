@@ -7,7 +7,7 @@ import Modal from "../../../components/UI/Modal/Modal";
 import axios from "axios";
 import config from "../../../config.json";
 import Files from "./Files/Files";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
+
 import Addtopic from "./Topics/Addtopics";
 import Topic from "./Topics/Topics";
 import Auxi from "../../../hoc/Auxi";
@@ -427,7 +427,24 @@ const oneproject = (props) => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0 text-dark">{projectdetail[1]}</h1>
+              <h1 className="m-0 text-dark">{projectdetail[1]}
+              
+              <NavLink
+            to={
+              "/projects/" +
+              projectdetail[1] +
+              "/" +
+              props.match.params.id +
+              "/" +
+              "excel"
+            }
+          >
+
+           Export to excel
+          </NavLink>
+              
+              
+              </h1>
               <span>
                 Description : {projectdetail[2] == "" ? "-" : projectdetail[2]}{" "}
               </span>

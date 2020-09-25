@@ -9,21 +9,15 @@ const Keywordgroups = db.keyword_group
 const Pdffiles = db.pdf_file
 const KeywordgroupTopic = db.keywordgroup_topics
 const Phrases = db.phrase
+const Pdftexts = db.pdf_text
 
 router.get('', (req, res)=>{
     Projects.findOne({
         where: { pid: req.query.pid },
+        attributes: ['pname'],
         include: [{
             model: Topics,
             include: [{
-                model: TopicPdf,
-                as: 'topic_role',
-                attributes: ['tid', 'pdfid'],
-                include: [{
-                    model: Pdffiles,
-                    as: 'pdf'
-                }]
-            },{
                 model: KeywordgroupTopic,
                 as: 'topic_group',
                 attributes: ['tid', 'keywordgroupsid'],
@@ -35,12 +29,22 @@ router.get('', (req, res)=>{
                         model: Keywords,
                         include: [{
                             model: Phrases,
-                            where: { status: 'seen' }
+                            attributes: ['phraseid', 'text'],
+                            where: { status: 'seen' },
+                            include: [{
+                                model: Pdftexts,
+                                attributes: ['pdftextid', 'page_number'],
+                                include: [{
+                                    model: Pdffiles,
+                                    attributes: ['pdfid', 'pdfname', 'uri' ]
+                                }]
+                            }]
                         }]
                     }]
                 }]
             }]
-        }]
+        }],
+        order: [[ { model: Topics }, 'tname', 'ASC' ], [[ Topics, {model: KeywordgroupTopic, as: 'topic_group',}, {model: Keywordgroups, as: 'keywordgroup'}, { model: Keywords }, 'keywordtext', 'asc' ]]]
     }).then((data)=>{
         res.status(200).send(data)
     }).catch((err)=>{

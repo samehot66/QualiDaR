@@ -8,6 +8,7 @@ import Projects from "../../containers/Projects/Projects";
 import Oneproject from "../../containers/Projects/Oneproject/Oneproject";
 import Sharedwithme from "../../containers/Sharedwithme/Sharedwithme";
 import Topics from "../../containers/Topics/Topics";
+import Excel from "../../containers/Excel/Excel";
 
 const Content = (props) => {
   return (
@@ -20,6 +21,7 @@ const Content = (props) => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/keywords" component={Keywords} />
         <Route path="/projects/:pname/:id/:tname/:tid" component={Topics} />
+        <Route path="/projects/:pname/:id/excel" component={Excel} />
         <Route path="/projects/:pname/:id" component={Oneproject} />
         <Route path="/projects" component={Projects} />
         <Route path="/sharedwithme" component={Sharedwithme} />

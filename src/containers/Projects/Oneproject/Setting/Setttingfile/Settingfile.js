@@ -285,7 +285,7 @@ const Setfile = (props) => {
           className="card-header border-transparent "
           style={{ padding: "0.2rem 1rem" }}
         >
-          <h3 className="card-title">File(s) in this project</h3>
+          <h3 className="card-title">File(s) in this topic</h3>
           <div className="card-tools"></div>
         </div>
         <div className="card-body p-0 " style={{ overflow: "auto" }}>
