@@ -135,10 +135,11 @@ const Setfile = (props) => {
       .get(config.URL + "/api/files", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
+          if (res.data[index].pdffile.done) {
           allfiles.push({
             pdfid: res.data[index].id,
             filename: res.data[index].pdffile.pdfname,
-          });
+          });}
         }
         setfile(allfiles);
       })
@@ -166,6 +167,7 @@ const Setfile = (props) => {
     await axios
       .get(config.URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {
+
         for (const index in res.data.pdffiles) {
           allfilesinuse.push({
             pdfid: res.data.pdffiles[index].pdfid,
@@ -213,7 +215,35 @@ const Setfile = (props) => {
           style={{ padding: "0.2rem 1rem" }}
         >
           <h3 className="card-title">File(s) </h3>
-          <div className="card-tools"></div>
+          <div className="card-tools">
+
+
+          <button
+                      type="button"
+                      className={[
+                        "btn btn-block btn-success",
+                        classes.Refresh,
+                      ].join(" ")}
+                      onClick={onGetfile}
+                      style={{
+                        backgroundColor: "white",
+                        borderColor: "#52a5ff",
+                        color: "#007bff",
+                      }}
+                    >
+                      <img
+                        style={{
+                          position: "relative",
+                          width: "11px",
+                          height: "11px",
+                          top: "-1px",
+                          left: "0px",
+                        }}
+                        src={require("../../Topics/icon/Refresh.png")}
+                      />
+                      Refresh
+                    </button>
+          </div>
         </div>
         <div className="card-body p-0 " style={{ overflow: "auto" }}>
           <table
@@ -256,7 +286,7 @@ const Setfile = (props) => {
           className="card-header border-transparent "
           style={{ padding: "0.2rem 1rem" }}
         >
-          <h3 className="card-title">File(s) in this project</h3>
+          <h3 className="card-title">File(s) in this topic</h3>
           <div className="card-tools"></div>
         </div>
         <div className="card-body p-0 " style={{ overflow: "auto" }}>

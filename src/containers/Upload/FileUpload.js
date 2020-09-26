@@ -38,12 +38,12 @@ const FileUpload = (props) => {
               Math.round((progressEvent.loaded * 100) / progressEvent.total)
             )
           );
-          onGetfiles();
+         
           // Clear percentage
           setTimeout(() => setUploadPercentage(0), 5000);
         },
       });
-
+ onGetfiles();
       const { fileName, filePath } = res.data;
 
       setUploadedFile({ fileName, filePath });

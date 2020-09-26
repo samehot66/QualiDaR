@@ -63,7 +63,7 @@ class authentication extends Component {
           You are currently logging name as
         </div>
         <div className={classes.Name}> {localStorage.getItem("email")} </div>
-        <div className={classes.Btn}>
+        {/* <div className={classes.Btn}>
           <button
             type="button"
             className="btn btn-block btn-danger"
@@ -71,7 +71,7 @@ class authentication extends Component {
           >
             Log out
           </button>
-        </div>
+        </div> */}
       </div>
     ) : (
       <div style={{ top: "-23px", position: "relative" }}>

@@ -12,13 +12,13 @@ const Header = () => {
             <i className="fas fa-bars" />
           </a>
         </li>
-        {isauth ? (
+        {/* {isauth ? (
           <li className="nav-item d-none d-sm-inline-block">
             <NavLink to="/dashboard" className="nav-link">
               Home
             </NavLink>
           </li>
-        ) : null}
+        ) : null} */}
       </ul>
 
       <ul className="navbar-nav ml-auto">

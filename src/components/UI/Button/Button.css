@@ -67,12 +67,32 @@
   background-color: #007bff;
 }
 
-.Start {
+.Searchmultikey{
+  float:right;
+  background-color: #007bff;
+}
+
+.Cancletopic {
   background-color: #ff5533;
   left: 75px;
+  margin-top: 0px;
 }
 
 .Save {
   left: 0px;
   background-color: #007bff;
+}
+
+.Starttopic {
+  background-color: #3f51b5;
+  left: -95px;
+  margin-top: 0px;
+}
+
+
+.Next {
+  background-color: #3f51b5;
+  position: absolute;
+  left:81px;
+  margin-top: 0px;
 }

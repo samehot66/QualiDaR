@@ -77,7 +77,7 @@ const textedit = (props) => {
       text: val,
       phraseid: props.textinfo.phraseid
     });
-   // await axios.put(config.URL + "/api/phrases/edit", data, axiosConfig);
+    await axios.put(config.URL + "/api/phrases/edit", data, axiosConfig);
     await props.onUpdate(textinfo);
     await props.modalClosed();
 

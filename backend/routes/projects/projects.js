@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../../config/db.config.js');
+const fs = require('fs')
 const Project = db.project
 const ProjectRole = db.project_role
 const User = db.user
@@ -9,6 +10,8 @@ const Phrases = db.phrase
 const Keywordgroup_topics = db.keywordgroup_topics
 const Topic_pdffiles = db.topic_pdffiles
 const ProjectPdffiles = db.project_pdffile
+const PdfTexts = db.pdf_text
+const PdfFiles = db.pdf_file
 
 //GET
 //URL - http://localhost:4000/api/projects 
@@ -102,64 +105,118 @@ router.post('', async (req, res) => {
 })
 
 router.delete('', async (req, res) => {
-  Project.destroy({
-    where: {pid: req.query.pid}
+  Project.findOne({
+    where: { pid: req.query.pid }
   }).then((data)=>{
-    if(data==1){
-      ProjectRole.destroy({
-        where: { pid: null }
-      }).catch((err)=>{
-        console.log(err)
-        return res.status(500).send(err)
-      })
-
-      ProjectPdffiles.destroy({
-        where: { pid: null }
-      }).catch((err)=>{
-        console.log(err)
-        return res.status(500).send(err)
-      })
-
-      Topics.destroy({
-        where: { pid: null }
+    console.log('Project obj: ', data)
+    if(data){
+      ProjectPdffiles.findAll({
+        where: { pid: req.query.pid }
       }).then((data)=>{
-        console.log(data)
-          if(data==1){
-            console.log('success')
-            Keywordgroup_topics.destroy({
-                where: { tid: null }
-            }).then((data)=>{
-                Topic_pdffiles.destroy({
-                    where: { tid: null }
-                }).then((data)=>{
-                    Phrases.destroy({
-                        where: { tid: null }
-                    }).then((data)=>{
-                      return res.status(200).send({ message: 'Delete project and remove related item complete!' })
-                    }).catch((err)=>{
-                        console.log(err)
-                        return res.status(500).send(err)
-                    })
-                }).catch((err)=>{
-                    console.log(err)
-                    return res.status(500).send(err)
-                })
-            }).catch((err)=>{
+        if(data){
+        console.log('Project PDF obj' + data)
+        data.forEach(element => {
+          console.log("element pdfid: " + element.dataValues.pdfid)
+          PdfFiles.findOne({
+            where: { pdfid: element.dataValues.pdfid }
+          }).then((data)=>{
+            if(data){
+              try{
+                fs.unlinkSync(data.dataValues.uri)
+              }catch(err){
+                return res.status(500).send(err)
+              }
+            }
+          }).catch((err)=>{
+            console.log(err)
+            return res.status(500).send(err)
+          })
+
+          PdfFiles.destroy({
+            where: { pdfid: element.dataValues.pdfid }
+          }).then((data)=>{
+            if(data==1){
+              PdfTexts.destroy({
+                where: { pdfid: null }
+              }).catch((err)=>{
                 console.log(err)
                 return res.status(500).send(err)
-            })
-          }
-    }).catch((err)=>{
+              })
+            }
+          }).catch((err)=>{
+            console.log(err)
+            return res.status(500).send(err)
+          })
+        });}
+      }).catch((err)=>{
         console.log(err)
         return res.status(500).send(err)
-    })
+      })
     }else{
       return res.status(404).send({ message: 'Project not found!' })
     }
-  }).catch((err)=>{
-    console.log(err)
-    return res.status(500).send(err)
+
+    Project.destroy({
+      where: {pid: req.query.pid}
+    }).then((data)=>{
+      if(data==1){
+        ProjectRole.destroy({
+          where: { pid: null }
+        }).catch((err)=>{
+          console.log(err)
+          return res.status(500).send(err)
+        })
+  
+        ProjectPdffiles.destroy({
+          where: { pid: null }
+        }).catch((err)=>{
+          console.log(err)
+          return res.status(500).send(err)
+        })
+  
+        Topics.destroy({
+          where: { pid: null }
+        }).then((data)=>{
+          console.log(data)
+            if(data==1){
+              console.log('success')
+              Keywordgroup_topics.destroy({
+                  where: { tid: null }
+              }).then((data)=>{
+                  Topic_pdffiles.destroy({
+                      where: { tid: null }
+                  }).then((data)=>{
+                      Phrases.destroy({
+                          where: { tid: null }
+                      }).then((data)=>{
+                        return res.status(200).send({ message: 'Delete project and remove related item complete!' })
+                      }).catch((err)=>{
+                          console.log(err)
+                          return res.status(500).send(err)
+                      })
+                  }).catch((err)=>{
+                      console.log(err)
+                      return res.status(500).send(err)
+                  })
+              }).catch((err)=>{
+                  console.log(err)
+                  return res.status(500).send(err)
+              })
+            }
+      }).catch((err)=>{
+          console.log(err)
+          return res.status(500).send(err)
+      })
+      }else{
+        return res.status(404).send({ message: 'Project not found!' })
+      }
+    }).catch((err)=>{
+      console.log(err)
+      return res.status(500).send(err)
+    })
   })
+
+  
   /*var deleteProject = await Project.destroy({
     where: {
       pid: req.query.pid
@@ -329,6 +386,18 @@ router.get('/checkaccess', (req, res)=>{
   })
 })
 
+
+router.get('/test', (req, res)=>{
+  ProjectPdffiles.findAll()
+  .then((data)=>{
+    data.forEach(element => {
+      console.log('element pdfid: ' + element.dataValues.pdfid)
+    });
+    
+    res.status(200).send(data)
+  })
+})
+
 router.get('/:pid', (req, res)=>{
   console.log("request ",req)
   ProjectRole.findOne({
@@ -356,6 +425,5 @@ router.get('/:pid', (req, res)=>{
     res.status(500).send(error)
   })
 })
-
 
 module.exports = router

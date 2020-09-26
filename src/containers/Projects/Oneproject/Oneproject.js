@@ -7,7 +7,7 @@ import Modal from "../../../components/UI/Modal/Modal";
 import axios from "axios";
 import config from "../../../config.json";
 import Files from "./Files/Files";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
+
 import Addtopic from "./Topics/Addtopics";
 import Topic from "./Topics/Topics";
 import Auxi from "../../../hoc/Auxi";
@@ -22,6 +22,10 @@ const oneproject = (props) => {
   const [allpeople, setallpeople] = useState([]);
   const [searchallpeople, setsearchallpeople] = useState("");
   const [allpeoplefilterserch, setallpeoplefiltersearch] = useState([]);
+
+  const [numpeople,setnumpeople] =useState(0);
+  const [numfile,setnumfile]=useState(0);
+  const [numtopic,setnumtopic]=useState(0);
 
   const [Newtopicemodal, setNewtopicmodal] = useState(false);
   const shownewtopicModal = () => {
@@ -92,6 +96,7 @@ const oneproject = (props) => {
           });
         }
         setallpeople(people);
+        setnumpeople(people.length);
       })
       .catch((err) => {
         alert("Show people Failed");
@@ -162,6 +167,7 @@ const oneproject = (props) => {
           });
         }
         setallpeople(people);
+        setnumpeople(people.length);
       })
       .catch((err) => {
         alert("Show people Failed");
@@ -258,6 +264,7 @@ const oneproject = (props) => {
           });
         }
         setfiles(loadfiles);
+        setnumfile(loadfiles.length);
       })
       .catch((err) => {
         console.log(err);
@@ -298,6 +305,7 @@ const oneproject = (props) => {
           });
         }
         setfiles(loadfiles);
+        setnumfile(loadfiles.length);
       })
       .catch((err) => {});
   };
@@ -326,6 +334,7 @@ const oneproject = (props) => {
       });
     }
     setfiles(loadfiles);
+    setnumfile(loadfiles.length);
   };
 
   useEffect(() => {
@@ -358,6 +367,7 @@ const oneproject = (props) => {
           });
         }
         settopic(loadtopics);
+        setnumtopic(loadtopics.length);
       })
       .catch((err) => {});
     return () => {
@@ -392,6 +402,7 @@ const oneproject = (props) => {
           });
         }
         settopic(loadtopics);
+        setnumtopic(loadtopics.length);
       })
       .catch((err) => {});
   };
@@ -419,6 +430,7 @@ const oneproject = (props) => {
       });
     }
     settopic(loadtopic);
+    setnumtopic(loadtopic.length);
   };
 
   return isauth ? (
@@ -427,7 +439,24 @@ const oneproject = (props) => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0 text-dark">{projectdetail[1]}</h1>
+              <h1 className="m-0 text-dark">{projectdetail[1]}
+              
+              <NavLink
+            to={
+              "/projects/" +
+              projectdetail[1] +
+              "/" +
+              props.match.params.id +
+              "/" +
+              "excel"
+            }
+          >
+
+           Export to excel
+          </NavLink>
+              
+              
+              </h1>
               <span>
                 Description : {projectdetail[2] == "" ? "-" : projectdetail[2]}{" "}
               </span>
@@ -460,7 +489,7 @@ const oneproject = (props) => {
                   className="card-header border-transparent "
                   style={{ padding: "0.2rem 1rem" }}
                 >
-                  <h3 className="card-title">People in this project</h3>
+                  <h3 className="card-title">{numpeople} people in this project</h3>
                   <div className="card-tools">
                     <input
                       type="text"
@@ -564,7 +593,7 @@ const oneproject = (props) => {
                   style={{ padding: "0.2rem 1rem", backgroundColor: "#52a5ff" }}
                 >
                   <h3 className="card-title" style={{ color: "white" }}>
-                    File(s) in this project
+                   {numfile} file(s) in this project
                     <button
                       type="button"
                       className={[
@@ -674,7 +703,7 @@ const oneproject = (props) => {
                   style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
                 >
                   <h3 className="card-title" style={{ color: "white" }}>
-                    Topic(s)
+                   {numtopic} topic(s)
                     <button
                       type="button"
                       className={[

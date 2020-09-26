@@ -9,6 +9,7 @@ import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
 //import ReactHtmlParser from "react-html-parser";
 import Highlighter from "react-highlight-words";
+import Multisearch from "./Mutisearch/Multisearch";
 
 const topics = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
@@ -21,7 +22,6 @@ const topics = (props) => {
   const closeInfoModal = () => {
     setInfomodal(false);
   };
-
   const [file, setfile] = useState([]);
   const [kwgroup, setkwgroup] = useState([]);
   //  console.log(props.match.params.tid);
@@ -29,6 +29,10 @@ const topics = (props) => {
   const [kw, setkw] = useState([]);
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
+
+  const [numall,setnumall]  = useState(0);
+  const [numinuse,setnuminuse] = useState(0);
+
   const [textinfo,settextinfo] = useState([]);
   const [kwgroupinfo,setkwgroupinfo] = useState([]);
   
@@ -51,7 +55,14 @@ const topics = (props) => {
     setEdittextmodal2(false);
   };
 
-
+  const [showsearchmulti,setsearchmulti] = useState(false);
+  const showsearchmultiModal = () => {
+  
+    setsearchmulti(true);
+  };
+  const closesearchmultiModal = () => {
+    setsearchmulti(false);
+  };
   useEffect(() => {
     let source = axios.CancelToken.source();
     const keywordgroupinfo = [];
@@ -73,6 +84,7 @@ const topics = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
+        console.log(res.data)
         for (const index in res.data.keywordgroups) {
           keywordgroupinfo.push({
             keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,
@@ -188,34 +200,38 @@ const topics = (props) => {
         console.log(res.data)
         for (const index in res.data) {
           if(res.data[index].status=="unseen"){
+            if(res.data[index].text!==''){
           loadparagraphs.push({
             phraseid: res.data[index].phraseid,
             text: res.data[index].text,
-            pdfname: "BTS.pdf",
-            page: "44",
-      
+            pdfname: res.data[index].pdf_text.pdffile.pdfname,
+            page: res.data[index].pdf_text.page_number,
             status: res.data[index].status,
-          });
+          });}
         }
           else{
+            if(res.data[index].text!==''){
             loadinuse.push({
               phraseid: res.data[index].phraseid,
               text: res.data[index].text,
-              pdfname: "BTS.pdf",
-              page: "44",
-        
+              pdfname: res.data[index].pdf_text.pdffile.pdfname,
+              page: res.data[index].pdf_text.page_number,
               status: res.data[index].status,
             });
-          }
+          }}
 
       }
       setparagraphinuse(loadinuse)
         setparagraphall(loadparagraphs);
+        setnumall(loadparagraphs.length);
+        setnuminuse(loadinuse.length);
       })
       .catch((err) => {
         alert("Show sections failed")
       });
     keywset.push(kw);
+    //keywset.push("หลัก");
+    //keywset.push("ส่วน");
     setkw(keywset);
   };
 
@@ -237,10 +253,12 @@ const topics = (props) => {
     var x = [...paragraphall];
 
     setparagraphinuse([...paragraphinuse, x[id]]);
-    console.log(paragraphinuse);
+
     x.splice(id, 1);
 
     setparagraphall(x);
+    setnumall(x.length);
+        setnuminuse(paragraphinuse.length+1);
   };
 
   const removeHandler2 = async (id,phraseid) => {
@@ -264,6 +282,8 @@ const topics = (props) => {
     x.splice(id, 1);
 
     setparagraphinuse(x);
+    setnumall(paragraphall.length+1);
+        setnuminuse(x.length);
   };
 
   const textUpdate = (newText) => {
@@ -311,10 +331,18 @@ const topics = (props) => {
     };
 
     await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    .then((res) => {
+    
+    alert("Delete Section ID: ["+phraseid+"] Successful.")
+    })
+    .catch((err) => {
+      alert("Delete Section ID: ["+phraseid+"] Failed.")
+    });
     var x = [...paragraphall];
     x.splice(index, 1);
     setparagraphall(x);
-
+    setnumall(x.length);
+      
   }
 
   const deleteHandler2 =async (index,phraseid) =>{
@@ -332,16 +360,27 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
+    
+      alert("Delete Section ID:"+phraseid+" Successful.")
+      })
+      .catch((err) => {
+        alert("Delete Section ID:"+phraseid+" Failed.")
+      });
     var x = [...paragraphinuse];
     x.splice(index, 1);
     setparagraphinuse(x);
 
+    setnuminuse(x.length);
   }
-var test = []
-test.push("ธุร")
-test.push("สื่อโฆษณา")
-test.push("โต")
+  const onGetphrasemulti =async (newState)=>
+  {
+    console.log(newState);
+  }
+  const onSetkw =async (newState)=>
+  {
+    setkw(newState)
+  }
   return isauth ? (
     <Auxi>
       <div className="content-header" style={{ padding: "1px .5rem", display: checkaccess ? "block" : "none"  }}>
@@ -468,8 +507,34 @@ test.push("โต")
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem" }}
               >
-                <h3 className="card-title">Keyword(s)</h3>
+                <h3 className="card-title">Keyword(s)
+              </h3>
                 <div className="card-tools">
+                  <button
+                      type="button"
+                      className={[
+                        "btn btn-block btn-success",
+                        classes.Searchmulti,
+                      ].join(" ")}
+                      onClick={showsearchmultiModal}
+                    >  <i
+                    className="fa fa-fw  fa-search"
+                    style={{ fontSize: "12px",paddingRight:"3px" ,paddingleft:"0"}}
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title={"Search with multi-keywords"}
+                  ></i>
+                            Multi-keywords
+                    </button>
+                    <Modal
+                        show={showsearchmulti}
+                        modalClosed={closesearchmultiModal}
+                        name="Search with multi-keywords"
+                      >
+                      
+                      <Multisearch tid={props.match.params.tid} cancel={()=>closesearchmultiModal()} onGetphrasemulti={onGetphrasemulti} onSetkw={onSetkw}/>
+                      
+                      </Modal>
                 </div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
@@ -510,8 +575,10 @@ test.push("โต")
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
               >
-                <h3 className="card-title"> Section(s)</h3>
-                <div className="card-tools">{kw}</div>
+                <h3 className="card-title">{numall} section(s)</h3>
+                <div className="card-tools text-truncate"  data-toggle="tooltip"
+                data-placement="top"
+                title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
                 <div style={{ overflow: "auto", height: "600px" }}>
@@ -531,7 +598,7 @@ test.push("โต")
                       >
                         <h3 className="card-title">
                           {" "}
-                          Section No. {p.phraseid}
+                          Section ID: {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -634,8 +701,10 @@ test.push("โต")
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem" }}
               >
-                <h3 className="card-title">In use</h3>
-                <div className="card-tools">{kw}</div>
+                <h3 className="card-title">{numinuse} in use</h3>
+                <div className="card-tools text-truncate"  data-toggle="tooltip"
+                data-placement="top"
+                title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
               </div>
               <div className="card-body p-0 " style={{ overflow: "auto" }}>
                 <div style={{ overflow: "auto", height: "600px" }}>
@@ -654,7 +723,7 @@ test.push("โต")
                         }}
                       >
                         <h3 className="card-title">
-                          Section No. {p.phraseid}
+                          Section ID: {p.phraseid}
                         </h3>
                         <div className="card-tools">
                           <i

@@ -100,15 +100,14 @@ router.get('/groups', (req, res)=>{
 })
 
 router.get('/topic', (req, res)=>{
-  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywordgroups.shared FROM keywordgroups LEFT JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroup_topics.keywordgroupsid WHERE keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroups.keywordgroupsid FROM keywordgroups RIGHT JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroup_topics.keywordgroupsid);")
-  /*Topic.findOne({
+  Topic.findOne({
     where: { tid: req.query.tid },
     include: [{
       model: Keywordgroup,
       order: [['groupname', 'ASC']]
     }]
-  })*/.then((data)=>{
-    res.status(200).send(data[0])
+  }).then((data)=>{
+    res.status(200).send(data)
   }).catch((err)=>{
     res.status(500).send(err)
   })
@@ -278,8 +277,7 @@ router.get('/public', (req, res)=>{
     include:[{
       model: Keywordgroup,
       where: { shared: "1"}
-    }],
-    order: [[ 'keywordtext', 'asc' ]]
+    }]
   }).then((data)=>{
         res.json(data)
     }).catch((err)=>{
@@ -292,10 +290,8 @@ router.get('/private', (req, res)=>{
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
     include:[{
-      model: Keywordgroup,
-      where: { shared: "0" }
-    }],
-    order: [[ 'keywordtext', 'asc' ]]
+      model: Keywordgroup
+    }]
   }).then((data)=>{
       res.json(data)
   }).catch((err)=>{

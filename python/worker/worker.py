@@ -24,8 +24,8 @@ def pdf_process(task_id):
         print("Processing start")
         print(task.location)
         st = extract_text(task.location)
-        #clean_text(st)
-        #clean_text2(st)
+        clean_text(st)
+        clean_text2(st)
         try:
             connection = mysql.connector.connect(host='localhost',
                                          database='testdb',

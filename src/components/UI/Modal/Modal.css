@@ -14,3 +14,13 @@
   text-align: center;
   color: #ffffff;
 }
+
+.Modal2 {
+  position: fixed;
+  z-index: 500;
+  width: 50%;
+  left: 25%;
+  top: 10%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+}
