@@ -80,6 +80,7 @@ const topics = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
+        console.log(res.data)
         for (const index in res.data.keywordgroups) {
           keywordgroupinfo.push({
             keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,

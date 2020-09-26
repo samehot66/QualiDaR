@@ -29,16 +29,19 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/topic/keywords/all", data, axiosConfig, {
+      .get(config.URL + "/api/keywords/topic/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
-        for (const index in res.data) {
+        console.log(res.data)
+        for (const index in res.data[0].keywordgroups) {
           keywords.push({
-            kid: res.data[index].kid,
-            keywordtext: res.data[index].keywordtext,
-          });
+              keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
+              groupname: res.data[0].keywordgroups[index].groupname,
+              keywords: res.data[0].keywordgroups[index].keywords
+          })      
         }
+        console.log(keywords)
         setallkeywords(keywords);   
       })
       .catch((err) => {
@@ -49,16 +52,16 @@ const Setfile = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    setallkeywordsfilterserch(
-      allkeywords.filter((keywords) => {
-        return keywords.keywordtext
-          .toString()
-          .toLowerCase()
-          .includes(search.toLowerCase());
-      })
-    );
-  }, [search, allkeywords]);
+  // useEffect(() => {
+  //   setallkeywordsfilterserch(
+  //     allkeywords.filter((keywords) => {
+  //       return keywords.keywordtext
+  //         .toString()
+  //         .toLowerCase()
+  //         .includes(search.toLowerCase());
+  //     })
+  //   );
+  // }, [search, allkeywords]);
 
   const addKeywordHandler =(keywords)=>{
     let x =[...inusekeyword]
@@ -142,6 +145,7 @@ const Setfile = (props) => {
              <thead>
                     <tr>
                       <th>Name</th>
+                      <t>Keywordgroupname</t>
                       <th>Tool(s)</th>
                     </tr>
                   </thead>

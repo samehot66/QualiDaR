@@ -77,8 +77,8 @@ const Projects = (props) => {
               <h1 className="m-0 text-dark">Export project</h1> <ReactHTMLTableToExcel  
                                                 className="btn btn-info"  
                                                 table="emp"  
-                                                filename="ReportExcel"  
-                                                sheet="Sheet"  
+                                                filename={props.match.params.pname + "_project"} 
+                                                sheet="Project"  
                                                 buttonText="Export excel" /> 
             </div>
             <div className="col-sm-6">
@@ -134,7 +134,7 @@ const Projects = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                      {exceldata.map((data) => (
+                      {/* {exceldata.map((data) => (
                          <tr key={data.phraseid}>     
                          <td>{data.file}</td> 
                        <td>{data.page}</td>       
@@ -142,15 +142,15 @@ const Projects = (props) => {
                         <td>{data.keyword}</td>
                         <td>{data.text}</td>
                      </tr>
-                        ))}
-{/* 
+                        ))} */}
+
                      <tr>     
                          <td>BTS.pdf</td> 
                        <td>44</td>       
                         <td>Social</td>
                         <td>สื่อโฆษณา</td>
                         <td>นงาน 24 ภาวะอุตสาหกรรม และแนวโน้มธุรกิจ2.1 ประวัติความเป็นมา 262.2 เหตุการณ์สำคัญในปี 2561/62 282.3 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจระบบขนส่งมวลชน 312.4 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจสื่อโฆษณา 402.5 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจอสังหาริมทรัพย์ 442.6 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจบริการ 472.7 การประเมินผลการดำเนินงานเทียบกับเป้าหมายปี 2561/62 49 2.8 แนวโน้มธุรกิจปี 2562/63</td>
-                     </tr> */}
+                     </tr>  
                       </tbody>
                     </table>
                   </div>
