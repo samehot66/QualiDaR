@@ -89,14 +89,14 @@ const Projects = (props) => {
             <div className="col-sm-6">
               <h1 className="m-0 text-dark">Project(s)</h1>
             </div>
-            <div className="col-sm-6">
+            {/* <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
                   <NavLink to="#">Home</NavLink>
                 </li>
                 <li className="breadcrumb-item active">Project(s)</li>
               </ol>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
