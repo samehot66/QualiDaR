@@ -4,7 +4,10 @@ import Auxi from "../../hoc/Auxi";
 
 const Menu = () => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
-
+  const logout =()=>{
+    localStorage.clear();
+    window.location.reload();
+  }
   return (
     <aside
       className="main-sidebar sidebar-light-primary elevation-4"
@@ -12,7 +15,7 @@ const Menu = () => {
     >
       {isauth ? (
         <NavLink
-          to="/dashboard"
+          to="#"
           className="brand-link"
           style={{ backgroundColor: "#2981e9" }}
         >
@@ -74,11 +77,12 @@ const Menu = () => {
           >
             {isauth ? (
               <Auxi>
-                {" "}
+           
+               
                 <li className="nav-item">
-                  <NavLink to="/dashboard" className="nav-link">
-                    <i className="nav-icon fas fa-th-large" />
-                    <p>Dashboard</p>
+                  <NavLink to="/projects" className="nav-link">
+                    <i className="nav-icon fas fa-folder" />
+                    <p>Project(s)</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -88,17 +92,18 @@ const Menu = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/projects" className="nav-link">
-                    <i className="nav-icon fas fa-folder" />
-                    <p>Project(s)</p>
-                  </NavLink>
-                </li>
-                <li className="nav-item">
                   <NavLink to="/sharedwithme" className="nav-link">
                     <i className="nav-icon fas fa-users" />
                     <p>Shared with me</p>
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                 
+                 <a href="" className="nav-link">
+                
+                    <p style={{color:"red", cursor:"pointer"}} onClick={logout} >Logout</p>
+                  </a> 
+                </li> 
               </Auxi>
             ) : (
               <li className="nav-item">

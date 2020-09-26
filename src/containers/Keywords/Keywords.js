@@ -269,7 +269,7 @@ const Keywords = (props) => {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <NavLink to="/dashboard">Home</NavLink>
+                  <NavLink to="/projects">Home</NavLink>
                 </li>
                 <li className="breadcrumb-item active">Keyword(s)</li>
               </ol>
