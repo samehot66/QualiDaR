@@ -99,10 +99,10 @@ const Menu = () => {
                 </li>
                 <li className="nav-item">
              
-                   <p  className="nav-link"onClick={logout}  style={{ cursor:"pointer"}} >
-                 <a href="#" style={{ cursor:"pointer"}}>
-                 <i className="nav-icon"/>
-                 <p  style={{color:"red", cursor:"pointer"}}>    Logout</p>
+                   <p  className="nav-link" onClick={logout}  style={{ cursor:"pointer"}} >
+                 <a href="" style={{ cursor:"pointer"}} onClick={logout}>
+                 <i className="nav-icon" onClick={logout}/>
+                 <p  style={{color:"red", cursor:"pointer"}} onClick={logout}>    Logout</p>
                   </a> </p>
                 </li> 
               </Auxi>
