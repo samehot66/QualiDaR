@@ -135,10 +135,11 @@ const Setfile = (props) => {
       .get(config.URL + "/api/files", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
+          if (res.data[index].pdffile.done) {
           allfiles.push({
             pdfid: res.data[index].id,
             filename: res.data[index].pdffile.pdfname,
-          });
+          });}
         }
         setfile(allfiles);
       })
@@ -166,7 +167,7 @@ const Setfile = (props) => {
     await axios
       .get(config.URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {
-        console.log(res.data)
+
         for (const index in res.data.pdffiles) {
           allfilesinuse.push({
             pdfid: res.data.pdffiles[index].pdfid,

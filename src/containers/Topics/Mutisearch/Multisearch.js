@@ -145,7 +145,7 @@ const Setfile = (props) => {
              <thead>
                     <tr>
                       <th>Name</th>
-                      <t>Keywordgroupname</t>
+                      <th>Keywordgroupname</th>
                       <th>Tool(s)</th>
                     </tr>
                   </thead>

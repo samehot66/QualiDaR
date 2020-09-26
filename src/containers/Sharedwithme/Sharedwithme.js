@@ -12,7 +12,7 @@ const Sharedwithme = (props) => {
   const [projects, setprojects] = useState([]);
   const [search, setsearch] = useState("");
   const [projectsfiltersearch, setprojectsfiltersearch] = useState([]);
-
+  const [numshared, setnumshared] = useState(0);
   useEffect(() => {
     const loadprojects = [];
     let source = axios.CancelToken.source();
@@ -41,6 +41,7 @@ const Sharedwithme = (props) => {
           });
         }
         setprojects(loadprojects);
+        setnumshared(loadprojects.length);
       })
       .catch((err) => {
         alert("Show all shared projects Failed");
@@ -75,7 +76,7 @@ const Sharedwithme = (props) => {
                   <NavLink to="/projects">Home</NavLink>
                 </li>
                 <li className="breadcrumb-item active">
-                  Shared with me project(s)
+                Shared with me project(s)
                 </li>
               </ol>
             </div>
@@ -90,7 +91,7 @@ const Sharedwithme = (props) => {
               style={{ padding: "0.2rem 1rem", backgroundColor: "#2981e9" }}
             >
               <h3 className="card-title" style={{ color: "white" }}>
-                All your project(s){" "}
+              {numshared} shared with me project(s)
               </h3>
               <div className="card-tools">
                 <input

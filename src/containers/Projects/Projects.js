@@ -19,6 +19,7 @@ const Projects = (props) => {
     setNewprojmodal(false);
   };
   const [projects, setprojects] = useState([]);
+  const [numprojects,setnumproject] =useState(0);
   const [search, setsearch] = useState("");
   const [projectsfiltersearch, setprojectsfiltersearch] = useState([]);
 
@@ -49,6 +50,7 @@ const Projects = (props) => {
           });
         }
         setprojects(loadprojects);
+        setnumproject(loadprojects.length);
       })
       .catch((err) => {
         alert("Show all projects Failed");
@@ -68,6 +70,7 @@ const Projects = (props) => {
       });
     }
     setprojects(loadprojects);
+    setnumproject(loadprojects.length);
   };
 
   useEffect(() => {
@@ -108,7 +111,7 @@ const Projects = (props) => {
               style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
             >
               <h3 className="card-title" style={{ color: "white" }}>
-                All your project(s){" "}
+              {numprojects} project(s){" "}
               </h3>
               <div className="card-tools">
                 <input

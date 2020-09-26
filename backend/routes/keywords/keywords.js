@@ -277,8 +277,7 @@ router.get('/public', (req, res)=>{
     include:[{
       model: Keywordgroup,
       where: { shared: "1"}
-    }],
-    order: [[ 'keywordtext', 'asc' ]]
+    }]
   }).then((data)=>{
         res.json(data)
     }).catch((err)=>{
@@ -291,10 +290,8 @@ router.get('/private', (req, res)=>{
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
     include:[{
-      model: Keywordgroup,
-      where: { shared: "0" }
-    }],
-    order: [[ 'keywordtext', 'asc' ]]
+      model: Keywordgroup
+    }]
   }).then((data)=>{
       res.json(data)
   }).catch((err)=>{

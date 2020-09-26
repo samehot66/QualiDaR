@@ -54,9 +54,19 @@ const Projects = (props) => {
     axios
       .get(config.URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
       .then((res) => {
-      console.log(res.data)
-    
-   
+        for (const index in res.data) {
+       
+          loadexceldata.push({
+ phraseid: res.data[index].phraseid,
+                     file: res.data[index].pdfname,
+                      page : res.data[index].page_number,
+                     tname: res.data[index].tname,
+                     groupname: res.data[index].groupname,
+      keyword: res.data[index].keywordtext,
+     text: res.data[index].text
+                
+          });
+        }
       setexceldata(loadexceldata);
       })
       .catch((err) => {
@@ -129,28 +139,30 @@ const Projects = (props) => {
                           <th >File</th>
                          <th >Page</th>
                          <th>Topic name</th>
+                         <th>Keyword group name</th>
                           <th>Keyword</th>
                           <th>Text</th>   
                         </tr>
                       </thead>
                       <tbody>
-                      {/* {exceldata.map((data) => (
+                      {exceldata.map((data) => (
                          <tr key={data.phraseid}>     
                          <td>{data.file}</td> 
                        <td>{data.page}</td>       
                         <td>{data.tname}</td>
+                        <td>{data.groupname}</td>    
                         <td>{data.keyword}</td>
                         <td>{data.text}</td>
                      </tr>
-                        ))} */}
+                        ))}
 
-                     <tr>     
+                     {/* <tr>     
                          <td>BTS.pdf</td> 
                        <td>44</td>       
                         <td>Social</td>
                         <td>สื่อโฆษณา</td>
                         <td>นงาน 24 ภาวะอุตสาหกรรม และแนวโน้มธุรกิจ2.1 ประวัติความเป็นมา 262.2 เหตุการณ์สำคัญในปี 2561/62 282.3 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจระบบขนส่งมวลชน 312.4 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจสื่อโฆษณา 402.5 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจอสังหาริมทรัพย์ 442.6 ภาพรวมธุรกิจและภาวะอุตสาหกรรม - ธุรกิจบริการ 472.7 การประเมินผลการดำเนินงานเทียบกับเป้าหมายปี 2561/62 49 2.8 แนวโน้มธุรกิจปี 2562/63</td>
-                     </tr>  
+                     </tr>   */}
                       </tbody>
                     </table>
                   </div>

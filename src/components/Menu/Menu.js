@@ -55,15 +55,15 @@ const Menu = () => {
               />
             </div>
             <div className="info">
-              <NavLink
+              {/* <NavLink
                 to="/profile"
                 className="d-block text-truncate "
                 data-toggle="tooltip"
                 data-placement="top"
                 title={localStorage.getItem("email")}
-              >
+              > */}
                 {localStorage.getItem("email")}
-              </NavLink>
+              {/* </NavLink> */}
             </div>
           </div>
         ) : null}
@@ -98,12 +98,11 @@ const Menu = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-             
-                   <p  className="nav-link" onClick={logout}  style={{ cursor:"pointer"}} >
-                 <a href="" style={{ cursor:"pointer"}} onClick={logout}>
+                   <span onClick={logout}  style={{ cursor:"pointer"}} >
+                 <a  className="nav-link" href="" style={{ cursor:"pointer"}} onClick={logout}>
                  <i className="nav-icon" onClick={logout}/>
                  <p  style={{color:"red", cursor:"pointer"}} onClick={logout}>    Logout</p>
-                  </a> </p>
+                  </a> </span>
                 </li> 
               </Auxi>
             ) : (

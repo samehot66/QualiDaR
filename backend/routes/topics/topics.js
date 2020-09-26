@@ -232,7 +232,7 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
         return res.status(500).send(err)
     })
     
-    performFindphrases(pdfid, pid, keywordgroups, req.body.tid).then((data) => {
+    performFindphrases(pdfid, pid, keywordgroups, req.body.tid, req.body.wordlength).then((data) => {
         Topic.findOne({
             where: { tid: req.body.tid }
         }).then((data)=>{
@@ -253,13 +253,14 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
 
 })
 
-performFindphrases = async (pdfid, pid, keywordgroups, tid) =>{
+performFindphrases = async (pdfid, pid, keywordgroups, tid, wordlength) =>{
     console.log('asdadasda' + keywordgroups)
     var promise = await axios.post("http://localhost:5000/findphrases", {
         pdfid: pdfid,
         pid: pid,
         keywordgroups: keywordgroups,
-        tid: tid
+        tid: tid,
+        wordlength: wordlength
     }).then((res) => {
         console.log(res)
         console.log('createTask: ' + res.data)

@@ -29,6 +29,10 @@ const topics = (props) => {
   const [kw, setkw] = useState([]);
   const [paragraphall, setparagraphall] = useState([]);
   const [paragraphinuse, setparagraphinuse] = useState([]);
+
+  const [numall,setnumall]  = useState(0);
+  const [numinuse,setnuminuse] = useState(0);
+
   const [textinfo,settextinfo] = useState([]);
   const [kwgroupinfo,setkwgroupinfo] = useState([]);
   
@@ -219,6 +223,8 @@ const topics = (props) => {
       }
       setparagraphinuse(loadinuse)
         setparagraphall(loadparagraphs);
+        setnumall(loadparagraphs.length);
+        setnuminuse(loadinuse.length);
       })
       .catch((err) => {
         alert("Show sections failed")
@@ -251,6 +257,8 @@ const topics = (props) => {
     x.splice(id, 1);
 
     setparagraphall(x);
+    setnumall(x.length);
+        setnuminuse(paragraphinuse.length+1);
   };
 
   const removeHandler2 = async (id,phraseid) => {
@@ -274,6 +282,8 @@ const topics = (props) => {
     x.splice(id, 1);
 
     setparagraphinuse(x);
+    setnumall(paragraphall.length+1);
+        setnuminuse(x.length);
   };
 
   const textUpdate = (newText) => {
@@ -331,7 +341,8 @@ const topics = (props) => {
     var x = [...paragraphall];
     x.splice(index, 1);
     setparagraphall(x);
-
+    setnumall(x.length);
+      
   }
 
   const deleteHandler2 =async (index,phraseid) =>{
@@ -360,6 +371,7 @@ const topics = (props) => {
     x.splice(index, 1);
     setparagraphinuse(x);
 
+    setnuminuse(x.length);
   }
   const onGetphrasemulti =async (newState)=>
   {
@@ -563,7 +575,7 @@ const topics = (props) => {
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
               >
-                <h3 className="card-title"> Section(s)</h3>
+                <h3 className="card-title">{numall} section(s)</h3>
                 <div className="card-tools text-truncate"  data-toggle="tooltip"
                 data-placement="top"
                 title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
@@ -689,7 +701,7 @@ const topics = (props) => {
                 className="card-header border-transparent "
                 style={{ padding: "0.2rem 1rem" }}
               >
-                <h3 className="card-title">In use</h3>
+                <h3 className="card-title">{numinuse} in use</h3>
                 <div className="card-tools text-truncate"  data-toggle="tooltip"
                 data-placement="top"
                 title={kw.join("+")} style={{width:"400px",float:"right",textAlign: "right"}}>{kw.join("+")}</div>
