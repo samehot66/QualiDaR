@@ -77,6 +77,7 @@ const addtopic = (props) => {
       };
     }
     props.onSetwordlength(formDataArray["name"].value);
+    props.cancel();
   };
 
 
@@ -140,10 +141,12 @@ const addtopic = (props) => {
             checkError={checkErrorFunc(formElement.config.error)}
           />
         ))}
+
+{/* <button type="button"  disabled={!FormIsValid} >my button</button> */}
         <Button
           btnType="Next"
           disabled={!FormIsValid}
-         clicked={props.cancel}
+          
         >
           Next
         </Button>

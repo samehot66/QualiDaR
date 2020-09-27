@@ -48,7 +48,8 @@ function getStepContent(step) {
 }
 const [wordlength,setwordlength]=useState(200);
 const Setwordlength = (newState) =>{
-  setwordlength(newState);
+  let length = newState;
+  setwordlength(length);
 }
 const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
