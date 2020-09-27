@@ -52,12 +52,13 @@ def task(task_id):
 def findphrases():
     data = request.json
     try:
+        print(data['keywordgroups'][0])
         wordlength = int(data['wordlength'])
         pdfid = data['pdfid']
         pid = data['pid']
-        keywordgroups = data['keywordgroups']
+        keywordgroups = data['keywordgroups'][0]
         tid = data['tid']
-        print(keywordgroups)
+        print(keywordgroups[0])
         find_phrases(pdfid, pid, keywordgroups, tid, wordlength)
     except ValueError as e:
         log.error(e)

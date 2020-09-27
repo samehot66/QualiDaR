@@ -174,6 +174,12 @@ router.delete('', (req, res)=>{
     })
 })
 
+router.get('/tests', (req, res)=>{
+    db.sequelize.query("SELECT keywords.kid, keywords.keywordtext FROM keywordgroup_topics JOIN keywordgroups ON keywordgroup_topics.keywordgroupsid = keywordgroups.keywordgroupsid JOIN keywords ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroup_topics.tid = " + req.query.tid +";").then((data)=>{
+        res.json(data)
+    })
+})
+
 router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
     var pdfid
     var pid
@@ -201,7 +207,8 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
         return res.status(500).send(err)
     })
 
-    var findGroup = await Keywordgroup_topics.findAll({
+    var findGroup = await db.sequelize.query("SELECT keywords.kid, keywords.keywordtext FROM keywordgroup_topics JOIN keywordgroups ON keywordgroup_topics.keywordgroupsid = keywordgroups.keywordgroupsid JOIN keywords ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroup_topics.tid = " + req.body.tid +";")
+    /*Keywordgroup_topics.findAll({
         attributes: ['keywordgroupsid'],
         where: { tid: req.body.tid },
         include: [{
@@ -213,9 +220,13 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
                 attributes: ['kid', 'keywordtext'],
             }]
         }]
-    }).then((data)=>{
-        console.log('5555'+data[0].dataValues.keywordgroup.dataValues.keywords)
-        keywordgroups = data[0].dataValues.keywordgroup.dataValues.keywords
+    })*/.then((data)=>{
+        console.log("key", data)
+        keywordgroups = data
+        /*data.forEach(element => {
+            console.log('5555', element.dataValues.keywordgroup.dataValues.keywords)
+            keywordgroups = element.dataValues.keywordgroup.dataValues.keywords
+        })*/
     }).catch((err)=>{
         console.log(err)
         return res.status(500).send(err)
@@ -254,7 +265,7 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
 })
 
 performFindphrases = async (pdfid, pid, keywordgroups, tid, wordlength) =>{
-    console.log('asdadasda' + keywordgroups)
+    console.log('asdadasda', keywordgroups)
     var promise = await axios.post("http://localhost:5000/findphrases", {
         pdfid: pdfid,
         pid: pid,
