@@ -238,8 +238,8 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
 
             for index in matched_setences:  #display sentences that matched keyword
                 #print(sent_tokenize(text[index-200:index+size_word+200]))
-                print(f'keyword {keyword}, page {page}: {text[index-int(wordlength/2):index+size_word+int(wordlength/2)]}')
-                tempJS = '{"start": ' + str(index-int(wordlength/2)) + ', "end": ' + str(index+size_word+int(wordlength/2)) + '}'
+                print(f'keyword {keyword}, page {page}: {text[index-wordlength//2:index+size_word+wordlength//2]}')
+                tempJS = '{"start": ' + str(index-wordlength//2) + ', "end": ' + str(index+size_word+wordlength//2) + '}'
                 tempJS = tempJS.replace("'", '"')
                 kindex = json.dumps(str(tempJS))
                 kindex = kindex.replace('\\', '')
@@ -252,8 +252,8 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                                          user='root',
                                          password='Decade65*')
                     cursor = connection.cursor()
-                    if(str(text[index-int(wordlength/2):index+size_word+int(wordlength/2)])!='' or  str(text[index-int(wordlength/2):index+size_word+int(wordlength/2)])!=None or str(text[index-int(wordlength/2):index+size_word+int(wordlength/2)])!=' '):
-                        mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-int(wordlength/2):index+size_word+int(wordlength/2)]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
+                    if(str(text[index-wordlength//2:index+size_word+wordlength//2])!='' or  str(text[index-wordlength//2:index+size_word+wordlength//2])!=None or str(text[index-wordlength//2:index+size_word+wordlength//2])!=' '):
+                        mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-wordlength//2:index+size_word+wordlength//2]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
                         #print(mySql_insert_query)
                         cursor.execute(mySql_insert_query)
                         connection.commit()

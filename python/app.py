@@ -52,7 +52,7 @@ def task(task_id):
 def findphrases():
     data = request.json
     try:
-        wordlength = data['wordlength']
+        wordlength = int(data['wordlength'])
         pdfid = data['pdfid']
         pid = data['pid']
         keywordgroups = data['keywordgroups']
