@@ -33,15 +33,26 @@ const Setfile = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log(res.data)
-        for (const index in res.data[0].keywordgroups) {
-          keywords.push({
-              keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
-              groupname: res.data[0].keywordgroups[index].groupname,
-              keywords: res.data[0].keywordgroups[index].keywords
+        console.log(res.data[0])
+        for(const index in res.data[0].keywordgroups)
+        {
+          for(const index2 in res.data[0].keywordgroups[index].keywords)
+          {
+             keywords.push({
+              kid: res.data[0].keywordgroups[index].keywords[index2].kid,
+              groupname:  res.data[0].keywordgroups[index].groupname,   
+              keywordtext: res.data[0].keywordgroups[index].keywords[index2].keywordtext
           })      
+           
+          }
         }
-        console.log(keywords)
+          // keywords.push({
+          //     keywordgroupsid: res.data[0].keywordgroups[index].keywords[index2].kid,
+          //     groupname:  res.data[0].keywordgroups[index].groupname,   
+          //     keywords: res.data[0].keywordgroups[index].keywords[index2].keywordtext
+          // })      
+         // keywordgroups[0].keywords[0].kid
+      
         setallkeywords(keywords);   
       })
       .catch((err) => {
@@ -52,16 +63,16 @@ const Setfile = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   setallkeywordsfilterserch(
-  //     allkeywords.filter((keywords) => {
-  //       return keywords.keywordtext
-  //         .toString()
-  //         .toLowerCase()
-  //         .includes(search.toLowerCase());
-  //     })
-  //   );
-  // }, [search, allkeywords]);
+  useEffect(() => {
+    setallkeywordsfilterserch(
+      allkeywords.filter((keywords) => {
+        return keywords.keywordtext
+          .toString()
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      })
+    );
+  }, [search, allkeywords]);
 
   const addKeywordHandler =(keywords)=>{
     let x =[...inusekeyword]
@@ -145,7 +156,7 @@ const Setfile = (props) => {
              <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Keywordgroupname</th>
+                      <th>Group name</th>
                       <th>Tool(s)</th>
                     </tr>
                   </thead>
@@ -158,6 +169,9 @@ const Setfile = (props) => {
                             style={{ color: "#4c96ed" }}
                           ></i>
                           {keywords.keywordtext}
+                        </td>
+                        <td>
+                          {keywords.groupname}
                         </td>
                   <td>
                     <i
@@ -203,7 +217,8 @@ const Setfile = (props) => {
             >
               <thead>
                     <tr>
-                      <th>Name</th>
+                    <th>Name</th>
+                      <th>Group name</th>
                       <th>Tool(s)</th>
                     </tr>
                   </thead>
@@ -216,6 +231,9 @@ const Setfile = (props) => {
                            style={{ color: "#17a2b8" }}
                           ></i>
                           {keywords.keywordtext}
+                        </td>
+                        <td>
+                          {keywords.groupname}
                         </td>
                   <td>
                     <i
