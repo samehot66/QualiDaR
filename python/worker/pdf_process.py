@@ -220,12 +220,15 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
         #    temp_text
         #print(f'Query result: {query_result}')
         for item in query_result:
+            iterate = 0
             page = item['page_number']
             keyword = item['keyword']
             text = item['text']
             kid = item['kid']
             pdftextid = item['pdftextid']
             size_word = len(keyword)
+            tempStart = 0
+            tempEnd = 0
             #print(f'Keyword: {keyword}\nLength of word: {size_word}')
             matched_setences = []  #store index of matched keyword
             p = re.compile(keyword)  #compile pattern of string
@@ -238,8 +241,29 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
 
             for index in matched_setences:  #display sentences that matched keyword
                 #print(sent_tokenize(text[index-200:index+size_word+200]))
-                print(f'keyword {keyword}, page {page}: {text[index-wordlength//2:index+size_word+wordlength//2]}')
-                tempJS = '{"start": ' + str(index-wordlength//2) + ', "end": ' + str(index+size_word+wordlength//2) + '}'
+                startIndex = index-wordlength//2
+                endIndex = index+size_word+wordlength//2
+                if iterate==0:
+                    iterate = iterate + 1
+                    tempStart = startIndex
+                    tempEnd = endIndex
+                else:
+                    if index in range(tempStart, tempEnd):
+                        iterate = iterate + 1
+                        continue
+                    elif startIndex <= tempEnd:
+                        startIndex = tempEnd+1
+                        wordGap = abs(index-startIndex)
+                        endIndex = index+wordGap+size_word
+                        tempStart = startIndex
+                        tempEnd = endIndex
+                    else: 
+                        tempStart = startIndex
+                        tempEnd = endIndex
+                    iterate = iterate + 1
+                    print('sasad')
+                print(f'keyword {keyword}, page {page}: {text[startIndex:endIndex]}')
+                tempJS = '{"start": ' + str(startIndex) + ', "end": ' + str(endIndex) + '}'
                 tempJS = tempJS.replace("'", '"')
                 kindex = json.dumps(str(tempJS))
                 kindex = kindex.replace('\\', '')
@@ -248,12 +272,12 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                 #print(kindex)
                 try:
                     connection = mysql.connector.connect(host='localhost',
-                                         database='testdb',
-                                         user='root',
-                                         password='Decade65*')
+                                        database='testdb',
+                                        user='root',
+                                        password='Decade65*')
                     cursor = connection.cursor()
-                    if(str(text[index-wordlength//2:index+size_word+wordlength//2])!='' or  str(text[index-wordlength//2:index+size_word+wordlength//2])!=None or str(text[index-wordlength//2:index+size_word+wordlength//2])!=' '):
-                        mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[index-wordlength//2:index+size_word+wordlength//2]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
+                    if(str(text[startIndex:endIndex])!='' or str(text[startIndex:endIndex])!=None or str(text[startIndex:endIndex])!=' '):
+                        mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[startIndex:endIndex]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
                         #print(mySql_insert_query)
                         cursor.execute(mySql_insert_query)
                         connection.commit()
