@@ -218,7 +218,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
         #    print(item)
         #for item in query_result:
         #    temp_text
-
+        #print(f'Query result: {query_result}')
         for item in query_result:
             page = item['page_number']
             keyword = item['keyword']
@@ -234,7 +234,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
              matched_setences.append(m.start())
              #print(m.start(), m.group())
     
-            #print(f'All matched index: {matched_setences}')
+            print(f'All matched index: {matched_setences}')
 
             for index in matched_setences:  #display sentences that matched keyword
                 #print(sent_tokenize(text[index-200:index+size_word+200]))

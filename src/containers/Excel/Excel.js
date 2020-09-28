@@ -11,6 +11,7 @@ const Projects = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [checkaccess, setcheckaccess] = useState(false);
   const [exceldata,setexceldata] = useState([]);
+  const [numexcel,setnumexcel] =useState(0);
   useEffect(() => {
     let data = {
       params: {
@@ -68,6 +69,7 @@ const Projects = (props) => {
           });
         }
       setexceldata(loadexceldata);
+      setnumexcel(loadexceldata.length);
       })
       .catch((err) => {
         alert("Show data Failed");
@@ -122,7 +124,7 @@ const Projects = (props) => {
               style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
             >
               <h3 className="card-title" style={{ color: "white" }}>
-              {props.match.params.pname} 
+              {props.match.params.pname} project has {numexcel} in use section(s)
               </h3>
               <div className="card-tools">
               
