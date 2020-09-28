@@ -181,7 +181,8 @@ const classes = useStyles();
         props.onGettopics(res.data);
       })
       .catch((err) => {
-        alert("Show all files Failed");
+        //alert("Show all files Failed");
+        localStorage.clear();
       });
   };
 

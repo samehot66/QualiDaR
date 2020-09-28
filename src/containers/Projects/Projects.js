@@ -53,7 +53,8 @@ const Projects = (props) => {
         setnumproject(loadprojects.length);
       })
       .catch((err) => {
-        alert("Show all projects Failed");
+        //alert("Show all projects Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

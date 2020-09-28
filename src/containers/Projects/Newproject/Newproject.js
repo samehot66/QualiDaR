@@ -119,7 +119,8 @@ const newProj = (props) => {
         props.onGetprojects(res.data);
       })
       .catch((err) => {
-        alert("Show all projects Failed");
+        //alert("Show all projects Failed");
+        localStorage.clear();
       });
   };
 

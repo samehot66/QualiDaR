@@ -44,7 +44,8 @@ const Sharedwithme = (props) => {
         setnumshared(loadprojects.length);
       })
       .catch((err) => {
-        alert("Show all shared projects Failed");
+        //alert("Show all shared projects Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

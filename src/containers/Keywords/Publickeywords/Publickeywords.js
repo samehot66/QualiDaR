@@ -57,7 +57,8 @@ const Publickeywords = (props) => {
         props.onGetpubgroups(res.data);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
   };
 
@@ -104,7 +105,8 @@ const Publickeywords = (props) => {
         props.onGetsubgroups(res.data);
       })
       .catch((err) => {
-        alert("Show subscribe keyword groups Failed");
+        //alert("Show subscribe keyword groups Failed");
+        localStorage.clear();
       });
   };
 
@@ -142,7 +144,8 @@ const Publickeywords = (props) => {
         setallkeywords(keywords);
       })
       .catch((err) => {
-        alert("Show keywords Failed!");
+        //alert("Show keywords Failed!");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

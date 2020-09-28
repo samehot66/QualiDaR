@@ -103,7 +103,8 @@ const topics = (props) => {
         setkwgroup(keywordgroupinfo);
       })
       .catch((err) => {
-        alert("Show info Failed");
+        //alert("Show info Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -141,7 +142,8 @@ const topics = (props) => {
         setkwgroupinfo(keywordgroupinfo);
       })
       .catch((err) => {
-        alert("Show keyword(s) Failed");
+        //alert("Show keyword(s) Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -227,7 +229,8 @@ const topics = (props) => {
         setnuminuse(loadinuse.length);
       })
       .catch((err) => {
-        alert("Show sections failed")
+        //alert("Show sections failed")
+        localStorage.clear();
       });
     keywset.push(kw);
     //keywset.push("หลัก");

@@ -72,7 +72,8 @@ const Projects = (props) => {
       setnumexcel(loadexceldata.length);
       })
       .catch((err) => {
-        alert("Show data Failed");
+        //alert("Show data Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

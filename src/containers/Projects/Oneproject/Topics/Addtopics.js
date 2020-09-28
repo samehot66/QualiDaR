@@ -83,7 +83,8 @@ const addtopic = (props) => {
       .post(config.URL + "/api/topics", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
-        alert("Topic name has already exist!");
+        //alert("Topic name has already exist!");
+        localStorage.clear();
       });
     await onGetTopic();
   };
@@ -108,7 +109,8 @@ const addtopic = (props) => {
         props.onGettopic(res.data);
       })
       .catch((err) => {
-        alert("Show all topics Failed");
+        //alert("Show all topics Failed");
+        localStorage.clear();
       });
   };
 

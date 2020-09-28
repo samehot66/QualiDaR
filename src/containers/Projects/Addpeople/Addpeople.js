@@ -107,7 +107,8 @@ const addpeople = (props) => {
         setallpeople(people);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
   };
 
@@ -140,7 +141,8 @@ const addpeople = (props) => {
         setallpeople(people);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

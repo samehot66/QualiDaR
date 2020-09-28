@@ -104,7 +104,8 @@ const edittopic = (props) => {
         props.onGettopicafteredit(res.data);
       })
       .catch((err) => {
-        alert("Show all topics Failed");
+        //alert("Show all topics Failed");
+        localStorage.clear();
       });
   };
 

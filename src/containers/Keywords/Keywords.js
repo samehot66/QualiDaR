@@ -60,7 +60,8 @@ const Keywords = (props) => {
         setpublickeywords(pubkeywords);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -193,7 +194,8 @@ const Keywords = (props) => {
         setpublickeywords(pubkeywords);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
 
     await setsubscribekeywords(subscribekeywords);
@@ -229,7 +231,8 @@ const Keywords = (props) => {
         setprivatekeywords(yourkeywords);
       })
       .catch((err) => {
-        alert("Show your keywords Failed!");
+        //alert("Show your keywords Failed!");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

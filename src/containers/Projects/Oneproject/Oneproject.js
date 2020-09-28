@@ -99,7 +99,8 @@ const oneproject = (props) => {
         setnumpeople(people.length);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -170,7 +171,8 @@ const oneproject = (props) => {
         setnumpeople(people.length);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
   };
 

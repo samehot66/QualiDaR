@@ -137,7 +137,8 @@ const yourkeywords = (props) => {
         setallkeywords(keywords);
       })
       .catch((err) => {
-        alert("Show keywords Failed");
+        //alert("Show keywords Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -248,7 +249,8 @@ const yourkeywords = (props) => {
         setallkeywords(keywords);
       })
       .catch((err) => {
-        alert("Show keywords Failed");
+        //alert("Show keywords Failed");
+        localStorage.clear();
       });
   };
 
