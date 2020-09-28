@@ -442,7 +442,16 @@ const oneproject = (props) => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1 className="m-0 text-dark">{projectdetail[1]}
-              
+              <img
+                        style={{
+                          position: "relative",
+                          width: "20px",
+                          height: "20px",
+                          top: "0px",
+                          left: "10px",
+                        }}
+                        src={require("./Topics/icon/Csv.png")}
+                      />
               <NavLink
             to={
               "/projects/" +
@@ -452,9 +461,10 @@ const oneproject = (props) => {
               "/" +
               "excel"
             }
+            style={{fontSize:"20px", position:"relative",  left: "10px",}}
           >
-
-           Export to excel
+   
+         Export
           </NavLink>
               
               
