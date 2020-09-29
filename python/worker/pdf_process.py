@@ -47,6 +47,12 @@ def extract_text(pdf_path):
 def clean_text2(st):
     print("Start clean texts 2!")
     for i in range(len(st)):
+        if '\uF710' in st[i]:
+            st[i] = st[i].replace('\uF710', 'ั') 
+        if '\uF706' in st[i]:
+            st[i] = st[i].replace('\uF706', '้')   
+        if '\uF70E' in st[i]:
+            st[i] = st[i].replace('\uF70E', '์')
         if '' in st[i]:
             st[i] = st[i].replace('', '่')
         if '' in st[i]:
@@ -220,6 +226,12 @@ def clean_text(st):
         #    st[i] = st[i].replace('\xef\x9c\x92', '\xe0\xb9\x87')
         # if '\xef\x9c\x8b' in st[i]:
         #    st[i] = st[i].replace('\xef\x9c\x8b', '\xe0\xb9\x89')
+        if '\uF710' in st[i]:
+            st[i] = st[i].replace('\uF710', 'ั') 
+        if '\uF706' in st[i]:
+            st[i] = st[i].replace('\uF706', '้')   
+        if '\uF70E' in st[i]:
+            st[i] = st[i].replace('\uF70E', '์')
         if '' in st[i]:
             st[i] = st[i].replace('', '่')
         if 'ำ' in st[i]:
