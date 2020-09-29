@@ -48,9 +48,9 @@ def clean_text2(st):
     print("Start clean texts 2!")
     for i in range(len(st)):
         if '\uF710' in st[i]:
-            st[i] = st[i].replace('\uF710', 'ั') 
+            st[i] = st[i].replace('\uF710', 'ั')
         if '\uF706' in st[i]:
-            st[i] = st[i].replace('\uF706', '้')   
+            st[i] = st[i].replace('\uF706', '้')
         if '\uF70E' in st[i]:
             st[i] = st[i].replace('\uF70E', '์')
         if '' in st[i]:
@@ -227,9 +227,9 @@ def clean_text(st):
         # if '\xef\x9c\x8b' in st[i]:
         #    st[i] = st[i].replace('\xef\x9c\x8b', '\xe0\xb9\x89')
         if '\uF710' in st[i]:
-            st[i] = st[i].replace('\uF710', 'ั') 
+            st[i] = st[i].replace('\uF710', 'ั')
         if '\uF706' in st[i]:
-            st[i] = st[i].replace('\uF706', '้')   
+            st[i] = st[i].replace('\uF706', '้')
         if '\uF70E' in st[i]:
             st[i] = st[i].replace('\uF70E', '์')
         if '' in st[i]:
@@ -275,9 +275,8 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                 keyword = item['keywordtext']
                 kid = item['kid']
                 #print(f'keyword {keyword}')
-                mySql_select_query = 'SELECT pdf_texts.pdftextid, pdf_texts.page_number, pdf_texts.text FROM pdf_texts JOIN pdffiles ON pdffiles.pdfid = ' + \
-                    str(pdfid) + ' JOIN projects ON projects.pid = ' + \
-                    str(pid) + ' WHERE pdf_texts.text LIKE "%' + keyword + '%";'
+                mySql_select_query = 'SELECT pdf_texts.pdftextid, pdf_texts.page_number, pdf_texts.text FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid JOIN pdf_texts ON pdf_texts.pdfid = pdffiles.pdfid WHERE topic_pdffiles.tid = ' + \
+                    str(tid) + ';'
                 cursor.execute(mySql_select_query)
                 for (pdftextid, page_number, text) in cursor:
                     j = '{"kid": "' + str(kid) + '", "keyword": "' + str(keyword) + '", "pdftextid": "' + str(
@@ -368,12 +367,14 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                                                          user='root',
                                                          password='Decade65*')
                     cursor = connection.cursor()
-                    
-                    mySql_select_query2 = 'SELECT phrases.phraseid, phrases.text FROM phrases WHERE kid = ' + str(kid) + ' AND text = "' + str(text[startIndex:endIndex]) + '";'
+
+                    mySql_select_query2 = 'SELECT phrases.phraseid, phrases.text FROM phrases WHERE kid = ' + \
+                        str(kid) + ' AND text = "' + \
+                        str(text[startIndex:endIndex]) + '";'
                     cursor.execute(mySql_select_query2)
                     for (phraseid, text) in cursor:
-                        if(phraseid!=None and text!=None):
-                            flag=True
+                        if(phraseid != None and text != None):
+                            flag = True
                         #print(f"{str(v)}, {pdftextid}, {page_number}, {text}")
 
                     cursor.close()
@@ -387,7 +388,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                         cursor.close()
                         connection.close()
                         print("MySQL connection is closed")
-                if(flag==True):
+                if(flag == True):
                     continue
                 try:
                     connection = mysql.connector.connect(host='localhost',
