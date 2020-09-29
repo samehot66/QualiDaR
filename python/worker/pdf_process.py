@@ -45,6 +45,74 @@ def extract_text(pdf_path):
 def clean_text2(st):
     print("Start clean texts 2!")
     for i in range(len(st)):
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if 'า' + '่' in st[i]:
+            st[i] = st[i].replace('า' + '่', 'ื' + '่' + 'อ')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '็')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', 'ิ')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '์')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', 'ี')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '์')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '้')
         if 'า' + 'า' in st[i]:
             st[i] = st[i].replace('า' + 'า', 'ำ')
         if ' ' + 'า' in st[i]:
@@ -149,6 +217,8 @@ def clean_text(st):
         #    st[i] = st[i].replace('\xef\x9c\x92', '\xe0\xb9\x87')
         #if '\xef\x9c\x8b' in st[i]:
         #    st[i] = st[i].replace('\xef\x9c\x8b', '\xe0\xb9\x89')
+        if '' in st[i]:
+            st[i] = st[i].replace('', '่')
         if 'ำ' in st[i]:
             st[i] = st[i].replace('ำ', 'า')
         #if '�' + 'า' in st[i]:
@@ -261,7 +331,6 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                         tempStart = startIndex
                         tempEnd = endIndex
                     iterate = iterate + 1
-                    print('sasad')
                 print(f'keyword {keyword}, page {page}: {text[startIndex:endIndex]}')
                 tempJS = '{"start": ' + str(startIndex) + ', "end": ' + str(endIndex) + '}'
                 tempJS = tempJS.replace("'", '"')
@@ -276,12 +345,14 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                                         user='root',
                                         password='Decade65*')
                     cursor = connection.cursor()
-                    if(str(text[startIndex:endIndex])!='' or str(text[startIndex:endIndex])!=None or str(text[startIndex:endIndex])!=' '):
-                        mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + str(text[startIndex:endIndex]) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
-                        #print(mySql_insert_query)
-                        cursor.execute(mySql_insert_query)
-                        connection.commit()
-                        #print(cursor.rowcount, "Record inserted successfully into Laptop table")
+                    if(len(str(text[startIndex:endIndex]))>190):
+                        if(str(text[startIndex:endIndex])!='' or str(text[startIndex:endIndex])!=None or str(text[startIndex:endIndex])!=' '):
+                            insertText = str(text[startIndex:endIndex])
+                            mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(kindex) + ', "' + insertText + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
+                            #print(mySql_insert_query)
+                            cursor.execute(mySql_insert_query)
+                            connection.commit()
+                            #print(cursor.rowcount, "Record inserted successfully into Laptop table")
                     
                     cursor.close()
                 except mysql.connector.Error as error:
