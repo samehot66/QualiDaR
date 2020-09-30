@@ -370,7 +370,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
 
                     mySql_select_query2 = 'SELECT phrases.phraseid, phrases.text FROM phrases WHERE kid = ' + \
                         str(kid) + ' AND text = "' + \
-                        str(text[startIndex:endIndex]) + '";'
+                        str(text[startIndex:endIndex]) + '" AND phrases.tid = ' + str(tid) + ';'
                     cursor.execute(mySql_select_query2)
                     for (phraseid, text) in cursor:
                         if(phraseid != None and text != None):
