@@ -43,6 +43,8 @@ db.keywordgroup_topics = require('../models/keywordgroup_topics.js')(sequelize, 
 //-------------------
 db.topic.hasMany(db.keywordgroup_topics, {as: 'topic_group',foreignKey: 'tid', sourceKey: 'tid'})
 db.keywordgroup_topics.belongsTo(db.topic, {as: 'topic_group',foreignKey: 'tid', sourceKey: 'tid'})
+db.user.hasMany(db.keywordgroup_topics, {as: 'add',foreignKey: 'uid', sourceKey: 'uid'})
+db.keywordgroup_topics.belongsTo(db.user, {as: 'add',foreignKey: 'uid', sourceKey: 'uid'})
 db.keyword_group.hasMany(db.keywordgroup_topics, {as: 'keywordgroup',foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
 db.keywordgroup_topics.belongsTo(db.keyword_group, {as: 'keywordgroup',foreignKey: 'keywordgroupsid', sourceKey: 'keywordgroupsid'})
 db.topic.belongsToMany(db.keyword_group, {through: db.keywordgroup_topics});

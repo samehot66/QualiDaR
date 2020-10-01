@@ -90,6 +90,32 @@ router.get('/usergroups', (req, res)=>{
   })
 })
 
+router.get('/usergroups/topic', (req, res)=>{
+  /*User.findAll({
+    attributes: ['uid', 'email'],
+    where: {uid: req.query.uid},
+    include: [{
+      model: Keywordgroup,
+      attributes: ['keywordgroupsid', 'groupname'],
+      where: { tid: {[Op.not]: req.query.tid} }
+    },{
+      model: Subscribe,
+      include: [{
+        model: Keywordgroup,
+        attributes: ['keywordgroupsid', 'groupname'],
+        where: { tid: {[Op.not]: req.query.tid} }
+      }]
+    }]
+  })*/
+  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') AND users.uid = ' + req.query.uid + ' UNION SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname AS email FROM keywordgroups JOIN subscribes ON subscribes.keywordgroupsid = keywordgroups.keywordgroupsid JOIN keywordgroup_topics ON keywordgroups.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') AND subscribes.uid = ' + req.query.uid + ';')
+  .then((data)=>{
+    res.status(200).send(data[0])
+  }).catch((err)=>{
+    console.log(err)
+    res.status(500).send(err)
+  })
+})
+
 router.get('/groups', (req, res)=>{
   db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, users.email FROM keywordgroups JOIN users ON keywordgroups.uid = users.uid && keywordgroups.keywordgroupsid IN (SELECT subscribes.keywordgroupsid FROM subscribes WHERE subscribes.uid = " + req.query.uid + " ) WHERE keywordgroups.shared = 1 ORDER BY keywordgroups.groupname ASC;" , { type: QueryTypes.SELECT })
   .then((data)=>{
@@ -312,7 +338,8 @@ router.post('/topic', async (req, res)=>{
             keywordgroupsid: req.body.keywordgroupsid,
             tid: req.body.tid,
             topicTid: req.body.tid,
-            keywordgroupKeywordgroupsid: req.body.keywordgroupsid
+            keywordgroupKeywordgroupsid: req.body.keywordgroupsid,
+            uid: req.body.uid
           }).then((data)=>{
             return res.status(200).send(data)
           }).catch((err)=>{
