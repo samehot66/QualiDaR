@@ -614,7 +614,7 @@ const topics = (props) => {
                           ></i>
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -665,7 +665,7 @@ const topics = (props) => {
                           File:{" "}
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -739,7 +739,7 @@ const topics = (props) => {
                           ></i>
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -787,7 +787,7 @@ const topics = (props) => {
                           File:{" "}
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +

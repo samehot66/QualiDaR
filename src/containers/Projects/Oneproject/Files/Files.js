@@ -62,7 +62,7 @@ const file = (props) => {
       <td>
         <i className="fa fa-fw  fa-file-pdf" style={{ color: "#007bff" }}></i>
         <a
-          href={"./upload/" + props.webid + "/" + props.filename}
+          href={"/upload/" + props.webid + "/" + props.filename}
           target="_blank"
         >
           {props.filename}
