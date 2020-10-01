@@ -108,11 +108,13 @@ router.delete('', (req, res) =>{
   }).then((data)=>{
     if(data){
       Pdffiles.findOne({
-        pdfid: req.query.pdfid
+        where: {pdfid: req.query.pdfid}
       }).then((data)=>{
         try{
+          console.log('uri', data.dataValues.uri)
           fs.unlinkSync(data.dataValues.uri)
         }catch(err){
+          console.log('error', err)
           return res.status(500).send(err)
         }
       })

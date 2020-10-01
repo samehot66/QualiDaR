@@ -38,7 +38,7 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {

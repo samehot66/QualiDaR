@@ -28,7 +28,7 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/files/topic", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -105,7 +105,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/files/topic", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Add files Failed");
@@ -132,7 +132,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/files", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           if (res.data[index].pdffile.done) {
@@ -165,7 +165,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/files/topic", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {
 
         for (const index in res.data.pdffiles) {
@@ -199,7 +199,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .delete(config.URL + "/api/files/topic", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Remove files Failed");

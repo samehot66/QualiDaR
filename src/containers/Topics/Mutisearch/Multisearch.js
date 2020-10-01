@@ -29,7 +29,7 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/topic/keywords", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -114,7 +114,7 @@ const Setfile = (props) => {
     // };
   
     // await axios
-    //   .get(config.URL + "/api/phrases/multi", data, axiosConfig)
+    //   .get(process.env.REACT_APP_URL + "/api/phrases/multi", data, axiosConfig)
     //   .then((res) => {
     // await props.onGetphrasemulti(res.data)
     //   })

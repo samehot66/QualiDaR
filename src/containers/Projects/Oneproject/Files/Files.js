@@ -29,7 +29,7 @@ const file = (props) => {
       },
     };
    
-    await axios.delete(config.URL + '/api/files', data, axiosConfig)
+    await axios.delete(process.env.REACT_APP_URL + '/api/files', data, axiosConfig)
     await onGetfiles();
     closeDeleteModal();
   };
@@ -48,7 +48,7 @@ const file = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/files", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig)
       .then((res) => {
         props.onGetfiles(res.data);
       })
@@ -78,7 +78,7 @@ const file = (props) => {
       <td>{props.size} KB</td>
 
       <td>
-        {props.owner == localStorage.getItem("email") ? (
+        {props.owner == localStorage.getItem("email") && props.progress ? (
           <i
             id={props.pdfid}
             key={props.pdfid}

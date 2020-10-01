@@ -34,7 +34,7 @@ class authentication extends Component {
       mode: "cors",
       cache: "default",
     };
-    fetch(config.URL + "/api/auth/google", options)
+    fetch(process.env.REACT_APP_URL + "/api/auth/google", options)
       .then((r) => {
         const token = r.headers.get("x-auth-token");
         r.json().then((user) => {
@@ -86,7 +86,7 @@ class authentication extends Component {
         </div>
         <div className={classes.Lets}>Let's start your analysis...</div>
         <GoogleLogin
-          clientId={config.GOOGLE_CLIENT_ID}
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           buttonText="Login"
           scope="profile email"
           onSuccess={this.googleResponse}

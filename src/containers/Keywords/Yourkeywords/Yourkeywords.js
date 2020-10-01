@@ -49,7 +49,7 @@ const yourkeywords = (props) => {
     };
 
     axios
-      .delete(config.URL + "/api/keywords/subscribe", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/keywords/subscribe", data, axiosConfig)
       .then((res) => {
         onGetyourgroups();
       })
@@ -74,7 +74,7 @@ const yourkeywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/mygroups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/mygroups", data, axiosConfig)
       .then((res) => {
         props.onGetyourgroups(res.data);
       })
@@ -123,7 +123,7 @@ const yourkeywords = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/keywords/private", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/private", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -213,7 +213,7 @@ const yourkeywords = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/keywords/private", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/keywords/private", data, axiosConfig)
       .then((res) => {
         onGetKeywords();
       })
@@ -238,7 +238,7 @@ const yourkeywords = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/keywords/private", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/private", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           keywords.push({
@@ -314,7 +314,7 @@ const yourkeywords = (props) => {
     };
 
     axios
-      .delete(config.URL + "/api/keywords", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {
         onGetKeywords();
       })

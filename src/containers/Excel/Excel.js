@@ -26,7 +26,7 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig)
       .then((res) => {
         if (res.data.status == true) {
           setcheckaccess(true);
@@ -53,7 +53,7 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
+      .get(process.env.REACT_APP_URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
       .then((res) => {
         for (const index in res.data) {
        

@@ -29,7 +29,7 @@ const Setkeyword = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/usergroups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/usergroups", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -72,7 +72,7 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Add keyword group Failed");
@@ -98,7 +98,7 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/usergroups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/usergroups", data, axiosConfig)
       .then((res) => {
         for (const index in res.data[0].keywordgroups) {
           addkeywordgroup.push({
@@ -138,7 +138,7 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {
         for (const index in res.data.keywordgroups) {
           addkeywordgroupinuse.push({
@@ -172,7 +172,7 @@ const Setkeyword = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/topic", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -210,7 +210,7 @@ const Setkeyword = (props) => {
     };
 console.log(data)
     await axios
-      .delete(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Remove keyword group Failed");

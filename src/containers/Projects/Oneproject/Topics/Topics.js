@@ -114,7 +114,7 @@ const classes = useStyles();
       },
     };
 
-    await axios.put(config.URL + "/api/topics/finish", data, axiosConfig).then((res) => {
+    await axios.put(process.env.REACT_APP_URL + "/api/topics/finish", data, axiosConfig).then((res) => {
       setdone(true);
     })
     .catch((err) => {
@@ -157,7 +157,7 @@ const classes = useStyles();
       },
     };
 
-    await axios.delete(config.URL + '/api/topics', data, axiosConfig)
+    await axios.delete(process.env.REACT_APP_URL + '/api/topics', data, axiosConfig)
     await onGettopics();
     closeDeleteModal();
   };
@@ -176,7 +176,7 @@ const classes = useStyles();
       },
     };
     await axios
-      .get(config.URL + "/api/topics", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {
         props.onGettopics(res.data);
       })
@@ -240,7 +240,7 @@ const classes = useStyles();
           data-placement="top"
           title={"Edit"}
         ></i>
-        {props.owner == localStorage.getItem("email") ? (
+        {props.owner == localStorage.getItem("email") && done ? (
           <i
             className="fa fa-fw fa-trash"
             style={{ fontSize: "18px" }}

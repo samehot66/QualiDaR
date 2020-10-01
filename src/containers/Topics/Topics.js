@@ -80,7 +80,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics/detail", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/topics/detail", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -127,7 +127,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/keywords/topic/keywords", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -166,7 +166,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig, { cancelToken: source.token,
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig, { cancelToken: source.token,
       })
       .then((res) => {
        setcheckaccess(res.data.status);
@@ -197,7 +197,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/phrases", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/phrases", data, axiosConfig)
       .then((res) => {
         console.log(res.data)
         for (const index in res.data) {
@@ -251,7 +251,7 @@ const topics = (props) => {
         "Content-Type": "application/json",
       },
     };
-    await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+    await axios.put(process.env.REACT_APP_URL + "/api/phrases/status", data, axiosConfig);
 
     var x = [...paragraphall];
 
@@ -277,7 +277,7 @@ const topics = (props) => {
         "Content-Type": "application/json",
       },
     };
-   await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+   await axios.put(process.env.REACT_APP_URL + "/api/phrases/status", data, axiosConfig);
 
     var x = [...paragraphinuse];
 
@@ -333,7 +333,7 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    await axios.delete(process.env.REACT_APP_URL + '/api/phrases/delete', data, axiosConfig)
     .then((res) => {
     
     alert("Delete Section ID: ["+phraseid+"] Successful.")
@@ -363,7 +363,7 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
+    await axios.delete(process.env.REACT_APP_URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
     
       alert("Delete Section ID:"+phraseid+" Successful.")
       })

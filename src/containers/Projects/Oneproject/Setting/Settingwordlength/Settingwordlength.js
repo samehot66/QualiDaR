@@ -12,13 +12,13 @@ const addtopic = (props) => {
       elementLabel: "How long of text you want to read?",
       elementConfig: {
         type: "number",
-        placeholder: "Input text length for each such as 200",
+        placeholder: "Input text length for each such as 500 letters",
       },
-      value: "",
+      value: 400,
       validation: {
         required: true,
-        minLength: 200,
-        maxLength: 500,
+        minLength: 500,
+        maxLength: 1000,
       },
       valid: false,
       error: "",

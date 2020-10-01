@@ -46,7 +46,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -102,7 +102,7 @@ const Keywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/groups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           subscribekeywords.push({
@@ -135,7 +135,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/groups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -181,7 +181,7 @@ const Keywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           pubkeywords.push({
@@ -217,7 +217,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/mygroups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/mygroups", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {

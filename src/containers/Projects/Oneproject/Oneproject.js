@@ -75,7 +75,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -134,7 +134,7 @@ const oneproject = (props) => {
     };
 
     await axios
-      .delete(config.URL + "/api/projects/people", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         alert("Delete Failed");
@@ -158,7 +158,7 @@ const oneproject = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {
         for (const index in res.data.users) {
           people.push({
@@ -190,7 +190,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig)
       .then((res) => {
         if (res.data.status == true) {
           setcheckaccess(true);
@@ -217,7 +217,7 @@ const oneproject = (props) => {
     };
     axios
       .get(
-        config.URL + "/api/projects/" + props.match.params.id,
+        process.env.REACT_APP_URL + "/api/projects/" + props.match.params.id,
         data,
         axiosConfig,
         { cancelToken: source.token }
@@ -250,7 +250,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -291,7 +291,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -355,7 +355,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -392,7 +392,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           loadtopics.push({

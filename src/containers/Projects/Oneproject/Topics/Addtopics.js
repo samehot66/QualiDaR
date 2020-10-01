@@ -80,7 +80,7 @@ const addtopic = (props) => {
       },
     };
     await axios
-      .post(config.URL + "/api/topics", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         //alert("Topic name has already exist!");
@@ -104,7 +104,7 @@ const addtopic = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/topics", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {
         props.onGettopic(res.data);
       })

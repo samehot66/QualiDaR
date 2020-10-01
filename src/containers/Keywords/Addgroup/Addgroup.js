@@ -95,7 +95,7 @@ const addgroup = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/keywords", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         alert("Create failed");
@@ -117,7 +117,7 @@ const addgroup = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/mygroups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/mygroups", data, axiosConfig)
       .then((res) => {
         props.onGetyourgroups(res.data);
       })

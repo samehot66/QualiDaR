@@ -80,7 +80,7 @@ const edittopic = (props) => {
       },
     };
 
-    await axios.put(config.URL + "/api/topics", data, axiosConfig);
+    await axios.put(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig);
     await onGetTopic();
   };
 
@@ -99,7 +99,7 @@ const edittopic = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/topics", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {
         props.onGettopicafteredit(res.data);
       })

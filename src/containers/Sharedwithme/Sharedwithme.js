@@ -30,7 +30,7 @@ const Sharedwithme = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/projects/shared", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects/shared", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
