@@ -198,9 +198,9 @@ router.post('/upload', async (req, res, next) => {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
-    console.log(getDirectories('../public/upload/'))
+    console.log(getDirectories('../build/upload/'))
 
-    var dir = `../public/upload/${req.body.pid}`;
+    var dir = `../build/upload/${req.body.pid}`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir, {recursive: true}, err => { console.log(err) });
@@ -210,7 +210,7 @@ router.post('/upload', async (req, res, next) => {
        return res.status(400).send({ message: 'File is already exist in this project!' })
     }
 
-    file.mv(`../public/upload/${req.body.pid}/${file.name}`,async (err) => {
+    file.mv(`../build/upload/${req.body.pid}/${file.name}`,async (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
@@ -222,7 +222,7 @@ router.post('/upload', async (req, res, next) => {
 
       var uploadPDF = await Pdffiles.create({
         pdfname: file.name,
-        uri: `../public/upload/${req.body.pid}/${file.name}`,
+        uri: `../build/upload/${req.body.pid}/${file.name}`,
         description: req.body.description,
         size: file.size,
         done: false
@@ -285,7 +285,7 @@ router.post('/upload', async (req, res, next) => {
 
   createTask = async (pid, fileName, pdfid) => {
     var promise = await axios.post("http://localhost:5000/task", {
-        file: `../public/upload/${pid}/${fileName}`,
+        file: `../build/upload/${pid}/${fileName}`,
         pdfid: pdfid
     }).then((res) => {
         console.log(res)
