@@ -13,6 +13,7 @@ const ProjectRole = db.project_role
 const Phrases = db.phrase
 const Topic = db.topic
 const TopicPdffiles = db.topic_pdffiles
+const { Op } = require("sequelize");
 
 router.get('', (req, res) => {
   ProjectPdf.findAll({
@@ -36,6 +37,16 @@ router.get('', (req, res) => {
     console.log(data)
     res.status(200).send(data)
   }).catch((err) => {
+    console.log(err)
+    res.status(500).send(err)
+  })
+})
+
+router.get('/topic/except', (req, res)=>{
+  db.sequelize.query('SELECT pdffiles.pdfid, pdffiles.pdfname FROM pdffiles JOIN project_pdffiles ON pdffiles.pdfid = project_pdffiles.pdfid JOIN projects ON projects.pid = ' + req.query.pid + ' WHERE pdffiles.pdfid NOT IN (SELECT pdffiles.pdfid FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid WHERE topic_pdffiles.tid = ' + req.query.tid + ');')
+  .then((data)=>{
+    res.status(200).send(data[0])
+  }).catch((err)=>{
     console.log(err)
     res.status(500).send(err)
   })
