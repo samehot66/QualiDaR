@@ -25,10 +25,6 @@ module.exports = (sequelize, Sequelize) => {
     },
     description: {
       type: Sequelize.STRING
-    },
-    flask: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
     }
 	});
 	
