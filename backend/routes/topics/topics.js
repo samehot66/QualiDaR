@@ -48,6 +48,18 @@ router.get('', (req, res) =>{
     })*/
 })
 
+router.get('/numinuse', (req, res)=>{
+    Phrases.findAll({
+        attributes: [[db.sequelize.fn('COUNT', 'phraseid'), 'sectionCount']],
+        where: {tid: req.query.tid}
+    }).then((data)=>{
+        res.status(200).send(data)
+    }).catch((err)=>{
+        console.log(err)
+        res.status(500).send(err)
+    })
+})
+
 router.get('/projects/checkaccess', (req, res)=>{
     Topic.findOne({
         where: { tid: req.query.tid, pid: req.query.pid, uid: req.query.uid }

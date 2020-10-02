@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
     status: {
       type: Sequelize.ENUM("seen", "unseen"),
       defaultValue: "unseen"
+    },
+    sectionid: {
+      type: Sequelize.INTEGER
     }
 	});
 	
