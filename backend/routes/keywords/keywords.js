@@ -107,7 +107,7 @@ router.get('/usergroups/topic', (req, res)=>{
       }]
     }]
   })*/
-  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = users.uid WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
+  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, "private" AS "type" FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname, "public" AS "type" FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = users.uid WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
   .then((data)=>{
     res.status(200).send(data[0])
   }).catch((err)=>{
