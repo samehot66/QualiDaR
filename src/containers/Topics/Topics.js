@@ -209,6 +209,7 @@ const topics = (props) => {
             pdfname: res.data[index].pdf_text.pdffile.pdfname,
             page: res.data[index].pdf_text.page_number,
             status: res.data[index].status,
+            sectionid: res.data[index].sectionid
           });}
         }
           else{
@@ -219,6 +220,7 @@ const topics = (props) => {
               pdfname: res.data[index].pdf_text.pdffile.pdfname,
               page: res.data[index].pdf_text.page_number,
               status: res.data[index].status,
+              sectionid: res.data[index].sectionid
             });
           }}
 
@@ -601,7 +603,7 @@ const topics = (props) => {
                       >
                         <h3 className="card-title">
                           {" "}
-                          Section ID: {p.phraseid}
+                          Section ID: {p.sectionid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -726,7 +728,7 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          Section ID: {p.phraseid}
+                          Section ID: {p.sectionid}
                         </h3>
                         <div className="card-tools">
                           <i

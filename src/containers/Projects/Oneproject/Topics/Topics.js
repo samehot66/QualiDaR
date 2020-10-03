@@ -73,6 +73,7 @@ const classes = useStyles();
   const handleReset = () => {
     setActiveStep(0);
   };
+  const [numinuse,setnuminuse] =useState(0);
   const [Deletemodal, setDeletemodal] = useState(false);
   const showDeleteModal = () => {
     setDeletemodal(true);
@@ -190,6 +191,39 @@ const classes = useStyles();
     //console.log(newState)
     props.onGettopics(newState);
   }
+
+  useEffect(() => {
+    let numinuse = 0;
+    let source = axios.CancelToken.source();
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        tid: props.tid,
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(process.env.REACT_APP_URL + "/api/topics/numinuse", data, axiosConfig, {
+        cancelToken: source.token,
+      })
+      .then((res) => {
+       numinuse = res.data[0].sectionCount;
+       setnuminuse(res.data[0].sectionCount);
+    
+      })
+      .catch((err) => {});
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+
+
   return (
     <tr>
       {done ? (
@@ -222,6 +256,7 @@ const classes = useStyles();
       ) : (
         <td style={{ color: "red" }}>Wait start/Extracting...</td>
       )}
+      <td>{numinuse}</td>
       <td>
           <i
             className="fa fa-fw fa-play"

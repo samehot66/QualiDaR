@@ -788,6 +788,7 @@ const oneproject = (props) => {
                         <tr>
                           <th>Topic name</th>
                           <th>Status</th>
+                          <th>Section(s)</th>
                           <th>Tools</th>
                           <th>Created by</th>
                           <th>Role</th>
@@ -807,6 +808,7 @@ const oneproject = (props) => {
                             tid={top.tid}
                             key={top.tid}
                             onGettopics={handlerGettopic}
+                            
                           />
                         ))}
                       </tbody>

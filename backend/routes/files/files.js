@@ -43,7 +43,7 @@ router.get('', (req, res) => {
 })
 
 router.get('/topic/except', (req, res)=>{
-  db.sequelize.query('SELECT pdffiles.pdfid, pdffiles.pdfname FROM pdffiles JOIN project_pdffiles ON pdffiles.pdfid = project_pdffiles.pdfid JOIN projects ON projects.pid = ' + req.query.pid + ' WHERE pdffiles.pdfid NOT IN (SELECT pdffiles.pdfid FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid WHERE topic_pdffiles.tid = ' + req.query.tid + ');')
+  db.sequelize.query('SELECT pdffiles.pdfid, pdffiles.pdfname, pdffiles.done FROM pdffiles JOIN project_pdffiles ON pdffiles.pdfid = project_pdffiles.pdfid JOIN projects ON projects.pid = ' + req.query.pid + ' WHERE pdffiles.pdfid NOT IN (SELECT pdffiles.pdfid FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid WHERE topic_pdffiles.tid = ' + req.query.tid + ');')
   .then((data)=>{
     res.status(200).send(data[0])
   }).catch((err)=>{
@@ -113,55 +113,79 @@ router.delete('/topic', (req, res) => {
   })
 })
 
-router.delete('', (req, res) =>{
-  ProjectRole.findOne({
-    where: { pid: req.query.pid, uid: req.query.uid, role: 'owner' }
+router.delete('', (req, res, next) =>{
+  var flag = true
+  TopicPdffiles.findAll({
+    where:{pdfid: req.query.pdfid},
+    include: [{
+      model: Topic,
+      as: 'topic_role'
+    }]
   }).then((data)=>{
     if(data){
-      Pdffiles.findOne({
-        where: {pdfid: req.query.pdfid}
+    data.forEach(element=>{
+      console.log(element.dataValues.topic_role.dataValues.done)
+      if(!element.dataValues.topic_role.dataValues.done){
+        flag = false
+      }
+    })}
+  }).then((data)=>{
+      if(flag){
+      ProjectRole.findOne({
+        where: { pid: req.query.pid, uid: req.query.uid, role: 'owner' }
       }).then((data)=>{
-        try{
-          console.log('uri', data.dataValues.uri)
-          fs.unlinkSync(data.dataValues.uri)
-        }catch(err){
-          console.log('error', err)
-          return res.status(500).send(err)
-        }
-      })
-      Pdffiles.destroy({
-        where: { pdfid: req.query.pdfid }
-      }).then((data)=>{
-        if(data==1){
-          PdfTexts.destroy({
-            where: { pdfid: null }
+        if(data){
+          Pdffiles.findOne({
+            where: {pdfid: req.query.pdfid}
           }).then((data)=>{
-            Phrases.destroy({
-              where: { pdftextid: null }
-            }).then((data)=>{
-              ProjectPdf.destroy({
+            try{
+              console.log('uri', data.dataValues.uri)
+              fs.unlinkSync(data.dataValues.uri)
+            }catch(err){
+              console.log('error', err)
+              return res.status(500).send(err)
+            }
+          })
+          Pdffiles.destroy({
+            where: { pdfid: req.query.pdfid }
+          }).then((data)=>{
+            if(data==1){
+              PdfTexts.destroy({
                 where: { pdfid: null }
               }).then((data)=>{
-                return res.status(200).send({ message: 'Delete file and remove related item complete!' })
+                Phrases.destroy({
+                  where: { pdftextid: null }
+                }).then((data)=>{
+                  ProjectPdf.destroy({
+                    where: { pdfid: null }
+                  }).then((data)=>{
+                    return res.status(200).send({ message: 'Delete file and remove related item complete!' })
+                  }).catch((err)=>{
+                    console.log(err)
+                    return res.status(500).send(err)
+                  })
+                }).catch((err)=>{
+                  console.log(err)
+                  return res.status(500).send(err)
+                })
               }).catch((err)=>{
                 console.log(err)
                 return res.status(500).send(err)
               })
-            }).catch((err)=>{
-              console.log(err)
-              return res.status(500).send(err)
-            })
+            }
           }).catch((err)=>{
             console.log(err)
             return res.status(500).send(err)
           })
+        }else{
+          return res.status(404).send({ message: 'Only owner of project can delete files!' })
         }
       }).catch((err)=>{
         console.log(err)
         return res.status(500).send(err)
       })
     }else{
-      return res.status(404).send({ message: 'Only owner of project can delete files!' })
+      return res.status(400).send({ message: 'Cannot delete finding phrases files!' })
     }
   }).catch((err)=>{
     console.log(err)
