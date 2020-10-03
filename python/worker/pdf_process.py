@@ -310,7 +310,9 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
         for item in query_result:
             iterate = 0
             page = item['page_number']
-            keyword = item['keyword']
+            if(keyword != item['keyword'] or keyword == None):
+                keyword = item['keyword']
+                sectionId = 1
             text = item['text']
             kid = item['kid']
             pdftextid = item['pdftextid']
@@ -399,14 +401,15 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                     if(len(str(text[startIndex:endIndex])) > 190):
                         if(str(text[startIndex:endIndex]) != '' or str(text[startIndex:endIndex]) != None or str(text[startIndex:endIndex]) != ' '):
                             insertText = str(text[startIndex:endIndex])
-                            mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid) VALUES (' + str(
-                                kindex) + ', "' + insertText + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ');'
+                            mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid, sectionid) VALUES (' + str(
+                                kindex) + ', "' + insertText + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ', ' + str(sectionId) + ');'
                             # print(mySql_insert_query)
                             cursor.execute(mySql_insert_query)
                             connection.commit()
                             #print(cursor.rowcount, "Record inserted successfully into Laptop table")
 
                     cursor.close()
+                    sectionId = sectionId + 1
                 except mysql.connector.Error as error:
                     print("Failed to insert record into phrases table {}".format(error))
                 finally:
