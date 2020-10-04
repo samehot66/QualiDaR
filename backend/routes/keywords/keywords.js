@@ -297,29 +297,33 @@ router.put('', (req, res)=>{
 })
 
 router.get('/public', (req, res)=>{
-  Keyword.findAll({
+  /*Keyword.findAll({
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid},
     include:[{
       model: Keywordgroup,
       where: { shared: "1"}
     }]
-  }).then((data)=>{
-        res.json(data)
+  })*/
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 1;")
+  .then((data)=>{
+        res.json(data[0])
     }).catch((err)=>{
         res.status(500).send(err)
     })
 })
 
 router.get('/private', (req, res)=>{
-  Keyword.findAll({
+  /*Keyword.findAll({
     attributes: ["kid", "keywordtext"],
     where: {keywordgroupsid: req.query.keywordgroupsid, uid: req.query.uid},
     include:[{
       model: Keywordgroup
     }]
-  }).then((data)=>{
-      res.json(data)
+  })*/
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 0;")
+  .then((data)=>{
+      res.json(data[0])
   }).catch((err)=>{
       res.status(500).send(err)
   })
