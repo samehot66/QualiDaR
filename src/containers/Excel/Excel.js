@@ -11,6 +11,7 @@ const Projects = (props) => {
   const [isauth, setisauth] = useState(localStorage.getItem("isAuth"));
   const [checkaccess, setcheckaccess] = useState(false);
   const [exceldata,setexceldata] = useState([]);
+  const [numexcel,setnumexcel] =useState(0);
   useEffect(() => {
     let data = {
       params: {
@@ -25,7 +26,7 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig)
       .then((res) => {
         if (res.data.status == true) {
           setcheckaccess(true);
@@ -52,10 +53,11 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
+      .get(process.env.REACT_APP_URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
       .then((res) => {
+        console.log(res.data)
         for (const index in res.data) {
-       
+  
           loadexceldata.push({
  phraseid: res.data[index].phraseid,
                      file: res.data[index].pdfname,
@@ -68,9 +70,11 @@ const Projects = (props) => {
           });
         }
       setexceldata(loadexceldata);
+      setnumexcel(loadexceldata.length);
       })
       .catch((err) => {
-        alert("Show data Failed");
+        //alert("Show data Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -84,12 +88,12 @@ const Projects = (props) => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0 text-dark">Export project</h1> <ReactHTMLTableToExcel  
+              <h1 className="m-0 text-dark">Export project  <ReactHTMLTableToExcel  
                                                 className="btn btn-info"  
                                                 table="emp"  
                                                 filename={props.match.params.pname + "_project"} 
                                                 sheet="Project"  
-                                                buttonText="Export excel" /> 
+                                                buttonText="Download" /> </h1>
             </div>
             <div className="col-sm-6">
             <ol className="breadcrumb float-sm-right">
@@ -106,7 +110,7 @@ const Projects = (props) => {
                   </NavLink>
                 </li>
                 <li className="breadcrumb-item active">
-                  
+
                   {props.match.params.pname} Export
                 </li>
               </ol>
@@ -122,7 +126,7 @@ const Projects = (props) => {
               style={{ padding: "0.2rem 1rem", backgroundColor: "#66bfed" }}
             >
               <h3 className="card-title" style={{ color: "white" }}>
-              {props.match.params.pname} 
+              {props.match.params.pname} project has {numexcel} in use section(s)
               </h3>
               <div className="card-tools">
               
@@ -136,8 +140,9 @@ const Projects = (props) => {
                     >
                       <thead>
                         <tr> 
-                          <th >File</th>
-                         <th >Page</th>
+                          <th>No.</th>
+                          <th>File</th>
+                         <th>Page</th>
                          <th>Topic name</th>
                          <th>Keyword group name</th>
                           <th>Keyword</th>
@@ -145,8 +150,9 @@ const Projects = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                      {exceldata.map((data) => (
+                      {exceldata.map((data,index) => (
                          <tr key={data.phraseid}>     
+                         <td>{index+1}</td>
                          <td>{data.file}</td> 
                        <td>{data.page}</td>       
                         <td>{data.tname}</td>
@@ -157,6 +163,7 @@ const Projects = (props) => {
                         ))}
 
                      {/* <tr>     
+                     <td>No.</td>
                          <td>BTS.pdf</td> 
                        <td>44</td>       
                         <td>Social</td>

@@ -95,7 +95,7 @@ const editProj = (props) => {
         "Content-Type": "application/json",
       },
     };
-    await axios.put(config.URL + "/api/projects", data, axiosConfig);
+    await axios.put(process.env.REACT_APP_URL + "/api/projects", data, axiosConfig);
     await onGetprojects();
   };
 
@@ -114,12 +114,13 @@ const editProj = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/projects", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects", data, axiosConfig)
       .then((res) => {
         props.onGetprojects(res.data);
       })
       .catch((err) => {
-        alert("Show all projects Failed");
+        //alert("Show all projects Failed");
+        localStorage.clear();
       });
   };
 

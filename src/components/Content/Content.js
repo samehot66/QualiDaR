@@ -17,6 +17,7 @@ const Content = (props) => {
       style={{ minHeight: "700px", height: "700px" }}
     >
       <Switch>
+      <Route path="/" exact component={Authentication} />
        {/* <Route path="/dashboard" component={Dashboard} /> */}
         <Route path="/keywords" component={Keywords} />
         <Route path="/projects/:pname/:id/:tname/:tid" component={Topics} />
@@ -24,7 +25,7 @@ const Content = (props) => {
         <Route path="/projects/:pname/:id" component={Oneproject} />
         <Route path="/projects" component={Projects} />
         <Route path="/sharedwithme" component={Sharedwithme} />       
-         <Route path="/" exact component={Authentication} />
+         
         <Route render={() => <Errorpage></Errorpage>} />
       </Switch>
     </div>

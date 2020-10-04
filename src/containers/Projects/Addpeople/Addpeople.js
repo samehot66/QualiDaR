@@ -71,7 +71,7 @@ const addpeople = (props) => {
       },
     };
     await axios
-      .post(config.URL + "/api/projects/people/add", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/projects/people/add", data, axiosConfig)
       .then((res) => {
         alert("Add Successed");
       })
@@ -96,7 +96,7 @@ const addpeople = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {
         for (const index in res.data.users) {
           people.push({
@@ -107,7 +107,8 @@ const addpeople = (props) => {
         setallpeople(people);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
   };
 
@@ -127,7 +128,7 @@ const addpeople = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -140,7 +141,8 @@ const addpeople = (props) => {
         setallpeople(people);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -218,7 +220,7 @@ const addpeople = (props) => {
     };
 
     await axios
-      .delete(config.URL + "/api/projects/people", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {
         alert("Delete Successful");
       })

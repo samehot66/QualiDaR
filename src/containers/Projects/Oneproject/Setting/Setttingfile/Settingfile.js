@@ -17,7 +17,7 @@ const Setfile = (props) => {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
-
+        tid:props.tid,
         pid: props.pid,
       },
     };
@@ -28,15 +28,18 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files/topic/except", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
-        for (const index in res.data) {
-          if (res.data[index].pdffile.done) {
+    
+       for (const index in res.data) {
+        if (res.data[index].done) {
             allfiles.push({
-              pdfid: res.data[index].id,
-              filename: res.data[index].pdffile.pdfname,
+        
+              pdfid: res.data[index].pdfid,
+             
+              filename: res.data[index].pdfname,
             });
           }
         }
@@ -67,7 +70,7 @@ const Setfile = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/files/topic", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -105,7 +108,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/files/topic", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Add files Failed");
@@ -121,7 +124,7 @@ const Setfile = (props) => {
       params: {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
-
+        tid:props.tid,
         pid: props.pid,
       },
     };
@@ -132,15 +135,18 @@ const Setfile = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/files", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files/topic/except", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
-          if (res.data[index].pdffile.done) {
-          allfiles.push({
-            pdfid: res.data[index].id,
-            filename: res.data[index].pdffile.pdfname,
-          });}
-        }
+          if (res.data[index].done) {
+              allfiles.push({
+          
+                pdfid: res.data[index].pdfid,
+               
+                filename: res.data[index].pdfname,
+              });
+            }
+          }
         setfile(allfiles);
       })
       .catch((err) => {
@@ -165,7 +171,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/files/topic", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {
 
         for (const index in res.data.pdffiles) {
@@ -199,7 +205,7 @@ const Setfile = (props) => {
     };
 
     await axios
-      .delete(config.URL + "/api/files/topic", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Remove files Failed");

@@ -46,7 +46,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -60,7 +60,8 @@ const Keywords = (props) => {
         setpublickeywords(pubkeywords);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -101,7 +102,7 @@ const Keywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/groups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           subscribekeywords.push({
@@ -134,7 +135,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/groups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -180,7 +181,7 @@ const Keywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           pubkeywords.push({
@@ -193,7 +194,8 @@ const Keywords = (props) => {
         setpublickeywords(pubkeywords);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
 
     await setsubscribekeywords(subscribekeywords);
@@ -215,7 +217,7 @@ const Keywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/mygroups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/mygroups", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -229,7 +231,8 @@ const Keywords = (props) => {
         setprivatekeywords(yourkeywords);
       })
       .catch((err) => {
-        alert("Show your keywords Failed!");
+        //alert("Show your keywords Failed!");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
