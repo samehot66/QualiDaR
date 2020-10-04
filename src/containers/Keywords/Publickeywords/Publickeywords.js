@@ -28,7 +28,7 @@ const Publickeywords = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/keywords/groups", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig)
       .then((res) => {
         onGetpubgroups();
       })
@@ -52,12 +52,13 @@ const Publickeywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {
         props.onGetpubgroups(res.data);
       })
       .catch((err) => {
-        alert("Show public keyword groups Failed");
+        //alert("Show public keyword groups Failed");
+        localStorage.clear();
       });
   };
 
@@ -76,7 +77,7 @@ const Publickeywords = (props) => {
     };
 
     axios
-      .delete(config.URL + "/api/keywords/groups", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig)
       .then((res) => {
         onGetsubgroups();
       })
@@ -99,12 +100,13 @@ const Publickeywords = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/groups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/groups", data, axiosConfig)
       .then((res) => {
         props.onGetsubgroups(res.data);
       })
       .catch((err) => {
-        alert("Show subscribe keyword groups Failed");
+        //alert("Show subscribe keyword groups Failed");
+        localStorage.clear();
       });
   };
 
@@ -129,7 +131,7 @@ const Publickeywords = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/public", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/public", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -142,7 +144,8 @@ const Publickeywords = (props) => {
         setallkeywords(keywords);
       })
       .catch((err) => {
-        alert("Show keywords Failed!");
+        //alert("Show keywords Failed!");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

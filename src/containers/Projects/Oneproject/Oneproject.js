@@ -75,7 +75,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -99,7 +99,8 @@ const oneproject = (props) => {
         setnumpeople(people.length);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -133,7 +134,7 @@ const oneproject = (props) => {
     };
 
     await axios
-      .delete(config.URL + "/api/projects/people", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         alert("Delete Failed");
@@ -157,7 +158,7 @@ const oneproject = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/projects/people", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/people", data, axiosConfig)
       .then((res) => {
         for (const index in res.data.users) {
           people.push({
@@ -170,7 +171,8 @@ const oneproject = (props) => {
         setnumpeople(people.length);
       })
       .catch((err) => {
-        alert("Show people Failed");
+        //alert("Show people Failed");
+        localStorage.clear();
       });
   };
 
@@ -188,7 +190,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig)
       .then((res) => {
         if (res.data.status == true) {
           setcheckaccess(true);
@@ -215,7 +217,7 @@ const oneproject = (props) => {
     };
     axios
       .get(
-        config.URL + "/api/projects/" + props.match.params.id,
+        process.env.REACT_APP_URL + "/api/projects/" + props.match.params.id,
         data,
         axiosConfig,
         { cancelToken: source.token }
@@ -248,7 +250,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -289,7 +291,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/files", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -353,7 +355,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -390,7 +392,7 @@ const oneproject = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/topics", data, axiosConfig)
       .then((res) => {
         for (const index in res.data) {
           loadtopics.push({
@@ -440,7 +442,16 @@ const oneproject = (props) => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1 className="m-0 text-dark">{projectdetail[1]}
-              
+              <img
+                        style={{
+                          position: "relative",
+                          width: "20px",
+                          height: "20px",
+                          top: "0px",
+                          left: "10px",
+                        }}
+                        src={require("./Topics/icon/Csv.png")}
+                      />
               <NavLink
             to={
               "/projects/" +
@@ -450,9 +461,10 @@ const oneproject = (props) => {
               "/" +
               "excel"
             }
+            style={{fontSize:"20px", position:"relative",  left: "10px",}}
           >
-
-           Export to excel
+   
+         Export
           </NavLink>
               
               
@@ -776,6 +788,7 @@ const oneproject = (props) => {
                         <tr>
                           <th>Topic name</th>
                           <th>Status</th>
+                          <th>Section(s)</th>
                           <th>Tools</th>
                           <th>Created by</th>
                           <th>Role</th>
@@ -795,6 +808,7 @@ const oneproject = (props) => {
                             tid={top.tid}
                             key={top.tid}
                             onGettopics={handlerGettopic}
+                            
                           />
                         ))}
                       </tbody>

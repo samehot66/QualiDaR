@@ -19,7 +19,7 @@ const Setkeyword = (props) => {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
 
-        pid: props.pid,
+        tid: props.tid,
       },
     };
     let axiosConfig = {
@@ -29,23 +29,31 @@ const Setkeyword = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/usergroups", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/usergroups/topic", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
-        for (const index in res.data[0].keywordgroups) {
-          addkeywordgroup.push({
-            keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
-            groupname: res.data[0].keywordgroups[index].groupname,
+
+        for(const index in res.data)
+        {
+              addkeywordgroup.push({
+            keywordgroupsid: res.data[index].keywordgroupsid,
+            groupname: res.data[index].groupname,
           });
         }
-        for (const index in res.data[0].subscribes) {
-          addkeywordgroup.push({
-            keywordgroupsid:
-              res.data[0].subscribes[index].keywordgroup.keywordgroupsid,
-            groupname: res.data[0].subscribes[index].keywordgroup.groupname,
-          });
-        }
+        // for (const index in res.data[0].keywordgroups) {
+        //   addkeywordgroup.push({
+        //     keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
+        //     groupname: res.data[0].keywordgroups[index].groupname,
+        //   });
+        // }
+        // for (const index in res.data[0].subscribes) {
+        //   addkeywordgroup.push({
+        //     keywordgroupsid:
+        //       res.data[0].subscribes[index].keywordgroup.keywordgroupsid,
+        //     groupname: res.data[0].subscribes[index].keywordgroup.groupname,
+        //   });
+        // }
 
         setkeywordgroup(addkeywordgroup);
       })
@@ -72,7 +80,7 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .post(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .post(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Add keyword group Failed");
@@ -88,7 +96,7 @@ const Setkeyword = (props) => {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
 
-        pid: props.pid,
+        tid: props.pid,
       },
     };
     let axiosConfig = {
@@ -98,21 +106,29 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/usergroups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/usergroups/topic", data, axiosConfig)
       .then((res) => {
-        for (const index in res.data[0].keywordgroups) {
-          addkeywordgroup.push({
-            keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
-            groupname: res.data[0].keywordgroups[index].groupname,
+
+        for(const index in res.data)
+        {
+              addkeywordgroup.push({
+            keywordgroupsid: res.data[index].keywordgroupsid,
+            groupname: res.data[index].groupname,
           });
         }
-        for (const index in res.data[0].subscribes) {
-          addkeywordgroup.push({
-            keywordgroupsid:
-              res.data[0].subscribes[index].keywordgroup.keywordgroupsid,
-            groupname: res.data[0].subscribes[index].keywordgroup.groupname,
-          });
-        }
+        // for (const index in res.data[0].keywordgroups) {
+        //   addkeywordgroup.push({
+        //     keywordgroupsid: res.data[0].keywordgroups[index].keywordgroupsid,
+        //     groupname: res.data[0].keywordgroups[index].groupname,
+        //   });
+        // }
+        // for (const index in res.data[0].subscribes) {
+        //   addkeywordgroup.push({
+        //     keywordgroupsid:
+        //       res.data[0].subscribes[index].keywordgroup.keywordgroupsid,
+        //     groupname: res.data[0].subscribes[index].keywordgroup.groupname,
+        //   });
+        // }
 
         setkeywordgroup(addkeywordgroup);
       })
@@ -138,7 +154,7 @@ const Setkeyword = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {
         for (const index in res.data.keywordgroups) {
           addkeywordgroupinuse.push({
@@ -172,7 +188,7 @@ const Setkeyword = (props) => {
     };
 
     axios
-      .get(config.URL + "/api/keywords/topic", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -208,9 +224,9 @@ const Setkeyword = (props) => {
         "Content-Type": "application/json",
       },
     };
-console.log(data)
+
     await axios
-      .delete(config.URL + "/api/keywords/topic", data, axiosConfig)
+      .delete(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
         console.log("Remove keyword group Failed");

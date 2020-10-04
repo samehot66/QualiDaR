@@ -28,7 +28,7 @@ const FileUpload = (props) => {
     formData.append("access_token", localStorage.getItem("access_token"));
 
     try {
-      const res = await axios.post(config.URL + "/api/files/upload", formData, {
+      const res = await axios.post(process.env.REACT_APP_URL + "/api/files/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -77,12 +77,13 @@ const FileUpload = (props) => {
       },
     };
     await axios
-      .get(config.URL + "/api/files", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/files", data, axiosConfig)
       .then((res) => {
         props.onGetfiles(res.data);
       })
       .catch((err) => {
-        alert("Show all files Failed");
+        //alert("Show all files Failed");
+        localStorage.clear();
       });
   };
 

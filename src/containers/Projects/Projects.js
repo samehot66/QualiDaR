@@ -38,7 +38,7 @@ const Projects = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/projects", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -53,7 +53,8 @@ const Projects = (props) => {
         setnumproject(loadprojects.length);
       })
       .catch((err) => {
-        alert("Show all projects Failed");
+        //alert("Show all projects Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();

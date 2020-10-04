@@ -80,7 +80,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/topics/detail", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/topics/detail", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -103,7 +103,8 @@ const topics = (props) => {
         setkwgroup(keywordgroupinfo);
       })
       .catch((err) => {
-        alert("Show info Failed");
+        //alert("Show info Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -126,7 +127,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/keywords/topic/keywords", data, axiosConfig, {
+      .get(process.env.REACT_APP_URL + "/api/keywords/topic/keywords", data, axiosConfig, {
         cancelToken: source.token,
       })
       .then((res) => {
@@ -141,7 +142,8 @@ const topics = (props) => {
         setkwgroupinfo(keywordgroupinfo);
       })
       .catch((err) => {
-        alert("Show keyword(s) Failed");
+        //alert("Show keyword(s) Failed");
+        localStorage.clear();
       });
     return () => {
       source.cancel();
@@ -164,7 +166,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/projects/checkaccess", data, axiosConfig, { cancelToken: source.token,
+      .get(process.env.REACT_APP_URL + "/api/projects/checkaccess", data, axiosConfig, { cancelToken: source.token,
       })
       .then((res) => {
        setcheckaccess(res.data.status);
@@ -195,7 +197,7 @@ const topics = (props) => {
       },
     };
     axios
-      .get(config.URL + "/api/phrases", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/phrases", data, axiosConfig)
       .then((res) => {
         console.log(res.data)
         for (const index in res.data) {
@@ -207,6 +209,7 @@ const topics = (props) => {
             pdfname: res.data[index].pdf_text.pdffile.pdfname,
             page: res.data[index].pdf_text.page_number,
             status: res.data[index].status,
+            sectionid: res.data[index].sectionid
           });}
         }
           else{
@@ -217,6 +220,7 @@ const topics = (props) => {
               pdfname: res.data[index].pdf_text.pdffile.pdfname,
               page: res.data[index].pdf_text.page_number,
               status: res.data[index].status,
+              sectionid: res.data[index].sectionid
             });
           }}
 
@@ -227,7 +231,8 @@ const topics = (props) => {
         setnuminuse(loadinuse.length);
       })
       .catch((err) => {
-        alert("Show sections failed")
+        //alert("Show sections failed")
+        localStorage.clear();
       });
     keywset.push(kw);
     //keywset.push("หลัก");
@@ -248,7 +253,7 @@ const topics = (props) => {
         "Content-Type": "application/json",
       },
     };
-    await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+    await axios.put(process.env.REACT_APP_URL + "/api/phrases/status", data, axiosConfig);
 
     var x = [...paragraphall];
 
@@ -274,7 +279,7 @@ const topics = (props) => {
         "Content-Type": "application/json",
       },
     };
-   await axios.put(config.URL + "/api/phrases/status", data, axiosConfig);
+   await axios.put(process.env.REACT_APP_URL + "/api/phrases/status", data, axiosConfig);
 
     var x = [...paragraphinuse];
 
@@ -330,7 +335,7 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)
+    await axios.delete(process.env.REACT_APP_URL + '/api/phrases/delete', data, axiosConfig)
     .then((res) => {
     
     alert("Delete Section ID: ["+phraseid+"] Successful.")
@@ -360,7 +365,7 @@ const topics = (props) => {
       },
     };
 
-    await axios.delete(config.URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
+    await axios.delete(process.env.REACT_APP_URL + '/api/phrases/delete', data, axiosConfig)  .then((res) => {
     
       alert("Delete Section ID:"+phraseid+" Successful.")
       })
@@ -598,7 +603,7 @@ const topics = (props) => {
                       >
                         <h3 className="card-title">
                           {" "}
-                          Section ID: {p.phraseid}
+                          Section ID: {p.sectionid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -611,7 +616,7 @@ const topics = (props) => {
                           ></i>
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -662,7 +667,7 @@ const topics = (props) => {
                           File:{" "}
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -723,7 +728,7 @@ const topics = (props) => {
                         }}
                       >
                         <h3 className="card-title">
-                          Section ID: {p.phraseid}
+                          Section ID: {p.sectionid}
                         </h3>
                         <div className="card-tools">
                           <i
@@ -736,7 +741,7 @@ const topics = (props) => {
                           ></i>
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +
@@ -784,7 +789,7 @@ const topics = (props) => {
                           File:{" "}
                           <a
                             href={
-                              "./upload/" +
+                              "/upload/" +
                               props.match.params.id +
                               "/" +
                               p.pdfname +

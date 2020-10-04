@@ -95,7 +95,7 @@ const editgroup = (props) => {
     };
 
     axios
-      .put(config.URL + "/api/keywords", data, axiosConfig)
+      .put(process.env.REACT_APP_URL + "/api/keywords", data, axiosConfig)
       .then((res) => {
         onGetyourgroups();
       })
@@ -120,7 +120,7 @@ const editgroup = (props) => {
     };
 
     await axios
-      .get(config.URL + "/api/keywords/mygroups", data, axiosConfig)
+      .get(process.env.REACT_APP_URL + "/api/keywords/mygroups", data, axiosConfig)
       .then((res) => {
         props.onGetyourgroups(res.data);
       })
