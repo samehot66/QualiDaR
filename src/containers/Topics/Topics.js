@@ -384,31 +384,31 @@ const topics = (props) => {
     const loadparagraphs = [];
     const loadinuse =[];
 
-    for (const index in newState) {
-      if(newState[index].status=="unseen"){
-        if(newState[index].text!==''){
-      loadparagraphs.push({
-        phraseid: newState[index].phraseid,
-        text: newState[index].text,
-        pdfname: newState[index].pdf_text.pdffile.pdfname,
-        page: newState[index].pdf_text.page_number,
-        status: newState[index].status,
-        sectionid: newState[index].sectionid
-      });}
-    }
-      else{
-        if(newState[index].text!==''){
-        loadinuse.push({
-          phraseid: newState[index].phraseid,
-          text: newState[index].text,
-          pdfname: newState[index].pdf_text.pdffile.pdfname,
-          page: newState[index].pdf_text.page_number,
-          status: newState[index].status,
-          sectionid: newState[index].sectionid
-        });
-      }}
+  //   for (const index in newState) {
+  //     if(newState[index].status=="unseen"){
+  //       if(newState[index].text!==''){
+  //     loadparagraphs.push({
+  //       phraseid: newState[index].phraseid,
+  //       text: newState[index].text,
+  //       pdfname: newState[index].pdf_text.pdffile.pdfname,
+  //       page: newState[index].pdf_text.page_number,
+  //       status: newState[index].status,
+  //       sectionid: newState[index].sectionid
+  //     });}
+  //   }
+  //     else{
+  //       if(newState[index].text!==''){
+  //       loadinuse.push({
+  //         phraseid: newState[index].phraseid,
+  //         text: newState[index].text,
+  //         pdfname: newState[index].pdf_text.pdffile.pdfname,
+  //         page: newState[index].pdf_text.page_number,
+  //         status: newState[index].status,
+  //         sectionid: newState[index].sectionid
+  //       });
+  //     }}
 
-  }
+  // }
   setparagraphinuse(loadinuse)
     setparagraphall(loadparagraphs);
     setnumall(loadparagraphs.length);
