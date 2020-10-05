@@ -40,7 +40,8 @@ router.get('/multi', (req, res)=>{
     }).then((data)=>{
         //res.status(200).send(data)
         req.body.keywords.forEach(item => {
-            allKeywords.push(item.keywordtext)
+            var queryJSON = JSON.parse(item)
+            allKeywords.push(queryJSON.keywordtext)
         })
         data.forEach(element => {
             var keyFlag = []
