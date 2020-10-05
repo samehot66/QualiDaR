@@ -34,9 +34,9 @@ router.get('', (req, res)=>{
 router.get('/multi', (req, res)=>{
     var response = []
     var allKeywords = []
-    console.log(req.body.keywords)
+    console.log(req.query.keywords)
     Phrases.findAll({
-        where: { tid: req.body.tid },
+        where: { tid: req.query.tid },
         include: [{
             model: PdfText,
             attributes: ['page_number'],
@@ -51,7 +51,7 @@ router.get('/multi', (req, res)=>{
           ]
     }).then((data)=>{
         //res.status(200).send(data)
-        req.body.keywords.forEach(item => {
+        req.query.keywords.forEach(item => {
             var queryJSON = JSON.parse(item)
             allKeywords.push(queryJSON.keywordtext)
         })
