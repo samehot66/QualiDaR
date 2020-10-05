@@ -61,7 +61,7 @@ router.get('/multi', (req, res)=>{
                 boolean = flag
             }
             if(boolean){
-                response.push(element.dataValues.text)
+                response.push(element)
             }
         })
     }).then(()=>{
