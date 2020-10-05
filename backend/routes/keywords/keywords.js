@@ -107,7 +107,7 @@ router.get('/usergroups/topic', (req, res)=>{
       }]
     }]
   })*/
-  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, "private" AS "type" FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname, "public" AS "type" FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = users.uid WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
+  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = users.uid WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
   .then((data)=>{
     res.status(200).send(data[0])
   }).catch((err)=>{
@@ -307,7 +307,8 @@ router.get('/public', (req, res)=>{
   })*/
   db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 1 ORDER BY keywords.keywordtext ASC;")
   .then((data)=>{
-        res.json(data[0])
+    res.status(200).send(data[0])
+      //  res.json(data[0])
     }).catch((err)=>{
         res.status(500).send(err)
     })
@@ -321,13 +322,15 @@ router.get('/private', (req, res)=>{
       model: Keywordgroup
     }]
   })*/
-  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 0 ORDER BY keywords.keywordtext ASC;")
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " ORDER BY keywords.keywordtext ASC;")
   .then((data)=>{
-      res.json(data[0])
+      //res.json(data[0])
+      res.status(200).send(data[0])
   }).catch((err)=>{
       res.status(500).send(err)
   })
 })
+
 
 router.post('/topic', async (req, res)=>{
   Keywordgroup.findOne({
