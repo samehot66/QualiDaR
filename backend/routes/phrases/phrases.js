@@ -31,6 +31,47 @@ router.get('', (req, res)=>{
     })
 })
 
+router.get('/multi', (req, res)=>{
+    var response = []
+    var allKeywords = []
+    console.log(req.body.keywords)
+    Phrases.findAll({
+        where: { tid: req.body.tid }
+    }).then((data)=>{
+        //res.status(200).send(data)
+        req.body.keywords.forEach(item => {
+            allKeywords.push(item.keywordtext)
+        })
+        data.forEach(element => {
+            var keyFlag = []
+            var boolean
+            //response.push(element.dataValues.text)
+            allKeywords.forEach(keyword=>{
+                if(element.dataValues.text.includes(keyword)){
+                    keyFlag.push(true)
+                }else{
+                    keyFlag.push(false)
+                }
+            })
+            for (flag of keyFlag){
+                if(!flag){
+                    boolean = flag
+                    break;
+                }
+                boolean = flag
+            }
+            if(boolean){
+                response.push(element.dataValues.text)
+            }
+        })
+    }).then(()=>{
+        res.status(200).send(response)
+    }).catch((err)=>{
+        console.log(err)
+        res.status(500).send(err)
+    })
+})
+
 router.delete('/delete', (req, res)=>{
     Phrases.destroy({
         where: { phraseid: req.query.phraseid }
