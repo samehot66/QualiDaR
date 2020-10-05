@@ -36,7 +36,19 @@ router.get('/multi', (req, res)=>{
     var allKeywords = []
     console.log(req.body.keywords)
     Phrases.findAll({
-        where: { tid: req.body.tid }
+        where: { tid: req.body.tid },
+        include: [{
+            model: PdfText,
+            attributes: ['page_number'],
+            include: [{
+                model: Pdffiles,
+                attributes: ['pdfname']
+            }]
+        }],
+        order: [
+            [ PdfText, Pdffiles, 'pdfname', 'asc' ],
+            [ PdfText, 'page_number', 'asc' ]
+          ]
     }).then((data)=>{
         //res.status(200).send(data)
         req.body.keywords.forEach(item => {

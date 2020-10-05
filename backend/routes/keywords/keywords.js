@@ -305,7 +305,7 @@ router.get('/public', (req, res)=>{
       where: { shared: "1"}
     }]
   })*/
-  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 1;")
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 1 ORDER BY keywords.keywordtext ASC;")
   .then((data)=>{
         res.json(data[0])
     }).catch((err)=>{
@@ -321,7 +321,7 @@ router.get('/private', (req, res)=>{
       model: Keywordgroup
     }]
   })*/
-  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 0;")
+  db.sequelize.query("SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname, keywords.kid, keywords.keywordtext FROM keywords JOIN keywordgroups ON keywords.keywordgroupsid = keywordgroups.keywordgroupsid WHERE keywordgroups.keywordgroupsid = " + req.query.keywordgroupsid + " AND keywordgroups.shared = 0 ORDER BY keywords.keywordtext ASC;")
   .then((data)=>{
       res.json(data[0])
   }).catch((err)=>{
