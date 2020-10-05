@@ -116,6 +116,8 @@ const classes = useStyles();
     };
 
     await axios.put(process.env.REACT_APP_URL + "/api/topics/finish", data, axiosConfig).then((res) => {
+
+      onGetnumsection();
       setdone(true);
     })
     .catch((err) => {
@@ -222,7 +224,31 @@ const classes = useStyles();
     };
   }, []);
 
-
+  const onGetnumsection = async () => {
+    let numinuse = 0;
+    let source = axios.CancelToken.source();
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        tid: props.tid,
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  await  axios
+      .get(process.env.REACT_APP_URL + "/api/topics/numinuse", data, axiosConfig, { })
+      .then((res) => {
+       numinuse = res.data[0].sectionCount;
+       setnuminuse(res.data[0].sectionCount);
+    
+      })
+      .catch((err) => {});
+   
+  };
 
   return (
     <tr>
