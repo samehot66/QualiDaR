@@ -199,7 +199,7 @@ const topics = (props) => {
     axios
       .get(process.env.REACT_APP_URL + "/api/phrases", data, axiosConfig)
       .then((res) => {
-        console.log(res.data)
+     
         for (const index in res.data) {
           if(res.data[index].status=="unseen"){
             if(res.data[index].text!==''){
@@ -380,7 +380,39 @@ const topics = (props) => {
   }
   const onGetphrasemulti =async (newState)=>
   {
-    console.log(newState);
+    
+    const loadparagraphs = [];
+    const loadinuse =[];
+
+    for (const index in newState) {
+      if(newState[index].status=="unseen"){
+        if(newState[index].text!==''){
+      loadparagraphs.push({
+        phraseid: newState[index].phraseid,
+        text: newState[index].text,
+        pdfname: newState[index].pdf_text.pdffile.pdfname,
+        page: newState[index].pdf_text.page_number,
+        status: newState[index].status,
+        sectionid: newState[index].sectionid
+      });}
+    }
+      else{
+        if(newState[index].text!==''){
+        loadinuse.push({
+          phraseid: newState[index].phraseid,
+          text: newState[index].text,
+          pdfname: newState[index].pdf_text.pdffile.pdfname,
+          page: newState[index].pdf_text.page_number,
+          status: newState[index].status,
+          sectionid: newState[index].sectionid
+        });
+      }}
+
+  }
+  setparagraphinuse(loadinuse)
+    setparagraphall(loadparagraphs);
+    setnumall(loadparagraphs.length);
+    setnuminuse(loadinuse.length);
   }
   const onSetkw =async (newState)=>
   {
