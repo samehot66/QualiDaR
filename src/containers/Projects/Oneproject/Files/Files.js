@@ -30,6 +30,12 @@ const file = (props) => {
     };
    
     await axios.delete(process.env.REACT_APP_URL + '/api/files', data, axiosConfig)
+    .then((res) => {
+    })
+    .catch((err) => {
+      alert("Delete failed! File has already in used");
+     
+    });
     await onGetfiles();
     closeDeleteModal();
   };

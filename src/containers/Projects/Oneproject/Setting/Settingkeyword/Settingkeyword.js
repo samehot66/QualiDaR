@@ -65,7 +65,12 @@ const Setkeyword = (props) => {
     };
   }, []);
 
-  const addGroupHandler = async (keywordgroupsid) => {
+  const addGroupHandler = async (keywordgroupsid,index) => {
+   
+    var x = [...keywordgroup];
+    x.splice(index, 1);
+    setkeywordgroup(x);
+    
     let data = {
       uid: localStorage.getItem("uid"),
       access_token: localStorage.getItem("access_token"),
@@ -85,7 +90,7 @@ const Setkeyword = (props) => {
       .catch((err) => {
         console.log("Add keyword group Failed");
       });
-    await onGetgroup();
+    //await onGetgroup();
     await onGetgroupinuse();
   };
   const onGetgroup = async () => {
@@ -131,6 +136,7 @@ const Setkeyword = (props) => {
         // }
 
         setkeywordgroup(addkeywordgroup);
+        console.log(keywordgroup)
       })
       .catch((err) => {
         console.log("Show keyword groups Failed");
@@ -266,7 +272,7 @@ const Setkeyword = (props) => {
               </tr>
             </thead>
             <tbody>
-              {keywordgroup.map((k) => (
+              {keywordgroup.map((k,index) => (
                 <tr key={k.keywordgroupsid}>
                   <td style={{ color: "#17a2b8" }}>
                     {" "}
@@ -280,7 +286,7 @@ const Setkeyword = (props) => {
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Add"
-                      onClick={(e) => addGroupHandler(e.target.id)}
+                      onClick={(e) => addGroupHandler(e.target.id,index)}
                     ></i>
                   </td>
                 </tr>

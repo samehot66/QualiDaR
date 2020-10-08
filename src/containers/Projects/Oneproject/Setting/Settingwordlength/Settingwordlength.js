@@ -12,9 +12,9 @@ const addtopic = (props) => {
       elementLabel: "How long of text you want to read?",
       elementConfig: {
         type: "number",
-        placeholder: "Input text length for each such as 500 letters",
+        placeholder: "Input text length such as 500 letters",
       },
-      value: 400,
+      value: 500,
       validation: {
         required: true,
         minLength: 500,
@@ -24,7 +24,7 @@ const addtopic = (props) => {
       error: "",
     },
   });
-  const [FormIsValid, setFromIsValid] = useState(false);
+  const [FormIsValid, setFromIsValid] = useState(true);
 
   const checkValidity = (value, rules) => {
     
@@ -50,12 +50,12 @@ const addtopic = (props) => {
 
     if (Number(value) < rules.minLength) {
       checkArray[0].Isvalid = false;
-      checkArray[0].Error = "Minimum text long is " + rules.minLength+"!";
+      checkArray[0].Error = "Minimum text long is " + rules.minLength+" letters!";
     }
 
     if (Number(value) > rules.maxLength) {
       checkArray[0].Isvalid = false;
-      checkArray[0].Error = "Maximum text long is " + rules.maxLength+"!";
+      checkArray[0].Error = "Maximum text long is " + rules.maxLength+" letters!";
     }
 
     if (rules.required) {

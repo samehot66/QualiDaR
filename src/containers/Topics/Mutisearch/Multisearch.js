@@ -98,29 +98,30 @@ const Setfile = (props) => {
 
   const onSearch= async()=>{
       let setkw=[];
-    // let data = {
-    //   params: {
-    //     uid: localStorage.getItem("uid"),
-    //     access_token: localStorage.getItem("access_token"),
-    //     keywords: inusekeyword,
-    //     tid:props.tid
-    //   },
-    // };
+    let data = {
+      params: {
+        uid: localStorage.getItem("uid"),
+        access_token: localStorage.getItem("access_token"),
+        keywords: inusekeyword,
+        tid:props.tid
+      },
+    };
     
-    // let axiosConfig = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-  
-    // await axios
-    //   .get(process.env.REACT_APP_URL + "/api/phrases/multi", data, axiosConfig)
-    //   .then((res) => {
-    // await props.onGetphrasemulti(res.data)
-    //   })
-    //   .catch((err) => {
-    //     alert("Show keywords Failed!");
-    //   });
+    let axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log(data)
+    await axios
+      .get(process.env.REACT_APP_URL + "/api/phrases/multi", data, axiosConfig)
+      .then((res) => {
+       
+  props.onGetphrasemulti(res.data)
+      })
+      .catch((err) => {
+        alert("Show keywords Failed!");
+      });
     for (let index = 0; index < inusekeyword.length; index++) { 
        setkw.push(inusekeyword[index].keywordtext)
     } 
