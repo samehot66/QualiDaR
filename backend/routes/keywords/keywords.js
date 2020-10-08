@@ -90,7 +90,7 @@ router.get('/usergroups', (req, res)=>{
   })
 })
 
-router.get('/usergroups/topic', (req, res)=>{
+router.get('/usergroups/topic', async (req, res)=>{
   /*User.findAll({
     attributes: ['uid', 'email'],
     where: {uid: req.query.uid},
@@ -107,8 +107,9 @@ router.get('/usergroups/topic', (req, res)=>{
       }]
     }]
   })*/
-  db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = users.uid WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
+  await db.sequelize.query('SELECT keywordgroups.keywordgroupsid, keywordgroups.groupname FROM keywordgroups WHERE keywordgroups.uid = ' + req.query.uid + ' AND keywordgroups.keywordgroupsid NOT IN (SELECT keywordgroupsid FROM keywordgroup_topics WHERE tid = ' + req.query.tid + ') UNION SELECT subscribes.keywordgroupsid, keywordgroups.groupname FROM subscribes JOIN keywordgroups ON keywordgroups.keywordgroupsid = subscribes.keywordgroupsid JOIN users ON subscribes.uid = ' + req.query.uid + ' WHERE subscribes.keywordgroupsid NOT IN (SELECT keywordgroup_topics.keywordgroupsid FROM keywordgroup_topics WHERE keywordgroup_topics.tid = ' + req.query.tid + ');')
   .then((data)=>{
+    console.log("usergroup/topics", data[0])
     res.status(200).send(data[0])
   }).catch((err)=>{
     console.log(err)

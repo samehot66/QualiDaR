@@ -22,6 +22,7 @@ const Setkeyword = (props) => {
         tid: props.tid,
       },
     };
+    console.log(data)
     let axiosConfig = {
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +102,7 @@ const Setkeyword = (props) => {
         uid: localStorage.getItem("uid"),
         access_token: localStorage.getItem("access_token"),
 
-        tid: props.pid,
+        tid: props.tid,
       },
     };
     let axiosConfig = {

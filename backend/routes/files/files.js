@@ -43,7 +43,7 @@ router.get('', (req, res) => {
 })
 
 router.get('/topic/except', (req, res)=>{
-  db.sequelize.query('SELECT pdffiles.pdfid, pdffiles.pdfname, pdffiles.done FROM pdffiles JOIN project_pdffiles ON pdffiles.pdfid = project_pdffiles.pdfid JOIN projects ON projects.pid = ' + req.query.pid + ' WHERE pdffiles.pdfid NOT IN (SELECT pdffiles.pdfid FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid WHERE topic_pdffiles.tid = ' + req.query.tid + ');')
+  db.sequelize.query('SELECT pdffiles.pdfid, pdffiles.pdfname, pdffiles.done FROM project_pdffiles JOIN pdffiles ON project_pdffiles.pdfid = pdffiles.pdfid WHERE project_pdffiles.pid = ' + req.query.pid + ' AND project_pdffiles.pdfid NOT IN (SELECT pdffiles.pdfid FROM topic_pdffiles JOIN pdffiles ON pdffiles.pdfid = topic_pdffiles.pdfid WHERE topic_pdffiles.tid = ' + req.query.tid + ');')
   .then((data)=>{
     res.status(200).send(data[0])
   }).catch((err)=>{
@@ -195,6 +195,7 @@ router.delete('', (req, res, next) =>{
 
 router.post('/upload', async (req, res, next) => {
     if (req.files === null) {
+      console.log('No file uploaded')
       return res.status(400).json({ msg: 'No file uploaded' });
     }
   
