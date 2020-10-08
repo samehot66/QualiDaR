@@ -4,6 +4,7 @@ const axios = require('axios');
 const { readdirSync } = require('fs')
 const fs = require('fs')
 const db = require('../../config/db.config.js');
+require('dotenv').config()
 const Project = db.project
 const User = db.user
 const Pdffiles = db.pdf_file
@@ -319,7 +320,7 @@ router.post('/upload', async (req, res, next) => {
   });
 
   createTask = async (pid, fileName, pdfid) => {
-    var promise = await axios.post("http://localhost:5000/task", {
+    var promise = await axios.post(process.env.FLASK_URL+"/task", {
         file: `../build/upload/${pid}/${fileName}`,
         pdfid: pdfid
     }).then((res) => {
@@ -334,7 +335,7 @@ router.post('/upload', async (req, res, next) => {
   }
 
   performTask = async (taskId) => {
-    var promise = await axios.put("http://localhost:5000/task/" + taskId)
+    var promise = await axios.put(process.env.FLASK_URL+"/task/" + taskId)
     .then((res) => {
       console.log(res.status)
       return res.status
