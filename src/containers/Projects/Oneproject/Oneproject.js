@@ -269,7 +269,7 @@ const oneproject = (props) => {
         setnumfile(loadfiles.length);
       })
       .catch((err) => {
-        console.log(err);
+       // console.log(err);
       });
     return () => {
       source.cancel();

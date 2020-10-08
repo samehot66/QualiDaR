@@ -114,7 +114,7 @@ const Keywords = (props) => {
         setsubscribekeywords(subscribekeywords);
       })
       .catch((err) => {
-        console.log("Show subscribe keyword groups Failed");
+        //console.log("Show subscribe keyword groups Failed");
       });
     await setpublickeywords(pubkeywords);
   };
@@ -150,7 +150,7 @@ const Keywords = (props) => {
         setsubscribekeywords(subscribekeywords);
       })
       .catch((err) => {
-        console.log("Show subscribe keyword groups Failed");
+        //console.log("Show subscribe keyword groups Failed");
       });
     return () => {
       source.cancel();

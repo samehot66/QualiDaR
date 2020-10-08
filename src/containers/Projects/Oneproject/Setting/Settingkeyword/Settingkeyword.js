@@ -58,7 +58,7 @@ const Setkeyword = (props) => {
         setkeywordgroup(addkeywordgroup);
       })
       .catch((err) => {
-        console.log("Show keyword groups Failed");
+        //console.log("Show keyword groups Failed");
       });
     return () => {
       source.cancel();
@@ -88,7 +88,7 @@ const Setkeyword = (props) => {
       .post(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
-        console.log("Add keyword group Failed");
+        //console.log("Add keyword group Failed");
       });
     //await onGetgroup();
     await onGetgroupinuse();
@@ -136,10 +136,10 @@ const Setkeyword = (props) => {
         // }
 
         setkeywordgroup(addkeywordgroup);
-        console.log(keywordgroup)
+       // console.log(keywordgroup)
       })
       .catch((err) => {
-        console.log("Show keyword groups Failed");
+       // console.log("Show keyword groups Failed");
       });
   };
   const onGetgroupinuse = async () => {
@@ -172,7 +172,7 @@ const Setkeyword = (props) => {
         setkeywordgroupinuse(addkeywordgroupinuse);
       })
       .catch((err) => {
-        console.log("Show keyword groups Failed");
+        //console.log("Show keyword groups Failed");
       });
   };
 
@@ -208,7 +208,7 @@ const Setkeyword = (props) => {
         setkeywordgroupinuse(addkeywordgroupinuse);
       })
       .catch((err) => {
-        console.log("Show keyword groups Failed");
+       // console.log("Show keyword groups Failed");
       });
     return () => {
       source.cancel();
@@ -235,7 +235,7 @@ const Setkeyword = (props) => {
       .delete(process.env.REACT_APP_URL + "/api/keywords/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
-        console.log("Remove keyword group Failed");
+       // console.log("Remove keyword group Failed");
       });
     await onGetgroup();
     await onGetgroupinuse();

@@ -46,7 +46,7 @@ const Setfile = (props) => {
         setfile(allfiles);
       })
       .catch((err) => {
-        console.log("Show files Failed");
+        //console.log("Show files Failed");
       });
     return () => {
       source.cancel();
@@ -86,7 +86,7 @@ const Setfile = (props) => {
         setfileinuse(allfilesinuse);
       })
       .catch((err) => {
-        console.log("Show files Failed!");
+        //console.log("Show files Failed!");
       });
     return () => {
       source.cancel();
@@ -111,7 +111,7 @@ const Setfile = (props) => {
       .post(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
-        console.log("Add files Failed");
+        //console.log("Add files Failed");
       });
     await onGetfile();
     await onGetfileinuse();
@@ -150,7 +150,7 @@ const Setfile = (props) => {
         setfile(allfiles);
       })
       .catch((err) => {
-        console.log("Show files Failed");
+       // console.log("Show files Failed");
       });
   };
   const onGetfileinuse = async () => {
@@ -184,7 +184,7 @@ const Setfile = (props) => {
         setfileinuse(allfilesinuse);
       })
       .catch((err) => {
-        console.log("Show files in use Failed");
+        //console.log("Show files in use Failed");
       });
   };
 
@@ -208,7 +208,7 @@ const Setfile = (props) => {
       .delete(process.env.REACT_APP_URL + "/api/files/topic", data, axiosConfig)
       .then((res) => {})
       .catch((err) => {
-        console.log("Remove files Failed");
+        //console.log("Remove files Failed");
       });
     await onGetfile();
     await onGetfileinuse();

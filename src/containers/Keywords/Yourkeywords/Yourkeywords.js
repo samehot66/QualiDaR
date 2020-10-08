@@ -55,7 +55,7 @@ const yourkeywords = (props) => {
       })
       .catch((err) => {
         onGetyourgroups();
-        console.log("Delete your group Failed");
+        //console.log("Delete your group Failed");
       });
     await closeDeleteModal();
   };
@@ -79,7 +79,7 @@ const yourkeywords = (props) => {
         props.onGetyourgroups(res.data);
       })
       .catch((err) => {
-        console.log("Show all your keyword groups Failed");
+        //console.log("Show all your keyword groups Failed");
       });
   };
 
@@ -127,7 +127,7 @@ const yourkeywords = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         for (const index in res.data) {
           keywords.push({
             kid: res.data[index].kid,

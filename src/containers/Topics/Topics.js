@@ -84,7 +84,7 @@ const topics = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         for (const index in res.data.keywordgroups) {
           keywordgroupinfo.push({
             keywordgroupsid: res.data.keywordgroups[index].keywordgroupsid,
@@ -315,7 +315,7 @@ const topics = (props) => {
     item.text = newText[0].text;
    
     items[newText[0].index] = item;
-   console.log(newText[0].phraseid)
+   //console.log(newText[0].phraseid)
 
    setparagraphinuse(items);
 
@@ -384,31 +384,31 @@ const topics = (props) => {
     const loadparagraphs = [];
     const loadinuse =[];
 
-  //   for (const index in newState) {
-  //     if(newState[index].status=="unseen"){
-  //       if(newState[index].text!==''){
-  //     loadparagraphs.push({
-  //       phraseid: newState[index].phraseid,
-  //       text: newState[index].text,
-  //       pdfname: newState[index].pdf_text.pdffile.pdfname,
-  //       page: newState[index].pdf_text.page_number,
-  //       status: newState[index].status,
-  //       sectionid: newState[index].sectionid
-  //     });}
-  //   }
-  //     else{
-  //       if(newState[index].text!==''){
-  //       loadinuse.push({
-  //         phraseid: newState[index].phraseid,
-  //         text: newState[index].text,
-  //         pdfname: newState[index].pdf_text.pdffile.pdfname,
-  //         page: newState[index].pdf_text.page_number,
-  //         status: newState[index].status,
-  //         sectionid: newState[index].sectionid
-  //       });
-  //     }}
+    for (const index in newState) {
+      if(newState[index].status=="unseen"){
+        if(newState[index].text!==''){
+      loadparagraphs.push({
+        phraseid: newState[index].phraseid,
+        text: newState[index].text,
+        pdfname: newState[index].pdf_text.pdffile.pdfname,
+        page: newState[index].pdf_text.page_number,
+        status: newState[index].status,
+        sectionid: newState[index].sectionid
+      });}
+    }
+      else{
+        if(newState[index].text!==''){
+        loadinuse.push({
+          phraseid: newState[index].phraseid,
+          text: newState[index].text,
+          pdfname: newState[index].pdf_text.pdffile.pdfname,
+          page: newState[index].pdf_text.page_number,
+          status: newState[index].status,
+          sectionid: newState[index].sectionid
+        });
+      }}
 
-  // }
+  }
   setparagraphinuse(loadinuse)
     setparagraphall(loadparagraphs);
     setnumall(loadparagraphs.length);

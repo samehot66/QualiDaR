@@ -100,7 +100,7 @@ const editgroup = (props) => {
         onGetyourgroups();
       })
       .catch((err) => {
-        console.log("Edit Failed");
+        //console.log("Edit Failed");
         onGetyourgroups();
       });
   };
@@ -125,7 +125,7 @@ const editgroup = (props) => {
         props.onGetyourgroups(res.data);
       })
       .catch((err) => {
-        console.log("Show all your keyword groups Failed");
+        //console.log("Show all your keyword groups Failed");
       });
   };
 

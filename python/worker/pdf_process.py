@@ -268,7 +268,9 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
             connection = mysql.connector.connect(host='localhost',
                                                  database='testdb',
                                                  user='root',
-                                                 password='Decade65*')
+                                                 password='Decade65*',
+                                            auth_plugin='mysql_native_password')
+                                                 
             cursor = connection.cursor()
             for item in keywordgroups:
                 # print(item)

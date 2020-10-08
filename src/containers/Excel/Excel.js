@@ -55,7 +55,7 @@ const Projects = (props) => {
     axios
       .get(process.env.REACT_APP_URL + "/api/excel", data, axiosConfig, { cancelToken: source.token,})
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         for (const index in res.data) {
   
           loadexceldata.push({

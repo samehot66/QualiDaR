@@ -33,7 +33,7 @@ const Setfile = (props) => {
         cancelToken: source.token,
       })
       .then((res) => {
-        console.log(res.data[0])
+       // console.log(res.data[0])
         for(const index in res.data[0].keywordgroups)
         {
           for(const index2 in res.data[0].keywordgroups[index].keywords)
@@ -112,7 +112,7 @@ const Setfile = (props) => {
         "Content-Type": "application/json",
       },
     };
-    console.log(data)
+   // console.log(data)
     await axios
       .get(process.env.REACT_APP_URL + "/api/phrases/multi", data, axiosConfig)
       .then((res) => {
