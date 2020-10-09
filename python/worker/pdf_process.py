@@ -1,6 +1,7 @@
 import io
 import re
 import json
+import os
 import mysql.connector
 from mysql.connector import Error
 from pythainlp import correct, sent_tokenize, word_tokenize
@@ -10,12 +11,16 @@ from pdfminer3.pdfinterp import PDFResourceManager
 from pdfminer3.pdfinterp import PDFPageInterpreter
 from pdfminer3.converter import PDFPageAggregator
 from pdfminer3.converter import TextConverter
-#from pdfminer.converter import TextConverter
-#from pdfminer.pdfinterp import PDFPageInterpreter
-#from pdfminer.pdfinterp import PDFResourceManager
-#from pdfminer.pdfpage import PDFPage
-#from pdfminer.layout import LAParams
+from dotenv import load_dotenv
+from pathlib import Path
 
+env_path = Path('..') / '.env'
+load_dotenv(dotenv_path=env_path)
+
+HOST = os.getenv("HOST")
+DATABASE = os.getenv("DATABASE")
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
 
 def extract_text_by_page(pdf_path):
     with open(pdf_path, 'rb') as fh:
@@ -265,10 +270,10 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
     try:
         print("Finding phrases start")
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                                 database='testdb',
-                                                 user='root',
-                                                 password='Decade65*')
+            connection = mysql.connector.connect(host=HOST,
+                                                 database=DATABASE,
+                                                 user=USER,
+                                                 password=PASSWORD)
             cursor = connection.cursor()
             for item in keywordgroups:
                 # print(item)
@@ -307,6 +312,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
         # for item in query_result:
         #    temp_text
         #print(f'Query result: {query_result}')
+        
         for item in query_result:
             iterate = 0
             page = item['page_number']
@@ -364,10 +370,10 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                 # print(kindex)
 
                 try:
-                    connection = mysql.connector.connect(host='localhost',
-                                                         database='testdb',
-                                                         user='root',
-                                                         password='Decade65*')
+                    connection = mysql.connector.connect(host=HOST,
+                                                         database=DATABASE,
+                                                         user=USER,
+                                                         password=PASSWORD)
                     cursor = connection.cursor()
 
                     mySql_select_query2 = 'SELECT phrases.phraseid, phrases.text FROM phrases WHERE kid = ' + \
