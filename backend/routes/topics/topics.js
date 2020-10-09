@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios');
 const db = require('../../config/db.config.js');
+require('dotenv').config()
 const Project = db.project
 const ProjectRole = db.project_role
 const User = db.user
@@ -278,7 +279,7 @@ router.put('/finish', async (req, res) =>{ //**not update longterm op yet!
 
 performFindphrases = async (pdfid, pid, keywordgroups, tid, wordlength) =>{
     console.log('asdadasda', keywordgroups)
-    var promise = await axios.post("http://localhost:5000/findphrases", {
+    var promise = await axios.post(process.env.FLASK_URL+"/findphrases", {
         pdfid: pdfid,
         pid: pid,
         keywordgroups: keywordgroups,

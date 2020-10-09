@@ -8,21 +8,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 const fileUpload = require('express-fileupload');
-var timeout = require('connect-timeout');
 
 var index = require('./routes/index');
 
 var app = express();
-
-app.use(timeout(3000000));
-
-
-app.use(fileUpload({
-  limits: {
-    fileSize: 200 * 1024 * 1024 * 1024 //200mb
-  },
-  abortOnLimit: true
-}));
 
 var corsOption = {
   origin: true,
@@ -40,11 +29,10 @@ app.use(cors(corsOption));
 app.use(express.json());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false, limit: '2gb' }))
-// app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload());
 
 /*async function AuthAPI (req, res, next) {
   await APIauthMiddleware.clientApiKeyValidation(req.cookies)

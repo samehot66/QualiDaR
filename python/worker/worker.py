@@ -1,6 +1,6 @@
 import sys
 sys.path.append(sys.path[0] + "/..")
-
+import os
 import uuid
 #import requests 
 import mysql.connector
@@ -9,11 +9,22 @@ from celery import Celery
 from time import sleep
 from model.utils import TaskStatus, task_dao
 from worker.pdf_process import extract_text, clean_text, clean_text2
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path('..') / '.env'
+load_dotenv(dotenv_path=env_path)
+
+HOST = os.getenv("HOST")
+DATABASE = os.getenv("DATABASE")
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
+BROKER = os.getenv("BROKER")
 
 
 CELERY_ACCEPT_CONTENT = ["pickle"]
 
-app = Celery("tasks", broker="amqp://admin:mypass@localhost:5673")
+app = Celery("tasks", broker=BROKER)
 
 
 @app.task()
@@ -27,11 +38,10 @@ def pdf_process(task_id):
         clean_text(st)
         clean_text2(st)
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                         database='testdb',
-                                         user='root',
-                                         password='Decade65*',
-                                         auth_plugin='mysql_native_password')
+            connection = mysql.connector.connect(host=HOST,
+                                         database=DATABASE,
+                                         user=USER,
+                                         password=PASSWORD)
             cursor = connection.cursor()
 
             for i in range(len(st)):
