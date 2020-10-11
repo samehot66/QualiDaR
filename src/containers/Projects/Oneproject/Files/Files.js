@@ -81,7 +81,7 @@ const file = (props) => {
       ) : (
         <td style={{ color: "red" }}>Extracting...</td>
       )}
-      <td>{props.size} KB</td>
+      <td>{Number((props.size/1024)/1024).toFixed(2)} MB</td>
 
       <td>
         {props.owner == localStorage.getItem("email") && props.progress ? (
