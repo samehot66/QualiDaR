@@ -75,8 +75,9 @@ const Setfile = (props) => {
     );
   }, [search, allkeywords]);
 
-  const addKeywordHandler =(keywords)=>{
-    let x =[...inusekeyword]
+  const addKeywordHandler =(keywords,indexstate)=>{
+    let x =[...inusekeyword];
+    console.log(indexstate)
     let check = false;
     for (let index = 0; index < x.length; index++) { 
         if(x[index].kid===keywords.kid)
@@ -88,10 +89,19 @@ const Setfile = (props) => {
     {
        x.push(keywords)
     }
-    setinusekeyword(x)
+     setinusekeyword(x)
+    let y = [...allkeywords];
+    y.splice(indexstate, 1);
+    setallkeywords(y);
+   
   }
   const removeKeywordHandler=(index)=>{
-    let x = [...inusekeyword]
+
+   
+    let x = [...inusekeyword] 
+    
+    setallkeywords([...allkeywords, x[index]]);
+  
     x.splice(index, 1);
     setinusekeyword(x)
   }
@@ -129,6 +139,10 @@ const Setfile = (props) => {
       await props.cancel();
   }
   const clearkw=()=>{
+      let x = [...allkeywords];
+      let y = [...inusekeyword];
+      let z = x.concat(y);
+      setallkeywords(z);
       setinusekeyword([]);
   }
   return isauth ? (
