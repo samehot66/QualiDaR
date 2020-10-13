@@ -260,7 +260,7 @@ router.post('/upload', async (req, res, next) => {
         pdfname: file.name,
         uri: `../build/upload/${req.body.pid}/${file.name}`,
         description: req.body.description,
-        size: file.size,
+        size: formatBytes(file.size),
         done: false
       }).then((data) => {
         pdfid = data.dataValues.pdfid
@@ -344,6 +344,17 @@ router.post('/upload', async (req, res, next) => {
           return err
       })
       return promise
+  }
+
+  formatBytes = (bytes, decimals = 2) => {
+    if (bytes === 0) return 0;
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
   }
 
 module.exports = router
