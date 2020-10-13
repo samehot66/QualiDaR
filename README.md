@@ -102,7 +102,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
 - [Something Missing?](#something-missing)
-- [Python packet for QUALIDAR]
+- [Python packet for QUALIDAR](#Python packet for QUALIDAR)
 
 ## Updating to New Releases
 
