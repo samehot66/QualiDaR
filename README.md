@@ -2487,3 +2487,11 @@ If you have ideas for more “How To” recipes that should be on this page, [le
 
 ## Long computation web api with flask reference
 https://github.com/golechwierowicz/long_computation_rest
+
+## Python packet for QUALIDAR
+
+pip install mysql-connector-python<br>
+pip install celery<br>
+pip install python-dotenv<br>
+pip install pdfminer3<br>
+pip install flask<br>
