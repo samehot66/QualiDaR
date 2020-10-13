@@ -2488,8 +2488,8 @@ If you have ideas for more “How To” recipes that should be on this page, [le
 
 ## Python packet for QUALIDAR
 
-pip install mysql-connector-python
-pip install celery
-pip install python-dotenv
-pip install pdfminer3
-pip install flask
+pip install mysql-connector-python<br>
+pip install celery<br>
+pip install python-dotenv<br>
+pip install pdfminer3<br>
+pip install flask<br>
