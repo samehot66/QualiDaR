@@ -102,6 +102,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
 - [Something Missing?](#something-missing)
+- [Python packet for QUALIDAR]
 
 ## Updating to New Releases
 
@@ -2486,8 +2487,8 @@ In the future, we might start automatically compiling incompatible third-party m
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
 
 ## Python packet for QUALIDAR
-pip install mysql-connector-python
-pip install celery
-pip install python-dotenv
-pip install pdfminer3
-pip install flask
+pip install mysql-connector-python<br>
+pip install celery<br>
+pip install python-dotenv<br>
+pip install pdfminer3<br>
+pip install flask<br>
