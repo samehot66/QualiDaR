@@ -2492,3 +2492,4 @@ pip install celery<br>
 pip install python-dotenv<br>
 pip install pdfminer3<br>
 pip install flask<br>
+pip install gunicorn
