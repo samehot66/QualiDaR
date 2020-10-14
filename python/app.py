@@ -1,6 +1,6 @@
 import uuid
 import json
-
+import secrets
 from flask import Flask, logging, request, jsonify
 
 from model.utils import task_dao
@@ -12,7 +12,9 @@ from worker.pdf_process import find_phrases
 app = Flask(__name__)
 log = logging.create_logger(app)
 log.setLevel("INFO")
-
+secret_key = secrets.token_hex(16)
+# example output, secret_key = 000d88cd9d90036ebdd237eb6b0db000
+app.config['SECRET_KEY'] = secret_key
 
 @app.route("/task", methods=["POST"])
 def create_task():
