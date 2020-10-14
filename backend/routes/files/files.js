@@ -354,7 +354,7 @@ router.post('/upload', async (req, res, next) => {
 
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+    return parseFloat((bytes / k).toFixed(dm));
   }
 
 module.exports = router
