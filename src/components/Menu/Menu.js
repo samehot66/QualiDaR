@@ -98,6 +98,13 @@ const Menu = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
+                   <span   style={{ cursor:"pointer"}} >
+                 <a  className="nav-link" target="_blank" href="https://o365cmu-my.sharepoint.com/:w:/g/personal/kanokpol_thongsem_cmu_ac_th/Ed8IsfvS3LdCj3hdEfAuXoMBBPFOMg4T42MqcU0qukJukg?e=41Nqfz" style={{ cursor:"pointer",color:"blue"}} >
+                 <i className="nav-icon"/>
+                 <p>How to use?</p>
+                  </a> </span>
+                </li> 
+                <li className="nav-item">
                    <span onClick={logout}  style={{ cursor:"pointer"}} >
                  <a  className="nav-link" href="" style={{ cursor:"pointer"}} onClick={logout}>
                  <i className="nav-icon" onClick={logout}/>
