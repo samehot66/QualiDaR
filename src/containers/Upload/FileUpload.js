@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import Message from "./Message";
 import Progress from "./Progress";
 import axios from "axios";
-import config from "../../config.json";
+//import config from "../../config.json";
 
 const FileUpload = (props) => {
   const [file, setFile] = useState("");

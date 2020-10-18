@@ -99,7 +99,7 @@ const Menu = () => {
                 </li>
                 <li className="nav-item">
                    <span   style={{ cursor:"pointer"}} >
-                 <a  className="nav-link" target="_blank" href="https://o365cmu-my.sharepoint.com/:w:/g/personal/kanokpol_thongsem_cmu_ac_th/Ed8IsfvS3LdCj3hdEfAuXoMBBPFOMg4T42MqcU0qukJukg?e=41Nqfz" style={{ cursor:"pointer",color:"blue"}} >
+                 <a  className="nav-link" target="_blank"  href="/upload/howtousethequalidar.pdf" style={{ cursor:"pointer",color:"blue"}} >
                  <i className="nav-icon"/>
                  <p>How to use?</p>
                   </a> </span>

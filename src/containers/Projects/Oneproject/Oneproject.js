@@ -5,7 +5,7 @@ import classes from "./Oneproject.css";
 import { NavLink } from "react-router-dom";
 import Modal from "../../../components/UI/Modal/Modal";
 import axios from "axios";
-import config from "../../../config.json";
+//import config from "../../../config.json";
 import Files from "./Files/Files";
 
 import Addtopic from "./Topics/Addtopics";

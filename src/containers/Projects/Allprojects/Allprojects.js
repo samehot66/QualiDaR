@@ -4,7 +4,7 @@ import Modal from '../../../components/UI/Modal/Modal';
 import Addpeople from '../Addpeople/Addpeople';
 import Auxi from '../../../hoc/Auxi';
 import { NavLink } from 'react-router-dom';
-import config from '../../../config.json';
+//import config from '../../../config.json';
 import axios from 'axios';
 import Button from '../../../components/UI/Button/Button';
 import Editproj from '../Editproject/Editproject';

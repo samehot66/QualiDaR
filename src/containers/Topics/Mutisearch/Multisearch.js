@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Errorpage from "../../../components/UI/Errorpage/Errorpage";
 import classes from "./Multisearch.css";
 import Auxi from "../../../hoc/Auxi";
-import config from "../../../config.json";
+//import config from "../../../config.json";
 import Button from "../../../components/UI/Button/Button";
 import axios from "axios";
 

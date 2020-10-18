@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Errorpage from "../../../../../components/UI/Errorpage/Errorpage";
 import classes from "./Settingkeyword.css";
 import Auxi from "../../../../../hoc/Auxi";
-import config from "../../../../../config.json";
+//import config from "../../../../../config.json";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 

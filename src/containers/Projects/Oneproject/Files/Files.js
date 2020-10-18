@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../../../../components/UI/Modal/Modal";
-import config from "../../../../config.json";
+//import config from "../../../../config.json";
 import Button from "../../../../components/UI/Button/Button";
 import axios from "axios";
 

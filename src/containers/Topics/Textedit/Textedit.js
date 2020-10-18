@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Auxi from "../../../hoc/Auxi";
 import "./Textedit.css";
 //import Button from '../../../components/UI/Button/Button';
-import config from "../../../config.json";
+//import config from "../../../config.json";
 import axios from "axios";
 import EdiText from 'react-editext'
 import classes from './Textedit.css'

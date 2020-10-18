@@ -5,7 +5,7 @@ import Modal from "../../../components/UI/Modal/Modal";
 import Button from "../../../components/UI/Button/Button";
 import classes from "../Yourkeywords/Yourkeywords.css";
 import axios from "axios";
-import config from "../../../config.json";
+//import config from "../../../config.json";
 import Editgroup from "../Editgroup/Editgroup";
 
 const yourkeywords = (props) => {

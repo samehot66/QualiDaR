@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
 import classes from "./Keywords.css";
 import Auxi from "../../hoc/Auxi";
-import config from "../../config.json";
+//import config from "../../config.json";
 import Publickeywords from "./Publickeywords/Publickeywords";
 import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";

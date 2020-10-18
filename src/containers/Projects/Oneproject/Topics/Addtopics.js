@@ -3,7 +3,7 @@ import Auxi from "../../../../hoc/Auxi";
 import Button from "../../../../components/UI/Button/Button";
 import Input from "../../../../components/UI/Input/Input";
 import axios from "axios";
-import config from "../../../../config.json";
+//import config from "../../../../config.json";
 
 const addtopic = (props) => {
   const [topicForm, settopicForm] = useState({

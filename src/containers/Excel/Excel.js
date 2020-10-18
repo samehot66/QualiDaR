@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
 import Auxi from "../../hoc/Auxi";
-import config from "../../config.json";
+//import config from "../../config.json";
 import axios from "axios";
 import classes from "./Excel.css";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";

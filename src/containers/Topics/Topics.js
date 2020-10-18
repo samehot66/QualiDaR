@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Errorpage from "../../components/UI/Errorpage/Errorpage";
 import Auxi from "../../hoc/Auxi";
 import classes from "./Topics.css";
-import config from "../../config.json";
+//import config from "../../config.json";
 import axios from "axios";
 import Modal from "../../components/UI/Modal/Modal";
 //import ReactHtmlParser from "react-html-parser";

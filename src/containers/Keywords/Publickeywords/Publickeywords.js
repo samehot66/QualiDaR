@@ -3,7 +3,7 @@ import Auxi from "../../../hoc/Auxi";
 import classes from "./Publickeywords.css";
 import Modal from "../../../components/UI/Modal/Modal";
 import axios from "axios";
-import config from "../../../config.json";
+//import config from "../../../config.json";
 
 const Publickeywords = (props) => {
   const [keywordsmodal, setkeywordsmodal] = useState(false);

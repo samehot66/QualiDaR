@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./Authentication.css";
 import { GoogleLogin } from "react-google-login";
-import config from "../../config.json";
+//import config from "../../config.json";
 import Button from "../../components/UI/Button/Button";
 
 class authentication extends Component {

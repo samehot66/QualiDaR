@@ -3,7 +3,7 @@ import Auxi from "../../../hoc/Auxi";
 import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import axios from "axios";
-import config from "../../../config.json";
+//import config from "../../../config.json";
 
 const addgroup = (props) => {
   const [groupForm, setgroupForm] = useState({

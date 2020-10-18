@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../../../../components/UI/Modal/Modal";
-import config from "../../../../config.json";
+//import config from "../../../../config.json";
 import Button2 from "../../../../components/UI/Button/Button";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
