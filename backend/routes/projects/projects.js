@@ -131,7 +131,6 @@ router.delete('', async (req, res) => {
             console.log(err)
             return res.status(500).send(err)
           })
-
           PdfFiles.destroy({
             where: { pdfid: element.dataValues.pdfid }
           }).then((data)=>{
@@ -147,49 +146,43 @@ router.delete('', async (req, res) => {
             console.log(err)
             return res.status(500).send(err)
           })
-        });}
-      }).catch((err)=>{
-        console.log(err)
-        return res.status(500).send(err)
-      })
-    }else{
-      return res.status(404).send({ message: 'Project not found!' })
-    }
-
-    Project.destroy({
-      where: {pid: req.query.pid}
-    }).then((data)=>{
-      if(data==1){
-        ProjectRole.destroy({
-          where: { pid: null }
-        }).catch((err)=>{
-          console.log(err)
-          return res.status(500).send(err)
-        })
-  
-        ProjectPdffiles.destroy({
-          where: { pid: null }
-        }).catch((err)=>{
-          console.log(err)
-          return res.status(500).send(err)
-        })
-  
-        Topics.destroy({
-          where: { pid: null }
+        });
+        Project.destroy({
+          where: {pid: req.query.pid}
         }).then((data)=>{
-          console.log(data)
-            if(data==1){
-              console.log('success')
-              Keywordgroup_topics.destroy({
-                  where: { tid: null }
-              }).then((data)=>{
-                  Topic_pdffiles.destroy({
+          if(data==1){
+            ProjectRole.destroy({
+              where: { pid: null }
+            }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
+            })
+            ProjectPdffiles.destroy({
+              where: { pid: null }
+            }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
+            })
+            Topics.destroy({
+              where: { pid: null }
+            }).then((data)=>{
+              console.log(data)
+                if(data==1){
+                  console.log('success')
+                  Keywordgroup_topics.destroy({
                       where: { tid: null }
                   }).then((data)=>{
-                      Phrases.destroy({
+                      Topic_pdffiles.destroy({
                           where: { tid: null }
                       }).then((data)=>{
-                        return res.status(200).send({ message: 'Delete project and remove related item complete!' })
+                          Phrases.destroy({
+                              where: { tid: null }
+                          }).then((data)=>{
+                            return res.status(200).send({ message: 'Delete project and remove related item complete!' })
+                          }).catch((err)=>{
+                              console.log(err)
+                              return res.status(500).send(err)
+                          })
                       }).catch((err)=>{
                           console.log(err)
                           return res.status(500).send(err)
@@ -198,22 +191,28 @@ router.delete('', async (req, res) => {
                       console.log(err)
                       return res.status(500).send(err)
                   })
-              }).catch((err)=>{
-                  console.log(err)
-                  return res.status(500).send(err)
-              })
-            }
-      }).catch((err)=>{
+                }else{
+                  return res.status(200).send({ message: 'Delete project and remove related item complete!' })
+                }
+          }).catch((err)=>{
+              console.log(err)
+              return res.status(500).send(err)
+          })
+          }else{
+            return res.status(404).send({ message: 'Project not found!' })
+          }
+        }).catch((err)=>{
           console.log(err)
           return res.status(500).send(err)
-      })
-      }else{
-        return res.status(404).send({ message: 'Project not found!' })
+        })
       }
-    }).catch((err)=>{
-      console.log(err)
-      return res.status(500).send(err)
-    })
+      }).catch((err)=>{
+        console.log(err)
+        return res.status(500).send(err)
+      })
+    }else{
+      return res.status(404).send({ message: 'Project not found!' })
+    }
   })
 
   
