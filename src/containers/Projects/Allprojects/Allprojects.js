@@ -39,9 +39,16 @@ const allprojects = (props) => {
       }
     }
 
-    await axios.delete(process.env.REACT_APP_URL + '/api/projects', data, axiosConfig)
-    await onGetprojects();
-    await closeDeleteModal();
+    await axios.delete(process.env.REACT_APP_URL + '/api/projects', data, axiosConfig) .then((res) => {
+      onGetprojects();
+      closeDeleteModal();
+    })
+    .catch((err) => {
+      //alert("Show all projects Failed");
+      onGetprojects();
+ closeDeleteModal();
+    })
+    
   }
 
   const onGetprojects = async () => {
