@@ -267,6 +267,7 @@ def clean_text(st):
 
 def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
     query_result = []
+    sectionId = 0
     try:
         print("Finding phrases start")
         try:
@@ -408,7 +409,7 @@ def find_phrases(pdfid, pid, keywordgroups, tid, wordlength):
                         if(str(text[startIndex:endIndex]) != '' or str(text[startIndex:endIndex]) != None or str(text[startIndex:endIndex]) != ' '):
                             insertText = str(text[startIndex:endIndex])
                             mySql_insert_query = 'INSERT INTO phrases (kindex, text, createdAt, updatedAt, tid, pdftextid, kid, sectionid) VALUES (' + str(
-                                kindex) + ', "' + insertText + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ', ' + str(sectionId) + ');'
+                                kindex) + ', "' + str(insertText) + '", CURRENT_TIME(), CURRENT_TIME(), ' + str(tid) + ', ' + str(pdftextid) + ', ' + str(kid) + ', ' + str(sectionId) + ');'
                             # print(mySql_insert_query)
                             cursor.execute(mySql_insert_query)
                             connection.commit()
